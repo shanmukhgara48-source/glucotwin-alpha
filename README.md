@@ -127,6 +127,8 @@ The `docs/submission/` folder contains the refreshed live strategy, continuous a
 
 The submission index is [alpha_vnrvjiet](alpha_vnrvjiet/README.md); the downloadable project package uses the required `alpha_vnrvjiet/` root folder.
 
+- [Download the complete hackathon package (ZIP)](https://github.com/shanmukhgara48-source/glucotwin-alpha/releases/download/submission-2026-10-10/alpha_vnrvjiet_GlucoTwin_Live_Platform.zip) — source, documentation and current submission files under the required `alpha_vnrvjiet/` root.
+
  The v3 video is a narrated editable presentation with actual UI screenshots and synthesized macOS Samantha speech, not an interactive browser recording. The v0.2 materials remain as legacy reference; use the files marked Live for the current release. [TEAM.md](docs/TEAM.md) contains registration details. Public source: https://github.com/shanmukhgara48-source/glucotwin-alpha. Registration and platform submission remain external steps.
 
 Code: MIT. Shanghai data: CC BY 4.0 with attribution in [DATA_LICENSE.md](DATA_LICENSE.md). No CGMacros data are included. Counts: 100 patients / 109 recordings / 112,462 measured observations; 13 missing rows excluded and 11 gaps preserved. The Chinese hospital cohort does not establish Indian clinical performance.

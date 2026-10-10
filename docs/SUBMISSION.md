@@ -21,6 +21,8 @@ The published brief supplies no numerical judging weights. Feature priorities ar
 
 Use these release assets in `docs/submission/`:
 
+- [Complete project and submission ZIP](https://github.com/shanmukhgara48-source/glucotwin-alpha/releases/download/submission-2026-10-10/alpha_vnrvjiet_GlucoTwin_Live_Platform.zip) — packaged with the required `alpha_vnrvjiet/` root folder.
+
 - `GlucoTwin_Live_Platform_Strategy.pdf` — current platform strategy, measured evidence and remaining clinic gates.
 - `GlucoTwin_Live_Architecture.pdf` — architecture and the receipt/outcome evidence chain.
 - `GlucoTwin_Clinic_Partnership_Packet.pdf` — source-access and workflow discussion material; no partnership or feedback is implied.

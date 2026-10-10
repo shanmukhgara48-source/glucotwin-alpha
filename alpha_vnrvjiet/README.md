@@ -4,6 +4,8 @@ Team alpha · vnrvjiet · Shanmukh sai gara. Four coordinated delivery workstrea
 
 [Project, problem, model and startup instructions](../README.md) · [MIT license](../LICENSE) · [Data attribution](../DATA_LICENSE.md)
 
+[Download the complete project and submission ZIP](https://github.com/shanmukhgara48-source/glucotwin-alpha/releases/download/submission-2026-10-10/alpha_vnrvjiet_GlucoTwin_Live_Platform.zip)
+
 - [Architecture PDF](../docs/submission/GlucoTwin_Live_Architecture.pdf)
 - [Editable presentation](../docs/submission/GlucoTwin_Live_Platform_Presentation.pptx)
 - [30-minute explanation video](../docs/submission/GlucoTwin_Live_Platform_Explanation.mp4)
