@@ -34,3 +34,7 @@ Three consecutive runs against separate fresh SQLite databases passed. Each serv
 ## Submission artifact checks
 
 Strategy: 8 A4 pages / 16 clickable references; doctor packet: 2 pages; original architecture: 1 page. All pages rendered and visually reviewed. Presentation: 21 slides; editable native text, architecture and quantitative chart with embedded workbook. Package, font/layout geometry and first-party import checks passed. The companion PDF contains exact rendered slides plus selectable captions and clickable primary references; its 21 pages were rendered and inspected. The 28-minute video includes disclosed synthetic speech and the actual authenticated local browser journey. Duration, audio levels and representative beginning/model/demo/end frames were checked. A one-page consultation example was regenerated after the PDF layout improvement.
+
+## Public clean-checkout check
+
+Cloned the public GitHub repository into a separate directory, created a new Python virtual environment, installed pinned requirements, ran npm ci and built the frontend through scripts/setup.sh. No model retraining was required. The compiled production launcher started on an alternate port with newly generated private accounts. An unauthenticated patient request returned 401; a fresh reviewer login opened Patient 2072 and the real 30-minute warning without browser errors. The verification service was stopped after the check; the working demonstration remained running.
