@@ -32,6 +32,14 @@ async def clinic_lifespan(app: FastAPI):
         raise RuntimeError("Only the anonymized/synthetic research release is enabled. Private clinical service requires the source and clinical release gates.")
     bootstrap()
     initialize_platform()
+    try:
+        from backend.arrival_model import artifact_checksum, load_clinic_bundle
+        # Load trusted local model bytes before jobs can hold the SQLite write lock.
+        load_clinic_bundle()
+        artifact_checksum()
+    except Exception:
+        # Missing/unreadable models remain an explicit readiness failure, without payload logs.
+        pass
     worker = ForecastWorker()
     worker.start()
     try:

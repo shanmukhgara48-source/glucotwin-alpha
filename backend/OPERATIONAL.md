@@ -81,6 +81,8 @@ scores do not inherit clinical validity from the retrospective source benchmark.
 ## Runtime boundary
 
 `ForecastWorker.start()`/`.stop()` are attached to the API lifecycle.
+Startup warms the trusted local model and checksum before the worker can claim
+jobs; missing/unreadable artifacts keep model readiness unavailable.
 `GLUCOTWIN_DISABLE_WORKER=1` disables it for isolated tests. SQLite is the default;
 `GLUCOTWIN_DATABASE_URL` selects the separately tested PostgreSQL compatibility
 path. Local SQLite recovery uses its backup API; PostgreSQL requires its own

@@ -341,6 +341,40 @@ def test_readiness_database_failure_is_unavailable_without_payload(pipeline, mon
     assert readiness(admin).status_code == 503
 
 
+@pytest.mark.parametrize("missing_artifact", [False, True])
+def test_startup_warms_trusted_model_before_worker_and_preserves_missing_gate(pipeline, monkeypatch, tmp_path, missing_artifact):
+    from fastapi.testclient import TestClient
+    from backend import arrival_model, hybrid, main
+    loader = arrival_model.load_clinic_bundle
+    loader.cache_clear()
+    arrival_model.artifact_checksum.cache_clear()
+    if missing_artifact:
+        monkeypatch.setattr(hybrid, "ROOT", tmp_path)
+        monkeypatch.setattr(arrival_model, "ROOT", tmp_path)
+    observed = {}
+
+    def inspect_start(self):
+        # A cold first load must finish before a worker could begin a DB transaction.
+        observed["cache_size_at_worker_start"] = loader.cache_info().currsize
+        observed["models_present"] = bool(loader().get("models"))
+        observed["checksum_cached"] = arrival_model.artifact_checksum.cache_info().currsize == 1
+
+    monkeypatch.setattr(main.ForecastWorker, "start", inspect_start)
+    try:
+        with TestClient(main.app) as client:
+            assert client.get("/api/health").status_code == 200
+            assert observed["cache_size_at_worker_start"] == 1
+            assert observed["models_present"] is (not missing_artifact)
+            assert observed["checksum_cached"] is (not missing_artifact)
+            if missing_artifact:
+                response = readiness(pipeline[0])
+                assert response.status_code == 503
+                assert json.loads(response.body)["data"]["model_ready"] is False
+    finally:
+        loader.cache_clear()
+        arrival_model.artifact_checksum.cache_clear()
+
+
 def test_any_future_measurement_is_quarantined_not_permanently_poisoned(pipeline):
     admin, source, now = pipeline
     future = now + timedelta(seconds=10)
