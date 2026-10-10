@@ -1,28 +1,36 @@
-# Local validation - 10 October 2026
+# Local validation — 10 October 2026
 
-## Implemented and checked
+## Current clinic release
 
-- Real ShanghaiT2DM: 100 base patients, 109 recordings, 112,462 measured observations; 13 missing rows excluded and 11 native gaps retained.
-- Patient-separated population training, separate interval calibration and held-out evaluation. Two independent training runs reproduced the same reported scores.
-- Pure prefix-only forecasts; changing future observations did not alter an earlier snapshot.
-- Independent patient replay; changing patients and returning reproduced the original state.
-- Intentionally withholding three recent readings produced a 45-minute freshness gap and suppressed both forecast arrays and warnings.
-- Future target actuals stayed hidden until their timestamps were reached.
-- Patient parameter adaptation was visible alongside the training prior. Alert acknowledgement remained display-only.
-- `python -m pytest backend/tests tests -q`: **16 passed**.
-- `npm --prefix frontend run build`: production build passed.
-- Final browser demo path: **three consecutive fresh-page runs passed**, without browser console errors. Each run exercised warning, acknowledgement, observed outcome, stable/gap episodes, patient switch, reset, step, play/pause, benchmark and provenance.
-- Presentation layout inspected at 1440px; mobile layout checked at 390px with document width equal to viewport width.
-- Launcher tested on alternate local ports, including frontend-to-API proxy and real-model replay. Ctrl+C removed both owned listening services; unrelated services were preserved.
+The upgraded clinic release supersedes the original replay-only demo. The legacy benchmark and its limitations remain in `data/processed/legacy_benchmark.json` and `backend/MODEL.md`. New model identities and exact evidence boundaries are in [EVIDENCE.md](EVIDENCE.md).
 
-## Measured limitations
+- **43 automated tests passed** after the final backend revision: native-data audit, causal/arrival boundaries, patient isolation, matured-only adaptation, 30-minute warning policy, unsupported-warning suppression, auth/revocation/roles, clinic checks, persistent transitions, immutable forecasts/outcomes, atomic/idempotent CSV/FHIR ingestion, units and report restrictions.
+- TypeScript and Vite production build passed. The compiled UI is served with the API on one local origin; development proxy remains available.
+- Reviewer and administrator roles are enforced server-side. Unauthorized access is rejected; imports and monitoring changes require admin. Runtime credentials, SQLite state, backups and sessions are excluded from the release.
+- 100 Shanghai patients / 109 recordings / 112,462 native measured observations. Thirteen missing rows excluded; eleven gaps retained.
+- One completed frozen five-fold clinic evaluation with grouped inner parameter selection and separate calibration patients. This is internal retrospective validation; the cohort was previously inspected.
+- Runtime recorded-demonstration forecasts match the patient's out-of-fold result. Warning case 2072 / cursor 853 is retrospectively selected, within a virtual weekday 09:00–17:00 window. Historical staffing and timezone are unverified.
+- SQLite backup and offline restore passed: integrity `ok`, schema 3, permissions 0600; users, reviews, actions, forecasts and outcomes matched exactly. Restore over an existing destination was refused without changing it.
+- Frontend checked at 1440px and 390px: no page errors or document-level horizontal overflow across queue, patient, monitoring, intake and model evidence. Tables scroll inside their containers.
 
-At 30 minutes, population MAE is 10.53 mg/dL, persistence 12.76, personalized filter 14.48 and pooled filter 14.81. The personalized model is not the strongest forecaster. Removing baseline context improves the population result in this split. The 60-minute same-filter improvement is inconclusive under the paired patient bootstrap.
+## Predictive results
 
-Precision/recall are overlapping forecast-window metrics; false-alert episodes use a 30-minute cooldown and eligible below-threshold forecast time as their patient-day denominator. The native sampling resolution is 15 minutes. These results do not establish prospective clinical performance.
+Thirty-minute population MAE 9.812 mg/dL; hybrid MAE 9.606. Hybrid-minus-population paired difference −0.206, patient-bootstrap 95% CI [−0.336, −0.110]. This supports a small internal adaptation improvement. Historical-context benefit is inconclusive.
 
-The build has a non-blocking Vite bundle-size warning (the chart/UI bundle is about 201 KB compressed) and a Starlette test-client deprecation warning. Neither caused a build, runtime or test failure.
+Thirty-minute episode precision 62.96%; overall observed episode recall 76.06%, including 13 onsets without eligible preceding forecast origins. Reachable-event recall is 76.57%. False alerts 0.919 per 24 eligible forecast hours; median warning lead 15 minutes; nominal 90% interval coverage 89.68%. All eligible forecast time is the denominator, not verified staffed hours. The clinical operating point awaits doctor review.
 
-## Not established
+Sixty-minute evidence is evaluated separately and shown as supplementary; it does not trigger the primary review workflow. Outcomes have the native 15-minute timing resolution. Negative findings and large-error cases remain visible.
 
-No hosted release, live sensor integration, prospective clinical validation, validated physiological simulation, medication advice, causal treatment effect or Indian clinical generalization. Repeated patient splits, improved adaptation, a separate cohort, final presentation/video and platform submission remain later milestones.
+## Evidence boundaries
+
+No completed doctor workflow review, clinical-use approval, hosted deployment, live CGM connection, prospective Indian validation, validated physiological simulation, medication advice or causal treatment evidence. FHIR support is a limited local adapter; no ABDM conformance certificate is claimed. TLS, encrypted storage, consent/retention operations and authorized integration latency are future pilot gates.
+
+The nonblocking Vite bundle-size notice and Starlette/httpx test-client deprecation warning remain. Neither caused a runtime/build failure.
+
+## Compiled browser demonstration
+
+Three consecutive runs against separate fresh SQLite databases passed. Each served the compiled frontend and API on one origin, signed in, opened the staffed warning, saved and reviewed it, planned follow-up, reloaded and verified action history, compared the outcome, closed the original episode, exported a matching PDF, checked gap/stable/off-hours behavior and opened model evidence. The third run also exercised synthetic CSV, dated FHIR and streaming. No page or console errors occurred. The actual third run was recorded with sign-in credentials excluded.
+
+## Submission artifact checks
+
+Strategy: 8 A4 pages / 16 clickable references; doctor packet: 2 pages; original architecture: 1 page. All pages rendered and visually reviewed. Presentation: 21 slides; editable native text, architecture and quantitative chart with embedded workbook. Package, font/layout geometry and first-party import checks passed. The companion PDF contains exact rendered slides plus selectable captions and clickable primary references; its 21 pages were rendered and inspected. The 28-minute video includes disclosed synthetic speech and the actual authenticated local browser journey. Duration, audio levels and representative beginning/model/demo/end frames were checked. A one-page consultation example was regenerated after the PDF layout improvement.

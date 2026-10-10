@@ -1,55 +1,83 @@
-# Local prototype architecture
+# GlucoTwin clinic prototype architecture
 
-The implementation separates offline training/evaluation from the doctor replay. The model is a damped-trend engineering approximation, not a validated physiological simulator.
+One workflow: identify a patient needing review → inspect available evidence → capture a forecast → document follow-up → compare the observed outcome → export consultation evidence. This is an engineering research prototype, with clinician review and prospective pilot approval pending.
 
 ```mermaid
 flowchart TD
-    A[Public ShanghaiT2DM archive] --> B[Audit and normalize native observations]
-    B --> C[Group recordings by patient]
-    C --> D[Training patients]
-    C --> E[Validation patients]
-    C --> F[Held-out test patients]
-    D --> G[Population gradient boosting models]
-    D --> H[Pooled filter parameter prior]
-    E --> I[90 percent residual interval calibration]
-    G --> J[Local model bundle]
-    H --> J
-    I --> J
-    F --> K[Baseline and personalization evaluation]
+    A[Audited public ShanghaiT2DM source] --> B[Native 15-minute recorded playback]
+    C[Admin CSV / limited FHIR / simulated stream] --> D[Identity / units / observation and availability times]
+    D --> E[(SQLite clinic store)]
+    B --> F[Prefix and arrival-time boundary]
+    E --> F
+    F --> G[Freshness / continuity checks]
+    G --> H[Population gradient boosting]
+    H --> I[Bounded matured-residual patient correction]
+    G --> J[Calibrated excursion classifier]
+    I --> K[30-minute primary / 60-minute supplementary forecast]
     J --> K
-    K --> L[Measured benchmark JSON]
-    B --> M[Recorded patient playback]
-    M --> N[Cursor-limited observation prefix]
-    N --> O[Freshness and continuity checks]
-    O --> P[Patient state and parameter updates]
-    J --> P
-    P --> Q[30 and 60 minute forecasts]
-    O --> R[Suppress unsupported forecasts]
-    Q --> S[Doctor dashboard]
-    R --> S
-    L --> S
-    N --> T[Reveal actuals only after target time]
-    T --> S
+    G --> L[Abstain during unsupported sensor history]
+    K --> M[Authenticated clinician dashboard]
+    L --> M
+    M --> N[Explicit immutable forecast capture]
+    N --> E
+    N --> O[Deduplicated review episode]
+    O --> P[Reviewer action / staffed-window responsibility]
+    P --> E
+    F --> Q[Append-only outcomes after target observation arrives]
+    Q --> E
+    E --> R[Timeline and consultation evidence PDF]
+    R --> M
+    S[Patient-grouped offline evaluation] --> T[Fold-specific model artifacts and measured benchmark]
+    T --> H
+    T --> J
+    T --> M
 ```
 
-## Causal boundary
+## Runtime and delivery
 
-The replay handler slices the chosen recording before calling the forecasting interface. The filter has independent state within that call; changing patients does not reuse another patient's state. Each historical forecast is generated from its issuance prefix. Later actuals are joined by timestamp only after they are available. Alert acknowledgement lives in the UI and never reaches the forecasting engine.
+React/TypeScript, Tailwind and Recharts provide the clinic queue, patient evidence screen, monitoring controls, review actions, intake, model evidence and report export. FastAPI owns authenticated APIs and the prefix-only forecasting functions. SQLite provides durable clinic records. No external AI provider is required.
 
-The sensor-gap scenario intentionally withholds three most recent readings while preserving the replay clock. It is a simulated missing-data test on recorded observations, clearly distinct from the dataset's naturally occurring gaps.
+Development uses Vite with an API proxy. The compiled deployment runs one origin: FastAPI serves `frontend/dist/index.html` at `/` and only the compiled asset directory at `/assets`, alongside `/api`. Runtime credentials/database/backups are never mounted as web files. The application is local until deployment controls are verified; an HTTPS reverse proxy is configured separately.
 
-## Fusion and adaptation
+## Causality and model state
 
-The population benchmark combines causal glucose-history features with age, sex, BMI and diabetes duration. Exact availability timestamps for baseline summary fields are absent; their use is a documented prototype assumption, and the context ablation tests their contribution.
+Measured CGM is preserved at its native 15-minute cadence. Missing readings remain missing. Replay exposes only the chosen recording prefix; imported history additionally requires both observation and availability time to be at or before the virtual clock. Imported times require explicit offsets and normalize to UTC. Native source timezone is unverified, so historical naive timestamps are labeled as a virtual dataset-local clock.
 
-The current filter starts from a training-cohort parameter prior and available glucose observations. It tracks level/trend and adapts damping/process noise from already-observed changes. Historical profile context is not yet a mechanistic parameter initialization. Same-filter pooled and adapted comparisons isolate parameter adaptation from state tracking.
+The main forecaster combines causal CGM features with available age, sex, BMI and diabetes duration. Historical Shanghai summary availability is an explicit source-data assumption; untimed labs, medications and future outcomes are excluded. Dated imported historical context is reconstructed independently at each prior forecast origin. Meals/activity/symptoms are evidence context until a predictive contribution is separately established.
 
-## Delivery simplifications
+Patient adaptation is a bounded, shrunk residual correction to the identical population predictor. It updates only after an earlier exact target reading arrives. Engineering level, trend, volatility and correction maturity are visible; they do not represent validated metabolic physiology. Patient state is reconstructed independently from available data, preventing contamination when switching patients.
 
-- Local FastAPI and Vite development services; no live sensor connector, account system or external AI service.
-- Flat files and a local joblib model bundle; no database.
-- Public anonymized research data only; authentication is left as a documented future task before any nonlocal deployment.
-- One primary recording per patient in the dashboard. Evaluation retains all recordings, grouped by patient; separate recordings are not stitched into an uninterrupted stream.
-- Quantized native 15-minute observations. Warning times cannot establish finer clinical timing than the data resolution.
+A separately trained classifier estimates whether any native future reading exceeds 180 mg/dL. **30 minutes is the actionable review horizon**; 60 minutes is supplementary. Current observed glucose above the threshold becomes an `ongoing_high` item. Unsupported primary predictions cannot inherit warnings from the retained legacy filter. Predictive intervals and probabilities expose their empirical calibration limits.
 
-Benchmark protocol, split IDs, calibration method, actual metrics and limitations are stored with the generated evaluation artifacts.
+The deliberate sensor-gap scenario withholds three recent readings while preserving the clock. Chart, timeline and consultation export use the same scenario/prefix. Actual outcomes become visible only when their observations are in that available prefix, including after scrubbing backward from a later replay time.
+
+## Persistent clinician workflow
+
+The ignored runtime database defaults to `.run/clinic.sqlite3`, configurable with `GLUCOTWIN_DB_PATH`. WAL is enabled. Numbered SQLite migrations use `PRAGMA user_version`: initial clinic tables, context semantic deduplication, then append-only forecast outcomes (current version **3**).
+
+- Source public profiles and their audited CGM files remain separate from labeled synthetic/public CSV imports.
+- Issued forecast records retain patient, model version, issue/input-cutoff time, scenario and a compact evidence snapshot. Their uniqueness key and an immutable-update trigger preserve earlier forecasts.
+- Review episodes deduplicate the same patient/type while open. Actions progress through new → reviewed → follow-up planned → closed and retain actor, reason, note and next review time.
+- Review acknowledgement does not modify the model, uncertainty, risk or benchmark score.
+- Eventual exact-target glucose outcomes are appended on explicit capture or simulated stream ingestion. Complete native windows support event labels; unavailable outcomes are not invented.
+- Recorded forecast clocks and wall-clock review audit times are labeled separately. Queue sensor freshness is age **at issue**, not a live reading-age claim.
+- Staffed windows name a responsible reviewer. Outside hours, forecasts/review items remain available and monitoring is explicitly inactive. No emergency notification service is implemented.
+- Consultation PDF generation escapes user-supplied text and exports observations, gaps, forecasts/observable actuals, unresolved reviews, notes and responsibility state.
+
+## Access, intake and recovery
+
+Passwords use salted PBKDF2-SHA256. Fresh installs use environment-supplied or randomly generated administrator/reviewer passwords; local bootstrap credentials are mode 0600 in `.run`. Revocable opaque bearer sessions expire after eight hours and are stored as hashes. Bearer authentication avoids relying on cross-site cookies. Patient/review/report queries derive clinic scope from the authenticated account, rather than trusting a client-supplied clinic ID.
+
+Reviewer/admin users can review records and add care context. Administrator access is required for intake, monitoring changes and audit inspection. Default CSV/FHIR/stream intake is synthetic and excludes identifying fields. The administrator may attest an anonymized public ShanghaiT2DM CSV using the allowlisted source URL/license and `PUB-*` IDs; this is separate from source evaluation. Native cadence is retained. CSV/FHIR imports are single transactions, including validation, identity, units, conflicts, context and audit writes; failed requests leave no partial import.
+
+The limited FHIR adapter accepts Patient, Condition, glucose/BMI Observation and CarePlan resources. Dated demographics and BMI can enter historical model context; condition/care-plan text remains evidence. Supported resource handling does not establish ABDM conformance certification or a live hospital connection.
+
+Database, credentials and backups have restrictive file permissions. SQLite's backup API includes committed WAL changes. Stop the service before restoration, verify integrity and then verify persisted reviews after restart. File permissions are not encryption at rest. TLS, encrypted storage, consent/retention handling and operating monitoring require deployment validation before identifiable data is accepted.
+
+## Evaluation and clinical release gates
+
+The legacy benchmark is retained. The upgraded model is assessed with five outer patient folds, grouped inner selection and separate calibration patients, with all recordings for a patient grouped together. Runtime source profiles select their corresponding held-out fold artifact. Out-of-fold predictions, failures and patient-bootstrap uncertainty are published. Because this cohort has already been inspected, evidence is described as **internal retrospective validation**.
+
+The selected warning operating point uses eligible forecast time, not a claim of staffed-clinic workload or prospective benefit. Doctor review of the workflow/operating point is pending. Measured performance does not establish clinical safety, regulatory approval or Indian generalization.
+
+Before clinical use: obtain clinician-approved responsibilities/performance requirements, verify authorized device latency and identity, validate deployment/privacy/backup controls, complete applicable regulatory/ethics assessment, perform a prospective shadow evaluation, and only then consider supervised release. Live CGM vendor integration, automated treatment advice and causal therapy simulation are outside this prototype.

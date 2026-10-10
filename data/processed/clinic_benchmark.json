@@ -1,0 +1,3447 @@
+{
+  "generated_at": "2026-10-10T10:56:18.691872+00:00",
+  "status": "measured",
+  "protocol": {
+    "status": "frozen_before_evaluation",
+    "frozen_at": "2026-10-10T10:55:01.175933+00:00",
+    "seed": 20261010,
+    "outer_folds": [
+      {
+        "fold": 1,
+        "training": [
+          "2000",
+          "2001",
+          "2006",
+          "2009",
+          "2010",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2024",
+          "2026",
+          "2027",
+          "2028",
+          "2031",
+          "2032",
+          "2033",
+          "2034",
+          "2035",
+          "2036",
+          "2038",
+          "2039",
+          "2040",
+          "2044",
+          "2045",
+          "2046",
+          "2047",
+          "2048",
+          "2049",
+          "2050",
+          "2051",
+          "2052",
+          "2053",
+          "2054",
+          "2056",
+          "2057",
+          "2058",
+          "2063",
+          "2067",
+          "2069",
+          "2070",
+          "2072",
+          "2074",
+          "2076",
+          "2080",
+          "2081",
+          "2082",
+          "2086",
+          "2089",
+          "2090",
+          "2091",
+          "2092",
+          "2093",
+          "2094",
+          "2095",
+          "2096",
+          "2097",
+          "2098"
+        ],
+        "calibration": [
+          "2002",
+          "2003",
+          "2008",
+          "2011",
+          "2025",
+          "2029",
+          "2030",
+          "2041",
+          "2043",
+          "2055",
+          "2060",
+          "2061",
+          "2064",
+          "2065",
+          "2073",
+          "2075"
+        ],
+        "evaluation": [
+          "2004",
+          "2005",
+          "2007",
+          "2023",
+          "2037",
+          "2042",
+          "2059",
+          "2062",
+          "2066",
+          "2068",
+          "2071",
+          "2077",
+          "2078",
+          "2079",
+          "2083",
+          "2084",
+          "2085",
+          "2087",
+          "2088",
+          "2099"
+        ]
+      },
+      {
+        "fold": 2,
+        "training": [
+          "2002",
+          "2005",
+          "2007",
+          "2008",
+          "2012",
+          "2015",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2022",
+          "2023",
+          "2025",
+          "2026",
+          "2027",
+          "2028",
+          "2030",
+          "2032",
+          "2033",
+          "2037",
+          "2038",
+          "2040",
+          "2041",
+          "2042",
+          "2043",
+          "2045",
+          "2049",
+          "2054",
+          "2055",
+          "2056",
+          "2057",
+          "2058",
+          "2059",
+          "2060",
+          "2061",
+          "2062",
+          "2064",
+          "2065",
+          "2066",
+          "2068",
+          "2069",
+          "2070",
+          "2071",
+          "2072",
+          "2073",
+          "2076",
+          "2078",
+          "2080",
+          "2081",
+          "2083",
+          "2084",
+          "2085",
+          "2086",
+          "2087",
+          "2088",
+          "2089",
+          "2090",
+          "2091",
+          "2092",
+          "2095",
+          "2096",
+          "2097",
+          "2098",
+          "2099"
+        ],
+        "calibration": [
+          "2000",
+          "2004",
+          "2010",
+          "2016",
+          "2024",
+          "2031",
+          "2035",
+          "2039",
+          "2044",
+          "2046",
+          "2048",
+          "2050",
+          "2051",
+          "2063",
+          "2077",
+          "2079"
+        ],
+        "evaluation": [
+          "2001",
+          "2003",
+          "2006",
+          "2009",
+          "2011",
+          "2013",
+          "2014",
+          "2021",
+          "2029",
+          "2034",
+          "2036",
+          "2047",
+          "2052",
+          "2053",
+          "2067",
+          "2074",
+          "2075",
+          "2082",
+          "2093",
+          "2094"
+        ]
+      },
+      {
+        "fold": 3,
+        "training": [
+          "2001",
+          "2002",
+          "2003",
+          "2006",
+          "2007",
+          "2008",
+          "2010",
+          "2011",
+          "2013",
+          "2014",
+          "2016",
+          "2019",
+          "2020",
+          "2021",
+          "2023",
+          "2027",
+          "2030",
+          "2032",
+          "2033",
+          "2034",
+          "2035",
+          "2036",
+          "2037",
+          "2038",
+          "2039",
+          "2042",
+          "2044",
+          "2046",
+          "2047",
+          "2048",
+          "2050",
+          "2052",
+          "2056",
+          "2058",
+          "2059",
+          "2061",
+          "2062",
+          "2063",
+          "2066",
+          "2067",
+          "2068",
+          "2071",
+          "2072",
+          "2074",
+          "2075",
+          "2076",
+          "2077",
+          "2078",
+          "2079",
+          "2080",
+          "2083",
+          "2084",
+          "2085",
+          "2086",
+          "2088",
+          "2089",
+          "2090",
+          "2091",
+          "2092",
+          "2093",
+          "2094",
+          "2095",
+          "2096",
+          "2099"
+        ],
+        "calibration": [
+          "2000",
+          "2004",
+          "2005",
+          "2009",
+          "2018",
+          "2026",
+          "2029",
+          "2031",
+          "2040",
+          "2041",
+          "2053",
+          "2060",
+          "2082",
+          "2087",
+          "2097",
+          "2098"
+        ],
+        "evaluation": [
+          "2012",
+          "2015",
+          "2017",
+          "2022",
+          "2024",
+          "2025",
+          "2028",
+          "2043",
+          "2045",
+          "2049",
+          "2051",
+          "2054",
+          "2055",
+          "2057",
+          "2064",
+          "2065",
+          "2069",
+          "2070",
+          "2073",
+          "2081"
+        ]
+      },
+      {
+        "fold": 4,
+        "training": [
+          "2001",
+          "2002",
+          "2003",
+          "2005",
+          "2006",
+          "2007",
+          "2013",
+          "2014",
+          "2015",
+          "2017",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026",
+          "2028",
+          "2029",
+          "2031",
+          "2034",
+          "2036",
+          "2037",
+          "2038",
+          "2041",
+          "2043",
+          "2045",
+          "2046",
+          "2047",
+          "2048",
+          "2049",
+          "2050",
+          "2051",
+          "2052",
+          "2053",
+          "2054",
+          "2055",
+          "2056",
+          "2057",
+          "2060",
+          "2061",
+          "2062",
+          "2065",
+          "2066",
+          "2067",
+          "2068",
+          "2069",
+          "2070",
+          "2071",
+          "2074",
+          "2077",
+          "2078",
+          "2079",
+          "2081",
+          "2082",
+          "2084",
+          "2085",
+          "2087",
+          "2088",
+          "2089",
+          "2092",
+          "2093",
+          "2094",
+          "2095",
+          "2098"
+        ],
+        "calibration": [
+          "2004",
+          "2009",
+          "2011",
+          "2012",
+          "2027",
+          "2039",
+          "2042",
+          "2059",
+          "2064",
+          "2073",
+          "2075",
+          "2076",
+          "2083",
+          "2086",
+          "2091",
+          "2099"
+        ],
+        "evaluation": [
+          "2000",
+          "2008",
+          "2010",
+          "2016",
+          "2018",
+          "2019",
+          "2020",
+          "2030",
+          "2032",
+          "2033",
+          "2035",
+          "2040",
+          "2044",
+          "2058",
+          "2063",
+          "2072",
+          "2080",
+          "2090",
+          "2096",
+          "2097"
+        ]
+      },
+      {
+        "fold": 5,
+        "training": [
+          "2000",
+          "2001",
+          "2003",
+          "2005",
+          "2006",
+          "2007",
+          "2008",
+          "2009",
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2019",
+          "2020",
+          "2021",
+          "2023",
+          "2024",
+          "2025",
+          "2028",
+          "2030",
+          "2033",
+          "2034",
+          "2035",
+          "2036",
+          "2040",
+          "2043",
+          "2044",
+          "2045",
+          "2049",
+          "2051",
+          "2052",
+          "2054",
+          "2059",
+          "2062",
+          "2063",
+          "2064",
+          "2065",
+          "2066",
+          "2067",
+          "2068",
+          "2069",
+          "2071",
+          "2074",
+          "2075",
+          "2077",
+          "2078",
+          "2079",
+          "2080",
+          "2081",
+          "2082",
+          "2083",
+          "2084",
+          "2087",
+          "2088",
+          "2090",
+          "2093",
+          "2094",
+          "2096",
+          "2097",
+          "2099"
+        ],
+        "calibration": [
+          "2004",
+          "2018",
+          "2022",
+          "2029",
+          "2032",
+          "2037",
+          "2042",
+          "2047",
+          "2053",
+          "2055",
+          "2057",
+          "2058",
+          "2070",
+          "2072",
+          "2073",
+          "2085"
+        ],
+        "evaluation": [
+          "2002",
+          "2026",
+          "2027",
+          "2031",
+          "2038",
+          "2039",
+          "2041",
+          "2046",
+          "2048",
+          "2050",
+          "2056",
+          "2060",
+          "2061",
+          "2076",
+          "2086",
+          "2089",
+          "2091",
+          "2092",
+          "2095",
+          "2098"
+        ]
+      }
+    ],
+    "design": "Five outer patient folds; three grouped inner folds select regression hyperparameters on30-minute training MAE;20% outer training patients are calibration-only.",
+    "parameters": [
+      {
+        "max_leaf_nodes": 15,
+        "learning_rate": 0.08,
+        "l2_regularization": 10.0,
+        "min_samples_leaf": 50
+      },
+      {
+        "max_leaf_nodes": 7,
+        "learning_rate": 0.08,
+        "l2_regularization": 20.0,
+        "min_samples_leaf": 75
+      }
+    ],
+    "max_iter": 80,
+    "bootstrap_repetitions": 1000,
+    "bootstrap_unit": "patient",
+    "primary_horizon_minutes": 30,
+    "secondary_horizon_minutes": 60,
+    "native_cadence_minutes": 15,
+    "target": "exact native endpoint CGM; event: current<=180 and any native future CGM>180 within horizon",
+    "event_episode": "first above180 native reading reachable from a below/equal180 eligible forecast; alert cooldown equals horizon; one onset matched at most once",
+    "alert_selection": "Calibration-only maximum episode recall constrained to<=1 false alert per24 eligible forecast hours; threshold grid .02:.02:.98 plus1.01(abstain)",
+    "intervals": "Separate-patient90th percentile absolute residual, fixed empirical widths; no distribution-free claim",
+    "probabilities": "Separate-patient logistic calibration of raw classifier logits, C=1.0",
+    "adaptation": {
+      "prior_weight": 24.0,
+      "decay": 0.98,
+      "max_correction": 20.0,
+      "residual_clip": 60.0
+    },
+    "primary_model_gate": "hybrid only if30-minute paired patient-bootstrap95% CI upper bound<0; otherwise population, adaptation experimental",
+    "phase": "First24h of each recording cold_start; subsequent origins adapted. State resets per recording.",
+    "context": "Matched age/sex/BMI/duration, assumed available at baseline; untimed labs/medications excluded",
+    "evidence_boundary": "Internal retrospective validation: patients and legacy evaluation already inspected. No external/prospective/clinical validation."
+  },
+  "cohort": {
+    "patients": 100,
+    "recordings": 109,
+    "observations": 112462
+  },
+  "model_labels": {
+    "population": "Boosted population + baseline context",
+    "hybrid": "Population + matured patient residual correction",
+    "population_no_context": "Boosting without baseline context",
+    "persistence": "Last observed glucose",
+    "linear_trend": "OLS trend on last five readings"
+  },
+  "metrics": [
+    {
+      "model": "population",
+      "horizon_minutes": 30,
+      "phase": "all",
+      "n_predictions": 111747,
+      "n_patients": 100,
+      "mae": 9.811884909751623,
+      "rmse": 13.96630030838599,
+      "mae_ci": [
+        9.40790337860731,
+        10.246060237720169
+      ],
+      "interval_coverage": 0.8962925179199441,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.79315857293664,
+      "brier_score": 0.02480522491487757
+    },
+    {
+      "model": "population",
+      "horizon_minutes": 30,
+      "phase": "cold_start",
+      "n_predictions": 10019,
+      "n_patients": 100,
+      "mae": 12.266768517092519,
+      "rmse": 16.98796372969822,
+      "mae_ci": [
+        11.70545605330734,
+        12.837870914977799
+      ],
+      "interval_coverage": 0.8426988721429285,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.84291591997859,
+      "brier_score": 0.03347580268055115
+    },
+    {
+      "model": "population",
+      "horizon_minutes": 30,
+      "phase": "adapted",
+      "n_predictions": 101728,
+      "n_patients": 100,
+      "mae": 9.570108025688745,
+      "rmse": 13.63252061460703,
+      "mae_ci": [
+        9.157206223375354,
+        10.02071726761843
+      ],
+      "interval_coverage": 0.9015708556149733,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.78825806511172,
+      "brier_score": 0.02404922931181819
+    },
+    {
+      "model": "hybrid",
+      "horizon_minutes": 30,
+      "phase": "all",
+      "n_predictions": 111747,
+      "n_patients": 100,
+      "mae": 9.605884935842152,
+      "rmse": 13.796777127244603,
+      "mae_ci": [
+        9.198353694946947,
+        10.001185488532204
+      ],
+      "interval_coverage": 0.8968115475135798,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.28178483821378,
+      "brier_score": 0.02480522491487757
+    },
+    {
+      "model": "hybrid",
+      "horizon_minutes": 30,
+      "phase": "cold_start",
+      "n_predictions": 10019,
+      "n_patients": 100,
+      "mae": 12.08879580297892,
+      "rmse": 16.84343386302605,
+      "mae_ci": [
+        11.537654381692818,
+        12.665138277271055
+      ],
+      "interval_coverage": 0.8441960275476594,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.33277102883272,
+      "brier_score": 0.03347580268055115
+    },
+    {
+      "model": "hybrid",
+      "horizon_minutes": 30,
+      "phase": "adapted",
+      "n_predictions": 101728,
+      "n_patients": 100,
+      "mae": 9.36134769950758,
+      "rmse": 13.459464045869927,
+      "mae_ci": [
+        8.963123229026063,
+        9.759056550832044
+      ],
+      "interval_coverage": 0.9019935514312677,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.2767633038888,
+      "brier_score": 0.02404922931181819
+    },
+    {
+      "model": "population_no_context",
+      "horizon_minutes": 30,
+      "phase": "all",
+      "n_predictions": 111747,
+      "n_patients": 100,
+      "mae": 9.779775900338276,
+      "rmse": 13.934121530780798,
+      "mae_ci": [
+        9.393971161057335,
+        10.202850683867064
+      ],
+      "interval_coverage": 0.8958808737594746,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.63995921463594,
+      "brier_score": 0.02480522491487757
+    },
+    {
+      "model": "population_no_context",
+      "horizon_minutes": 30,
+      "phase": "cold_start",
+      "n_predictions": 10019,
+      "n_patients": 100,
+      "mae": 12.152772122315888,
+      "rmse": 16.828172114843195,
+      "mae_ci": [
+        11.613552370049126,
+        12.718609319022713
+      ],
+      "interval_coverage": 0.8454935622317596,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.68658809564136,
+      "brier_score": 0.03347580268055115
+    },
+    {
+      "model": "population_no_context",
+      "horizon_minutes": 30,
+      "phase": "adapted",
+      "n_predictions": 101728,
+      "n_patients": 100,
+      "mae": 9.546063951337079,
+      "rmse": 13.615857596267487,
+      "mae_ci": [
+        9.158890541064325,
+        9.985102911142253
+      ],
+      "interval_coverage": 0.9008434256055363,
+      "interval_level": 0.9,
+      "mean_interval_width": 43.63536682356568,
+      "brier_score": 0.02404922931181819
+    },
+    {
+      "model": "persistence",
+      "horizon_minutes": 30,
+      "phase": "all",
+      "n_predictions": 111747,
+      "n_patients": 100,
+      "mae": 11.983151225536256,
+      "rmse": 17.616167444110467,
+      "mae_ci": [
+        11.379135862550438,
+        12.558336708007555
+      ],
+      "interval_coverage": 0.9012322478455798,
+      "interval_level": 0.9,
+      "mean_interval_width": 56.05832102875245,
+      "brier_score": 0.02480522491487757
+    },
+    {
+      "model": "persistence",
+      "horizon_minutes": 30,
+      "phase": "cold_start",
+      "n_predictions": 10019,
+      "n_patients": 100,
+      "mae": 14.487853079149614,
+      "rmse": 20.634126450341906,
+      "mae_ci": [
+        13.704866498088984,
+        15.284257716966634
+      ],
+      "interval_coverage": 0.8631599960075856,
+      "interval_level": 0.9,
+      "mean_interval_width": 56.11242638985928,
+      "brier_score": 0.03347580268055115
+    },
+    {
+      "model": "persistence",
+      "horizon_minutes": 30,
+      "phase": "adapted",
+      "n_predictions": 101728,
+      "n_patients": 100,
+      "mae": 11.73646783579742,
+      "rmse": 17.290462719481816,
+      "mae_ci": [
+        11.133385128555656,
+        12.30940700013493
+      ],
+      "interval_coverage": 0.9049819125511167,
+      "interval_level": 0.9,
+      "mean_interval_width": 56.052992293173965,
+      "brier_score": 0.02404922931181819
+    },
+    {
+      "model": "linear_trend",
+      "horizon_minutes": 30,
+      "phase": "all",
+      "n_predictions": 111747,
+      "n_patients": 100,
+      "mae": 15.384570860962711,
+      "rmse": 22.818798709138377,
+      "mae_ci": [
+        14.635197384401812,
+        16.150367968369828
+      ],
+      "interval_coverage": 0.8978675042730454,
+      "interval_level": 0.9,
+      "mean_interval_width": 73.78988107063275,
+      "brier_score": 0.02480522491487757
+    },
+    {
+      "model": "linear_trend",
+      "horizon_minutes": 30,
+      "phase": "cold_start",
+      "n_predictions": 10019,
+      "n_patients": 100,
+      "mae": 18.438834214991516,
+      "rmse": 26.453261148141898,
+      "mae_ci": [
+        17.499059748582038,
+        19.317667836142714
+      ],
+      "interval_coverage": 0.8643577203313704,
+      "interval_level": 0.9,
+      "mean_interval_width": 73.93650464118174,
+      "brier_score": 0.03347580268055115
+    },
+    {
+      "model": "linear_trend",
+      "horizon_minutes": 30,
+      "phase": "adapted",
+      "n_predictions": 101728,
+      "n_patients": 100,
+      "mae": 15.083762189367725,
+      "rmse": 22.42901184023943,
+      "mae_ci": [
+        14.326255445198706,
+        15.875509109594438
+      ],
+      "interval_coverage": 0.9011678200692042,
+      "interval_level": 0.9,
+      "mean_interval_width": 73.77544039005974,
+      "brier_score": 0.02404922931181819
+    },
+    {
+      "model": "population",
+      "horizon_minutes": 60,
+      "phase": "all",
+      "n_predictions": 111509,
+      "n_patients": 100,
+      "mae": 17.295224602945606,
+      "rmse": 24.503456726557985,
+      "mae_ci": [
+        16.51931293507977,
+        18.114271307893873
+      ],
+      "interval_coverage": 0.8953806419212799,
+      "interval_level": 0.9,
+      "mean_interval_width": 77.00472353466942,
+      "brier_score": 0.052461236629381715
+    },
+    {
+      "model": "population",
+      "horizon_minutes": 60,
+      "phase": "cold_start",
+      "n_predictions": 10017,
+      "n_patients": 100,
+      "mae": 20.712863045288014,
+      "rmse": 29.0448807455435,
+      "mae_ci": [
+        19.601549090964166,
+        21.824781929084917
+      ],
+      "interval_coverage": 0.8524508335829091,
+      "interval_level": 0.9,
+      "mean_interval_width": 77.11645413871327,
+      "brier_score": 0.06506979817680299
+    },
+    {
+      "model": "population",
+      "horizon_minutes": 60,
+      "phase": "adapted",
+      "n_predictions": 101492,
+      "n_patients": 100,
+      "mae": 16.957912457387884,
+      "rmse": 24.008698138739412,
+      "mae_ci": [
+        16.186003039309636,
+        17.770625500342945
+      ],
+      "interval_coverage": 0.8996177038584322,
+      "interval_level": 0.9,
+      "mean_interval_width": 76.99369601071966,
+      "brier_score": 0.05135965432211629
+    },
+    {
+      "model": "hybrid",
+      "horizon_minutes": 60,
+      "phase": "all",
+      "n_predictions": 111509,
+      "n_patients": 100,
+      "mae": 16.6204273103397,
+      "rmse": 23.881368740378257,
+      "mae_ci": [
+        15.859633336955914,
+        17.343111421171926
+      ],
+      "interval_coverage": 0.8958290362212915,
+      "interval_level": 0.9,
+      "mean_interval_width": 75.03700153257904,
+      "brier_score": 0.052461236629381715
+    },
+    {
+      "model": "hybrid",
+      "horizon_minutes": 60,
+      "phase": "cold_start",
+      "n_predictions": 10017,
+      "n_patients": 100,
+      "mae": 20.066814997196747,
+      "rmse": 28.443984233243235,
+      "mae_ci": [
+        19.027641514160546,
+        21.13943445958335
+      ],
+      "interval_coverage": 0.8503543975242088,
+      "interval_level": 0.9,
+      "mean_interval_width": 75.17743658270867,
+      "brier_score": 0.06506979817680299
+    },
+    {
+      "model": "hybrid",
+      "horizon_minutes": 60,
+      "phase": "adapted",
+      "n_predictions": 101492,
+      "n_patients": 100,
+      "mae": 16.280277688110882,
+      "rmse": 23.382829201066766,
+      "mae_ci": [
+        15.532776068224821,
+        17.00791234909576
+      ],
+      "interval_coverage": 0.9003172663855279,
+      "interval_level": 0.9,
+      "mean_interval_width": 75.02314095344818,
+      "brier_score": 0.05135965432211629
+    },
+    {
+      "model": "population_no_context",
+      "horizon_minutes": 60,
+      "phase": "all",
+      "n_predictions": 111509,
+      "n_patients": 100,
+      "mae": 17.1604120528914,
+      "rmse": 24.412406340923166,
+      "mae_ci": [
+        16.473270807692263,
+        17.91247036101968
+      ],
+      "interval_coverage": 0.8952281878592759,
+      "interval_level": 0.9,
+      "mean_interval_width": 76.50896532398178,
+      "brier_score": 0.052461236629381715
+    },
+    {
+      "model": "population_no_context",
+      "horizon_minutes": 60,
+      "phase": "cold_start",
+      "n_predictions": 10017,
+      "n_patients": 100,
+      "mae": 20.248106372557405,
+      "rmse": 28.422762245114352,
+      "mae_ci": [
+        19.324194661751886,
+        21.24341570041964
+      ],
+      "interval_coverage": 0.8574423480083857,
+      "interval_level": 0.9,
+      "mean_interval_width": 76.60027052581025,
+      "brier_score": 0.06506979817680299
+    },
+    {
+      "model": "population_no_context",
+      "horizon_minutes": 60,
+      "phase": "adapted",
+      "n_predictions": 101492,
+      "n_patients": 100,
+      "mae": 16.85566454569778,
+      "rmse": 23.980258508816277,
+      "mae_ci": [
+        16.170798228139034,
+        17.608642279235937
+      ],
+      "interval_coverage": 0.898957553304694,
+      "interval_level": 0.9,
+      "mean_interval_width": 76.49995373482484,
+      "brier_score": 0.05135965432211629
+    },
+    {
+      "model": "persistence",
+      "horizon_minutes": 60,
+      "phase": "all",
+      "n_predictions": 111509,
+      "n_patients": 100,
+      "mae": 20.186428001327247,
+      "rmse": 29.403171660388697,
+      "mae_ci": [
+        19.07642335060536,
+        21.27990727267599
+      ],
+      "interval_coverage": 0.9001963967034051,
+      "interval_level": 0.9,
+      "mean_interval_width": 95.63724183698176,
+      "brier_score": 0.052461236629381715
+    },
+    {
+      "model": "persistence",
+      "horizon_minutes": 60,
+      "phase": "cold_start",
+      "n_predictions": 10017,
+      "n_patients": 100,
+      "mae": 23.8785265049416,
+      "rmse": 34.026138676134664,
+      "mae_ci": [
+        22.454699414763798,
+        25.31535971054991
+      ],
+      "interval_coverage": 0.8678246980133772,
+      "interval_level": 0.9,
+      "mean_interval_width": 95.78221024258761,
+      "brier_score": 0.06506979817680299
+    },
+    {
+      "model": "persistence",
+      "horizon_minutes": 60,
+      "phase": "adapted",
+      "n_predictions": 101492,
+      "n_patients": 100,
+      "mae": 19.82202735190951,
+      "rmse": 28.906838225253548,
+      "mae_ci": [
+        18.70947792427264,
+        20.878785166698112
+      ],
+      "interval_coverage": 0.9033914003074134,
+      "interval_level": 0.9,
+      "mean_interval_width": 95.62293382729673,
+      "brier_score": 0.05135965432211629
+    },
+    {
+      "model": "linear_trend",
+      "horizon_minutes": 60,
+      "phase": "all",
+      "n_predictions": 111509,
+      "n_patients": 100,
+      "mae": 27.988070200611606,
+      "rmse": 41.550433671009145,
+      "mae_ci": [
+        26.51603878405702,
+        29.449540830876636
+      ],
+      "interval_coverage": 0.8979006178873454,
+      "interval_level": 0.9,
+      "mean_interval_width": 135.18856343434157,
+      "brier_score": 0.052461236629381715
+    },
+    {
+      "model": "linear_trend",
+      "horizon_minutes": 60,
+      "phase": "cold_start",
+      "n_predictions": 10017,
+      "n_patients": 100,
+      "mae": 32.837628032345016,
+      "rmse": 47.32947662305594,
+      "mae_ci": [
+        31.124189607015897,
+        34.56920416966302
+      ],
+      "interval_coverage": 0.8637316561844863,
+      "interval_level": 0.9,
+      "mean_interval_width": 135.3790476190476,
+      "brier_score": 0.06506979817680299
+    },
+    {
+      "model": "linear_trend",
+      "horizon_minutes": 60,
+      "phase": "adapted",
+      "n_predictions": 101492,
+      "n_patients": 100,
+      "mae": 27.50943128522445,
+      "rmse": 40.93584623842219,
+      "mae_ci": [
+        25.980921477918162,
+        28.994430840127254
+      ],
+      "interval_coverage": 0.9012730067394474,
+      "interval_level": 0.9,
+      "mean_interval_width": 135.16976313404007,
+      "brier_score": 0.05135965432211629
+    }
+  ],
+  "folds": [
+    {
+      "fold": 1,
+      "patient_ids": {
+        "fold": 1,
+        "training": [
+          "2000",
+          "2001",
+          "2006",
+          "2009",
+          "2010",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2024",
+          "2026",
+          "2027",
+          "2028",
+          "2031",
+          "2032",
+          "2033",
+          "2034",
+          "2035",
+          "2036",
+          "2038",
+          "2039",
+          "2040",
+          "2044",
+          "2045",
+          "2046",
+          "2047",
+          "2048",
+          "2049",
+          "2050",
+          "2051",
+          "2052",
+          "2053",
+          "2054",
+          "2056",
+          "2057",
+          "2058",
+          "2063",
+          "2067",
+          "2069",
+          "2070",
+          "2072",
+          "2074",
+          "2076",
+          "2080",
+          "2081",
+          "2082",
+          "2086",
+          "2089",
+          "2090",
+          "2091",
+          "2092",
+          "2093",
+          "2094",
+          "2095",
+          "2096",
+          "2097",
+          "2098"
+        ],
+        "calibration": [
+          "2002",
+          "2003",
+          "2008",
+          "2011",
+          "2025",
+          "2029",
+          "2030",
+          "2041",
+          "2043",
+          "2055",
+          "2060",
+          "2061",
+          "2064",
+          "2065",
+          "2073",
+          "2075"
+        ],
+        "evaluation": [
+          "2004",
+          "2005",
+          "2007",
+          "2023",
+          "2037",
+          "2042",
+          "2059",
+          "2062",
+          "2066",
+          "2068",
+          "2071",
+          "2077",
+          "2078",
+          "2079",
+          "2083",
+          "2084",
+          "2085",
+          "2087",
+          "2088",
+          "2099"
+        ]
+      },
+      "selected_parameters": {
+        "max_leaf_nodes": 15,
+        "learning_rate": 0.08,
+        "l2_regularization": 10.0,
+        "min_samples_leaf": 50
+      },
+      "inner_selection": [
+        {
+          "parameters": {
+            "max_leaf_nodes": 15,
+            "learning_rate": 0.08,
+            "l2_regularization": 10.0,
+            "min_samples_leaf": 50
+          },
+          "fold_mae": [
+            10.124148782853108,
+            9.777976617010115,
+            9.996804112167593
+          ],
+          "mean_mae": 9.966309837343607
+        },
+        {
+          "parameters": {
+            "max_leaf_nodes": 7,
+            "learning_rate": 0.08,
+            "l2_regularization": 20.0,
+            "min_samples_leaf": 75
+          },
+          "fold_mae": [
+            10.255346448520221,
+            9.956869517784963,
+            10.067457722926315
+          ],
+          "mean_mae": 10.093224563077166
+        }
+      ],
+      "metrics": [
+        {
+          "model": "population",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22746,
+          "n_patients": 20,
+          "mae": 9.846063759885912,
+          "rmse": 13.787863687127103,
+          "mae_ci": [
+            9.056227786088446,
+            10.845490739270213
+          ],
+          "interval_coverage": 0.9001143058120109,
+          "interval_level": 0.9,
+          "mean_interval_width": 44.21937967487316,
+          "brier_score": 0.016578520387997727
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22746,
+          "n_patients": 20,
+          "mae": 9.324312603020875,
+          "rmse": 13.420941575113627,
+          "mae_ci": [
+            8.691222888264626,
+            10.101233262908877
+          ],
+          "interval_coverage": 0.9014332190275213,
+          "interval_level": 0.9,
+          "mean_interval_width": 43.3029546939772,
+          "brier_score": 0.016578520387997727
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22746,
+          "n_patients": 20,
+          "mae": 9.7763867027049,
+          "rmse": 13.726953667831117,
+          "mae_ci": [
+            8.969040065229002,
+            10.858473899624409
+          ],
+          "interval_coverage": 0.8988833201442011,
+          "interval_level": 0.9,
+          "mean_interval_width": 44.08108488966667,
+          "brier_score": 0.016578520387997727
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22746,
+          "n_patients": 20,
+          "mae": 11.166077552097072,
+          "rmse": 16.687588837460147,
+          "mae_ci": [
+            10.311875907076605,
+            12.165805690841154
+          ],
+          "interval_coverage": 0.9108414666314957,
+          "interval_level": 0.9,
+          "mean_interval_width": 57.599999999999966,
+          "brier_score": 0.016578520387997727
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22746,
+          "n_patients": 20,
+          "mae": 15.106293853864416,
+          "rmse": 22.690031570772867,
+          "mae_ci": [
+            13.793395404328217,
+            16.5105351530254
+          ],
+          "interval_coverage": 0.8975204431548404,
+          "interval_level": 0.9,
+          "mean_interval_width": 72.72000000000004,
+          "brier_score": 0.016578520387997727
+        },
+        {
+          "model": "population",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22700,
+          "n_patients": 20,
+          "mae": 17.007355491901748,
+          "rmse": 23.2747907938389,
+          "mae_ci": [
+            15.662328486387212,
+            18.831806546931887
+          ],
+          "interval_coverage": 0.9099118942731278,
+          "interval_level": 0.9,
+          "mean_interval_width": 77.85217837162226,
+          "brier_score": 0.03749033171851152
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22700,
+          "n_patients": 20,
+          "mae": 15.559820951270227,
+          "rmse": 22.17569384052917,
+          "mae_ci": [
+            14.362612010659042,
+            16.85324274698394
+          ],
+          "interval_coverage": 0.9076211453744494,
+          "interval_level": 0.9,
+          "mean_interval_width": 73.89530762589641,
+          "brier_score": 0.03749033171851152
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22700,
+          "n_patients": 20,
+          "mae": 16.748013928011776,
+          "rmse": 23.133626836963224,
+          "mae_ci": [
+            15.452531263918125,
+            18.654652786957868
+          ],
+          "interval_coverage": 0.9094713656387665,
+          "interval_level": 0.9,
+          "mean_interval_width": 77.9633661557264,
+          "brier_score": 0.03749033171851152
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22700,
+          "n_patients": 20,
+          "mae": 18.3631718061674,
+          "rmse": 27.055956113829726,
+          "mae_ci": [
+            16.78117088092757,
+            20.15930396652304
+          ],
+          "interval_coverage": 0.9121585903083701,
+          "interval_level": 0.9,
+          "mean_interval_width": 93.60000000000004,
+          "brier_score": 0.03749033171851152
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22700,
+          "n_patients": 20,
+          "mae": 26.952946255506603,
+          "rmse": 40.39625210250965,
+          "mae_ci": [
+            24.518692662781888,
+            29.45857998139297
+          ],
+          "interval_coverage": 0.9076651982378855,
+          "interval_level": 0.9,
+          "mean_interval_width": 136.07999999999993,
+          "brier_score": 0.03749033171851152
+        }
+      ],
+      "events": {
+        "30": {
+          "episode_precision": 0.6149425287356322,
+          "episode_recall": 0.7482517482517482,
+          "true_alert_episodes": 214,
+          "false_alert_episodes": 134,
+          "reachable_event_episodes": 286,
+          "matched_event_episodes": 214,
+          "false_alerts_per_patient_day": 0.6247996502987032,
+          "eligible_patient_days": 214.46875,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.6050228310502284,
+          "recall": 0.47237076648841353
+        },
+        "60": {
+          "episode_precision": 0.6089385474860335,
+          "episode_recall": 0.7622377622377622,
+          "true_alert_episodes": 218,
+          "false_alert_episodes": 140,
+          "reachable_event_episodes": 286,
+          "matched_event_episodes": 218,
+          "false_alerts_per_patient_day": 0.6538237011091652,
+          "eligible_patient_days": 214.125,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.594,
+          "recall": 0.2727272727272727
+        }
+      },
+      "calibration": {
+        "30": {
+          "selected_threshold": 0.42,
+          "calibration_metrics": {
+            "episode_precision": 0.6396396396396397,
+            "episode_recall": 0.7888888888888889,
+            "true_alert_episodes": 213,
+            "false_alert_episodes": 120,
+            "reachable_event_episodes": 270,
+            "matched_event_episodes": 213,
+            "false_alerts_per_patient_day": 0.9682299546142209,
+            "eligible_patient_days": 123.9375,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.6220657276995305,
+            "recall": 0.5038022813688213
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        },
+        "60": {
+          "selected_threshold": 0.5,
+          "calibration_metrics": {
+            "episode_precision": 0.6441176470588236,
+            "episode_recall": 0.8111111111111111,
+            "true_alert_episodes": 219,
+            "false_alert_episodes": 121,
+            "reachable_event_episodes": 270,
+            "matched_event_episodes": 219,
+            "false_alerts_per_patient_day": 0.9785190801111954,
+            "eligible_patient_days": 123.65625,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.6373626373626373,
+            "recall": 0.3445544554455445
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "patient_ids": {
+        "fold": 2,
+        "training": [
+          "2002",
+          "2005",
+          "2007",
+          "2008",
+          "2012",
+          "2015",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2022",
+          "2023",
+          "2025",
+          "2026",
+          "2027",
+          "2028",
+          "2030",
+          "2032",
+          "2033",
+          "2037",
+          "2038",
+          "2040",
+          "2041",
+          "2042",
+          "2043",
+          "2045",
+          "2049",
+          "2054",
+          "2055",
+          "2056",
+          "2057",
+          "2058",
+          "2059",
+          "2060",
+          "2061",
+          "2062",
+          "2064",
+          "2065",
+          "2066",
+          "2068",
+          "2069",
+          "2070",
+          "2071",
+          "2072",
+          "2073",
+          "2076",
+          "2078",
+          "2080",
+          "2081",
+          "2083",
+          "2084",
+          "2085",
+          "2086",
+          "2087",
+          "2088",
+          "2089",
+          "2090",
+          "2091",
+          "2092",
+          "2095",
+          "2096",
+          "2097",
+          "2098",
+          "2099"
+        ],
+        "calibration": [
+          "2000",
+          "2004",
+          "2010",
+          "2016",
+          "2024",
+          "2031",
+          "2035",
+          "2039",
+          "2044",
+          "2046",
+          "2048",
+          "2050",
+          "2051",
+          "2063",
+          "2077",
+          "2079"
+        ],
+        "evaluation": [
+          "2001",
+          "2003",
+          "2006",
+          "2009",
+          "2011",
+          "2013",
+          "2014",
+          "2021",
+          "2029",
+          "2034",
+          "2036",
+          "2047",
+          "2052",
+          "2053",
+          "2067",
+          "2074",
+          "2075",
+          "2082",
+          "2093",
+          "2094"
+        ]
+      },
+      "selected_parameters": {
+        "max_leaf_nodes": 15,
+        "learning_rate": 0.08,
+        "l2_regularization": 10.0,
+        "min_samples_leaf": 50
+      },
+      "inner_selection": [
+        {
+          "parameters": {
+            "max_leaf_nodes": 15,
+            "learning_rate": 0.08,
+            "l2_regularization": 10.0,
+            "min_samples_leaf": 50
+          },
+          "fold_mae": [
+            10.287178567210905,
+            8.939711643772425,
+            10.765196464571812
+          ],
+          "mean_mae": 9.997362225185046
+        },
+        {
+          "parameters": {
+            "max_leaf_nodes": 7,
+            "learning_rate": 0.08,
+            "l2_regularization": 20.0,
+            "min_samples_leaf": 75
+          },
+          "fold_mae": [
+            10.398065395711564,
+            9.061002430606177,
+            11.001619296571256
+          ],
+          "mean_mae": 10.153562374296333
+        }
+      ],
+      "metrics": [
+        {
+          "model": "population",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22099,
+          "n_patients": 20,
+          "mae": 9.248103521993142,
+          "rmse": 13.173188006943144,
+          "mae_ci": [
+            8.378109959652916,
+            10.387320928467675
+          ],
+          "interval_coverage": 0.9240237114801575,
+          "interval_level": 0.9,
+          "mean_interval_width": 46.74895166068456,
+          "brier_score": 0.020720992699657947
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22099,
+          "n_patients": 20,
+          "mae": 8.988613612294435,
+          "rmse": 12.96065190941451,
+          "mae_ci": [
+            8.130360475548038,
+            10.08080131431929
+          ],
+          "interval_coverage": 0.9240689623964885,
+          "interval_level": 0.9,
+          "mean_interval_width": 45.75078044297868,
+          "brier_score": 0.020720992699657947
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22099,
+          "n_patients": 20,
+          "mae": 9.312595960382614,
+          "rmse": 13.222917657784292,
+          "mae_ci": [
+            8.505108643479325,
+            10.351777934925153
+          ],
+          "interval_coverage": 0.923661704149509,
+          "interval_level": 0.9,
+          "mean_interval_width": 46.600535072357864,
+          "brier_score": 0.020720992699657947
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22099,
+          "n_patients": 20,
+          "mae": 11.067894474863117,
+          "rmse": 16.431220180077354,
+          "mae_ci": [
+            9.619921278803464,
+            12.837590490820777
+          ],
+          "interval_coverage": 0.9252002353047649,
+          "interval_level": 0.9,
+          "mean_interval_width": 57.60000000000003,
+          "brier_score": 0.020720992699657947
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 22099,
+          "n_patients": 20,
+          "mae": 14.012339019865152,
+          "rmse": 20.943772921374258,
+          "mae_ci": [
+            12.502839173065146,
+            15.89670182263253
+          ],
+          "interval_coverage": 0.9289560613602426,
+          "interval_level": 0.9,
+          "mean_interval_width": 78.48,
+          "brier_score": 0.020720992699657947
+        },
+        {
+          "model": "population",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22051,
+          "n_patients": 20,
+          "mae": 16.418708214427983,
+          "rmse": 23.239159530943734,
+          "mae_ci": [
+            14.773266614382889,
+            18.497356885587223
+          ],
+          "interval_coverage": 0.92295134007528,
+          "interval_level": 0.9,
+          "mean_interval_width": 82.65993317468826,
+          "brier_score": 0.0427276290015583
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22051,
+          "n_patients": 20,
+          "mae": 15.671455355731906,
+          "rmse": 22.569031945522998,
+          "mae_ci": [
+            14.111873539188423,
+            17.773537866751106
+          ],
+          "interval_coverage": 0.9245385696793796,
+          "interval_level": 0.9,
+          "mean_interval_width": 80.53649818140445,
+          "brier_score": 0.0427276290015583
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22051,
+          "n_patients": 20,
+          "mae": 16.689196644178086,
+          "rmse": 23.536740386405704,
+          "mae_ci": [
+            15.26414598408764,
+            18.54520678809578
+          ],
+          "interval_coverage": 0.9223617976509002,
+          "interval_level": 0.9,
+          "mean_interval_width": 81.85418157759723,
+          "brier_score": 0.0427276290015583
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22051,
+          "n_patients": 20,
+          "mae": 18.69433585778423,
+          "rmse": 27.58993887675823,
+          "mae_ci": [
+            15.955480964545368,
+            21.906940989108165
+          ],
+          "interval_coverage": 0.9285293183982586,
+          "interval_level": 0.9,
+          "mean_interval_width": 100.8,
+          "brier_score": 0.0427276290015583
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 22051,
+          "n_patients": 20,
+          "mae": 25.435368917509408,
+          "rmse": 38.22922394301396,
+          "mae_ci": [
+            22.362832431508046,
+            29.327761987707582
+          ],
+          "interval_coverage": 0.9266246428733391,
+          "interval_level": 0.9,
+          "mean_interval_width": 141.83999999999997,
+          "brier_score": 0.0427276290015583
+        }
+      ],
+      "events": {
+        "30": {
+          "episode_precision": 0.6111111111111112,
+          "episode_recall": 0.7610062893081762,
+          "true_alert_episodes": 242,
+          "false_alert_episodes": 154,
+          "reachable_event_episodes": 318,
+          "matched_event_episodes": 242,
+          "false_alerts_per_patient_day": 0.8107041017767054,
+          "eligible_patient_days": 189.95833333333334,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.5849802371541502,
+          "recall": 0.47665056360708535
+        },
+        "60": {
+          "episode_precision": 0.6721311475409836,
+          "episode_recall": 0.7735849056603774,
+          "true_alert_episodes": 246,
+          "false_alert_episodes": 120,
+          "reachable_event_episodes": 318,
+          "matched_event_episodes": 246,
+          "false_alerts_per_patient_day": 0.6330365974282888,
+          "eligible_patient_days": 189.5625,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.6459510357815442,
+          "recall": 0.2934131736526946
+        }
+      },
+      "calibration": {
+        "30": {
+          "selected_threshold": 0.34,
+          "calibration_metrics": {
+            "episode_precision": 0.6006006006006006,
+            "episode_recall": 0.8,
+            "true_alert_episodes": 200,
+            "false_alert_episodes": 133,
+            "reachable_event_episodes": 250,
+            "matched_event_episodes": 200,
+            "false_alerts_per_patient_day": 0.9663210474532657,
+            "eligible_patient_days": 137.63541666666666,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.5944700460829493,
+            "recall": 0.5286885245901639
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        },
+        "60": {
+          "selected_threshold": 0.4,
+          "calibration_metrics": {
+            "episode_precision": 0.5970588235294118,
+            "episode_recall": 0.812,
+            "true_alert_episodes": 203,
+            "false_alert_episodes": 137,
+            "reachable_event_episodes": 250,
+            "matched_event_episodes": 203,
+            "false_alerts_per_patient_day": 0.9974215076596391,
+            "eligible_patient_days": 137.35416666666666,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.5992292870905588,
+            "recall": 0.33369098712446355
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "patient_ids": {
+        "fold": 3,
+        "training": [
+          "2001",
+          "2002",
+          "2003",
+          "2006",
+          "2007",
+          "2008",
+          "2010",
+          "2011",
+          "2013",
+          "2014",
+          "2016",
+          "2019",
+          "2020",
+          "2021",
+          "2023",
+          "2027",
+          "2030",
+          "2032",
+          "2033",
+          "2034",
+          "2035",
+          "2036",
+          "2037",
+          "2038",
+          "2039",
+          "2042",
+          "2044",
+          "2046",
+          "2047",
+          "2048",
+          "2050",
+          "2052",
+          "2056",
+          "2058",
+          "2059",
+          "2061",
+          "2062",
+          "2063",
+          "2066",
+          "2067",
+          "2068",
+          "2071",
+          "2072",
+          "2074",
+          "2075",
+          "2076",
+          "2077",
+          "2078",
+          "2079",
+          "2080",
+          "2083",
+          "2084",
+          "2085",
+          "2086",
+          "2088",
+          "2089",
+          "2090",
+          "2091",
+          "2092",
+          "2093",
+          "2094",
+          "2095",
+          "2096",
+          "2099"
+        ],
+        "calibration": [
+          "2000",
+          "2004",
+          "2005",
+          "2009",
+          "2018",
+          "2026",
+          "2029",
+          "2031",
+          "2040",
+          "2041",
+          "2053",
+          "2060",
+          "2082",
+          "2087",
+          "2097",
+          "2098"
+        ],
+        "evaluation": [
+          "2012",
+          "2015",
+          "2017",
+          "2022",
+          "2024",
+          "2025",
+          "2028",
+          "2043",
+          "2045",
+          "2049",
+          "2051",
+          "2054",
+          "2055",
+          "2057",
+          "2064",
+          "2065",
+          "2069",
+          "2070",
+          "2073",
+          "2081"
+        ]
+      },
+      "selected_parameters": {
+        "max_leaf_nodes": 15,
+        "learning_rate": 0.08,
+        "l2_regularization": 10.0,
+        "min_samples_leaf": 50
+      },
+      "inner_selection": [
+        {
+          "parameters": {
+            "max_leaf_nodes": 15,
+            "learning_rate": 0.08,
+            "l2_regularization": 10.0,
+            "min_samples_leaf": 50
+          },
+          "fold_mae": [
+            9.818863232644029,
+            9.60460276082466,
+            10.505791097457362
+          ],
+          "mean_mae": 9.976419030308683
+        },
+        {
+          "parameters": {
+            "max_leaf_nodes": 7,
+            "learning_rate": 0.08,
+            "l2_regularization": 20.0,
+            "min_samples_leaf": 75
+          },
+          "fold_mae": [
+            9.950725883069389,
+            9.730187428098905,
+            10.686035108882214
+          ],
+          "mean_mae": 10.122316140016835
+        }
+      ],
+      "metrics": [
+        {
+          "model": "population",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 26957,
+          "n_patients": 20,
+          "mae": 9.81900841189287,
+          "rmse": 13.889259722866548,
+          "mae_ci": [
+            9.0584466517897,
+            10.570036163636079
+          ],
+          "interval_coverage": 0.8838520606892458,
+          "interval_level": 0.9,
+          "mean_interval_width": 41.68590438890697,
+          "brier_score": 0.033544455385870725
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 26957,
+          "n_patients": 20,
+          "mae": 9.725225334365478,
+          "rmse": 13.748909672922558,
+          "mae_ci": [
+            9.008321428039356,
+            10.46733606826543
+          ],
+          "interval_coverage": 0.8846310791260155,
+          "interval_level": 0.9,
+          "mean_interval_width": 41.21164239778404,
+          "brier_score": 0.033544455385870725
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 26957,
+          "n_patients": 20,
+          "mae": 9.769588125527918,
+          "rmse": 13.892201199981807,
+          "mae_ci": [
+            8.999734184089402,
+            10.52035348823801
+          ],
+          "interval_coverage": 0.8834810995288793,
+          "interval_level": 0.9,
+          "mean_interval_width": 41.43243757886512,
+          "brier_score": 0.033544455385870725
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 26957,
+          "n_patients": 20,
+          "mae": 12.307801313202509,
+          "rmse": 17.714406449765473,
+          "mae_ci": [
+            11.002396889976218,
+            13.573043183349126
+          ],
+          "interval_coverage": 0.8947954149200579,
+          "interval_level": 0.9,
+          "mean_interval_width": 54.0,
+          "brier_score": 0.033544455385870725
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 26957,
+          "n_patients": 20,
+          "mae": 15.242581889676153,
+          "rmse": 22.21807186357572,
+          "mae_ci": [
+            13.669538163499285,
+            16.967799593534174
+          ],
+          "interval_coverage": 0.889676150907,
+          "interval_level": 0.9,
+          "mean_interval_width": 69.83999999999993,
+          "brier_score": 0.033544455385870725
+        },
+        {
+          "model": "population",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 26907,
+          "n_patients": 20,
+          "mae": 17.719574998835835,
+          "rmse": 25.09476974292896,
+          "mae_ci": [
+            16.08431374639347,
+            19.34971165374616
+          ],
+          "interval_coverage": 0.8814806555914818,
+          "interval_level": 0.9,
+          "mean_interval_width": 73.59276494122282,
+          "brier_score": 0.06972684599020322
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 26907,
+          "n_patients": 20,
+          "mae": 17.296726670329118,
+          "rmse": 24.591906172208255,
+          "mae_ci": [
+            15.737902787658768,
+            18.835256434194243
+          ],
+          "interval_coverage": 0.88051436429182,
+          "interval_level": 0.9,
+          "mean_interval_width": 71.73199596903225,
+          "brier_score": 0.06972684599020322
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 26907,
+          "n_patients": 20,
+          "mae": 17.528473540948074,
+          "rmse": 25.184883699485088,
+          "mae_ci": [
+            15.844291767374619,
+            19.103201830443126
+          ],
+          "interval_coverage": 0.8768721893930947,
+          "interval_level": 0.9,
+          "mean_interval_width": 72.84933161699574,
+          "brier_score": 0.06972684599020322
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 26907,
+          "n_patients": 20,
+          "mae": 21.049637640762626,
+          "rmse": 30.10985461363935,
+          "mae_ci": [
+            18.61949923715355,
+            23.361043515524546
+          ],
+          "interval_coverage": 0.8879473742892184,
+          "interval_level": 0.9,
+          "mean_interval_width": 93.59999999999994,
+          "brier_score": 0.06972684599020322
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 26907,
+          "n_patients": 20,
+          "mae": 28.118800312186423,
+          "rmse": 41.166134513096594,
+          "mae_ci": [
+            24.927494927507425,
+            31.575492163034397
+          ],
+          "interval_coverage": 0.8879102092392315,
+          "interval_level": 0.9,
+          "mean_interval_width": 128.8799999999999,
+          "brier_score": 0.06972684599020322
+        }
+      ],
+      "events": {
+        "30": {
+          "episode_precision": 0.6170212765957447,
+          "episode_recall": 0.7618213660245184,
+          "true_alert_episodes": 435,
+          "false_alert_episodes": 270,
+          "reachable_event_episodes": 571,
+          "matched_event_episodes": 435,
+          "false_alerts_per_patient_day": 1.3040853290400483,
+          "eligible_patient_days": 207.04166666666666,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.608843537414966,
+          "recall": 0.48509485094850946
+        },
+        "60": {
+          "episode_precision": 0.6504297994269341,
+          "episode_recall": 0.7950963222416813,
+          "true_alert_episodes": 454,
+          "false_alert_episodes": 244,
+          "reachable_event_episodes": 571,
+          "matched_event_episodes": 454,
+          "false_alerts_per_patient_day": 1.1808832425892317,
+          "eligible_patient_days": 206.625,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.6405529953917051,
+          "recall": 0.32876064333017974
+        }
+      },
+      "calibration": {
+        "30": {
+          "selected_threshold": 0.4,
+          "calibration_metrics": {
+            "episode_precision": 0.6434540389972145,
+            "episode_recall": 0.8076923076923077,
+            "true_alert_episodes": 231,
+            "false_alert_episodes": 128,
+            "reachable_event_episodes": 286,
+            "matched_event_episodes": 231,
+            "false_alerts_per_patient_day": 0.9519677719243879,
+            "eligible_patient_days": 134.45833333333334,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.6233766233766234,
+            "recall": 0.5152057245080501
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        },
+        "60": {
+          "selected_threshold": 0.5,
+          "calibration_metrics": {
+            "episode_precision": 0.6534090909090909,
+            "episode_recall": 0.8041958041958042,
+            "true_alert_episodes": 230,
+            "false_alert_episodes": 122,
+            "reachable_event_episodes": 286,
+            "matched_event_episodes": 230,
+            "false_alerts_per_patient_day": 0.9090344613474076,
+            "eligible_patient_days": 134.20833333333334,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.634315424610052,
+            "recall": 0.34398496240601506
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        }
+      }
+    },
+    {
+      "fold": 4,
+      "patient_ids": {
+        "fold": 4,
+        "training": [
+          "2001",
+          "2002",
+          "2003",
+          "2005",
+          "2006",
+          "2007",
+          "2013",
+          "2014",
+          "2015",
+          "2017",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026",
+          "2028",
+          "2029",
+          "2031",
+          "2034",
+          "2036",
+          "2037",
+          "2038",
+          "2041",
+          "2043",
+          "2045",
+          "2046",
+          "2047",
+          "2048",
+          "2049",
+          "2050",
+          "2051",
+          "2052",
+          "2053",
+          "2054",
+          "2055",
+          "2056",
+          "2057",
+          "2060",
+          "2061",
+          "2062",
+          "2065",
+          "2066",
+          "2067",
+          "2068",
+          "2069",
+          "2070",
+          "2071",
+          "2074",
+          "2077",
+          "2078",
+          "2079",
+          "2081",
+          "2082",
+          "2084",
+          "2085",
+          "2087",
+          "2088",
+          "2089",
+          "2092",
+          "2093",
+          "2094",
+          "2095",
+          "2098"
+        ],
+        "calibration": [
+          "2004",
+          "2009",
+          "2011",
+          "2012",
+          "2027",
+          "2039",
+          "2042",
+          "2059",
+          "2064",
+          "2073",
+          "2075",
+          "2076",
+          "2083",
+          "2086",
+          "2091",
+          "2099"
+        ],
+        "evaluation": [
+          "2000",
+          "2008",
+          "2010",
+          "2016",
+          "2018",
+          "2019",
+          "2020",
+          "2030",
+          "2032",
+          "2033",
+          "2035",
+          "2040",
+          "2044",
+          "2058",
+          "2063",
+          "2072",
+          "2080",
+          "2090",
+          "2096",
+          "2097"
+        ]
+      },
+      "selected_parameters": {
+        "max_leaf_nodes": 15,
+        "learning_rate": 0.08,
+        "l2_regularization": 10.0,
+        "min_samples_leaf": 50
+      },
+      "inner_selection": [
+        {
+          "parameters": {
+            "max_leaf_nodes": 15,
+            "learning_rate": 0.08,
+            "l2_regularization": 10.0,
+            "min_samples_leaf": 50
+          },
+          "fold_mae": [
+            10.310581048910954,
+            10.384054844333038,
+            9.16264948723134
+          ],
+          "mean_mae": 9.952428460158444
+        },
+        {
+          "parameters": {
+            "max_leaf_nodes": 7,
+            "learning_rate": 0.08,
+            "l2_regularization": 20.0,
+            "min_samples_leaf": 75
+          },
+          "fold_mae": [
+            10.55417610445448,
+            10.500075850338868,
+            9.170035556227058
+          ],
+          "mean_mae": 10.074762503673469
+        }
+      ],
+      "metrics": [
+        {
+          "model": "population",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 19047,
+          "n_patients": 20,
+          "mae": 9.849630656969754,
+          "rmse": 14.07190402464812,
+          "mae_ci": [
+            9.246410946097676,
+            10.604387479355795
+          ],
+          "interval_coverage": 0.8929490208431774,
+          "interval_level": 0.9,
+          "mean_interval_width": 43.022616848727864,
+          "brier_score": 0.02577278276486525
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 19047,
+          "n_patients": 20,
+          "mae": 9.799705900758667,
+          "rmse": 14.0506242239786,
+          "mae_ci": [
+            9.20894515907058,
+            10.507948054532108
+          ],
+          "interval_coverage": 0.8917939833044574,
+          "interval_level": 0.9,
+          "mean_interval_width": 42.91395628947646,
+          "brier_score": 0.02577278276486525
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 19047,
+          "n_patients": 20,
+          "mae": 9.821056407197329,
+          "rmse": 14.037251104860609,
+          "mae_ci": [
+            9.219724968350473,
+            10.530944742729321
+          ],
+          "interval_coverage": 0.8902714338215992,
+          "interval_level": 0.9,
+          "mean_interval_width": 42.63418124952199,
+          "brier_score": 0.02577278276486525
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 19047,
+          "n_patients": 20,
+          "mae": 12.42195621357694,
+          "rmse": 18.165858946083876,
+          "mae_ci": [
+            11.623004305527566,
+            13.353890974146177
+          ],
+          "interval_coverage": 0.8972016590539192,
+          "interval_level": 0.9,
+          "mean_interval_width": 57.60000000000001,
+          "brier_score": 0.02577278276486525
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 19047,
+          "n_patients": 20,
+          "mae": 15.841493148527329,
+          "rmse": 23.403442857087736,
+          "mae_ci": [
+            14.699511366326515,
+            17.135844415271865
+          ],
+          "interval_coverage": 0.8981466897674174,
+          "interval_level": 0.9,
+          "mean_interval_width": 75.59999999999991,
+          "brier_score": 0.02577278276486525
+        },
+        {
+          "model": "population",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 19001,
+          "n_patients": 20,
+          "mae": 17.295615161016304,
+          "rmse": 24.69337933504424,
+          "mae_ci": [
+            16.158740196236916,
+            18.713486780437496
+          ],
+          "interval_coverage": 0.8886900689437398,
+          "interval_level": 0.9,
+          "mean_interval_width": 76.84036056426517,
+          "brier_score": 0.05534732811958107
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 19001,
+          "n_patients": 20,
+          "mae": 17.040294631546292,
+          "rmse": 24.42445288160013,
+          "mae_ci": [
+            16.025764807140607,
+            18.32917189298881
+          ],
+          "interval_coverage": 0.8896373875059207,
+          "interval_level": 0.9,
+          "mean_interval_width": 75.84305741046968,
+          "brier_score": 0.05534732811958107
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 19001,
+          "n_patients": 20,
+          "mae": 17.124934828004214,
+          "rmse": 24.535599240714976,
+          "mae_ci": [
+            16.247158149634583,
+            18.271995164136637
+          ],
+          "interval_coverage": 0.8870585758644282,
+          "interval_level": 0.9,
+          "mean_interval_width": 75.60656005933005,
+          "brier_score": 0.05534732811958107
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 19001,
+          "n_patients": 20,
+          "mae": 21.03435608652176,
+          "rmse": 30.365728502733315,
+          "mae_ci": [
+            19.604501085296537,
+            22.79142108128362
+          ],
+          "interval_coverage": 0.8962159886321772,
+          "interval_level": 0.9,
+          "mean_interval_width": 97.20000000000005,
+          "brier_score": 0.05534732811958107
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 19001,
+          "n_patients": 20,
+          "mae": 28.872090942581973,
+          "rmse": 42.59008998410876,
+          "mae_ci": [
+            26.829064314285375,
+            31.239048392779388
+          ],
+          "interval_coverage": 0.8940582074627651,
+          "interval_level": 0.9,
+          "mean_interval_width": 137.52,
+          "brier_score": 0.05534732811958107
+        }
+      ],
+      "events": {
+        "30": {
+          "episode_precision": 0.6707021791767555,
+          "episode_recall": 0.7824858757062146,
+          "true_alert_episodes": 277,
+          "false_alert_episodes": 136,
+          "reachable_event_episodes": 354,
+          "matched_event_episodes": 277,
+          "false_alerts_per_patient_day": 0.8499446650608685,
+          "eligible_patient_days": 160.01041666666666,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.6484375,
+          "recall": 0.4763271162123386
+        },
+        "60": {
+          "episode_precision": 0.7146341463414634,
+          "episode_recall": 0.827683615819209,
+          "true_alert_episodes": 293,
+          "false_alert_episodes": 117,
+          "reachable_event_episodes": 354,
+          "matched_event_episodes": 293,
+          "false_alerts_per_patient_day": 0.7327288146650139,
+          "eligible_patient_days": 159.67708333333334,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.6947194719471947,
+          "recall": 0.31511976047904194
+        }
+      },
+      "calibration": {
+        "30": {
+          "selected_threshold": 0.42,
+          "calibration_metrics": {
+            "episode_precision": 0.6273885350318471,
+            "episode_recall": 0.7242647058823529,
+            "true_alert_episodes": 197,
+            "false_alert_episodes": 117,
+            "reachable_event_episodes": 272,
+            "matched_event_episodes": 197,
+            "false_alerts_per_patient_day": 0.9243683647436425,
+            "eligible_patient_days": 126.57291666666667,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.5989717223650386,
+            "recall": 0.4446564885496183
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        },
+        "60": {
+          "selected_threshold": 0.5,
+          "calibration_metrics": {
+            "episode_precision": 0.6302250803858521,
+            "episode_recall": 0.7205882352941176,
+            "true_alert_episodes": 196,
+            "false_alert_episodes": 115,
+            "reachable_event_episodes": 272,
+            "matched_event_episodes": 196,
+            "false_alerts_per_patient_day": 0.9097651421508035,
+            "eligible_patient_days": 126.40625,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.5952380952380952,
+            "recall": 0.2739043824701195
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        }
+      }
+    },
+    {
+      "fold": 5,
+      "patient_ids": {
+        "fold": 5,
+        "training": [
+          "2000",
+          "2001",
+          "2003",
+          "2005",
+          "2006",
+          "2007",
+          "2008",
+          "2009",
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2019",
+          "2020",
+          "2021",
+          "2023",
+          "2024",
+          "2025",
+          "2028",
+          "2030",
+          "2033",
+          "2034",
+          "2035",
+          "2036",
+          "2040",
+          "2043",
+          "2044",
+          "2045",
+          "2049",
+          "2051",
+          "2052",
+          "2054",
+          "2059",
+          "2062",
+          "2063",
+          "2064",
+          "2065",
+          "2066",
+          "2067",
+          "2068",
+          "2069",
+          "2071",
+          "2074",
+          "2075",
+          "2077",
+          "2078",
+          "2079",
+          "2080",
+          "2081",
+          "2082",
+          "2083",
+          "2084",
+          "2087",
+          "2088",
+          "2090",
+          "2093",
+          "2094",
+          "2096",
+          "2097",
+          "2099"
+        ],
+        "calibration": [
+          "2004",
+          "2018",
+          "2022",
+          "2029",
+          "2032",
+          "2037",
+          "2042",
+          "2047",
+          "2053",
+          "2055",
+          "2057",
+          "2058",
+          "2070",
+          "2072",
+          "2073",
+          "2085"
+        ],
+        "evaluation": [
+          "2002",
+          "2026",
+          "2027",
+          "2031",
+          "2038",
+          "2039",
+          "2041",
+          "2046",
+          "2048",
+          "2050",
+          "2056",
+          "2060",
+          "2061",
+          "2076",
+          "2086",
+          "2089",
+          "2091",
+          "2092",
+          "2095",
+          "2098"
+        ]
+      },
+      "selected_parameters": {
+        "max_leaf_nodes": 15,
+        "learning_rate": 0.08,
+        "l2_regularization": 10.0,
+        "min_samples_leaf": 50
+      },
+      "inner_selection": [
+        {
+          "parameters": {
+            "max_leaf_nodes": 15,
+            "learning_rate": 0.08,
+            "l2_regularization": 10.0,
+            "min_samples_leaf": 50
+          },
+          "fold_mae": [
+            10.371116238103262,
+            9.675340971773148,
+            9.504063405149008
+          ],
+          "mean_mae": 9.850173538341805
+        },
+        {
+          "parameters": {
+            "max_leaf_nodes": 7,
+            "learning_rate": 0.08,
+            "l2_regularization": 20.0,
+            "min_samples_leaf": 75
+          },
+          "fold_mae": [
+            10.60245483364524,
+            9.707928833065512,
+            9.593115057075646
+          ],
+          "mean_mae": 9.9678329079288
+        }
+      ],
+      "metrics": [
+        {
+          "model": "population",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 20898,
+          "n_patients": 20,
+          "mae": 10.327274002891386,
+          "rmse": 14.942524570158652,
+          "mae_ci": [
+            9.267196320057272,
+            11.617132710408974
+          ],
+          "interval_coverage": 0.8819025744090344,
+          "interval_level": 0.9,
+          "mean_interval_width": 43.62409275941878,
+          "brier_score": 0.028118748237357986
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 20898,
+          "n_patients": 20,
+          "mae": 10.234507589669098,
+          "rmse": 14.845918552208405,
+          "mae_ci": [
+            9.17286040116071,
+            11.482350779428696
+          ],
+          "interval_coverage": 0.8832424155421571,
+          "interval_level": 0.9,
+          "mean_interval_width": 43.65344704156195,
+          "brier_score": 0.028118748237357986
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 20898,
+          "n_patients": 20,
+          "mae": 10.253010765582191,
+          "rmse": 14.822167968131506,
+          "mae_ci": [
+            9.21391051280525,
+            11.514970842195837
+          ],
+          "interval_coverage": 0.8843429993300794,
+          "interval_level": 0.9,
+          "mean_interval_width": 43.7933520346643,
+          "brier_score": 0.028118748237357986
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 20898,
+          "n_patients": 20,
+          "mae": 13.021619293712316,
+          "rmse": 19.111744025334854,
+          "mae_ci": [
+            11.630924831001932,
+            14.43011721134644
+          ],
+          "interval_coverage": 0.877404536319265,
+          "interval_level": 0.9,
+          "mean_interval_width": 54.000000000000064,
+          "brier_score": 0.028118748237357986
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 30,
+          "phase": "all",
+          "n_predictions": 20898,
+          "n_patients": 20,
+          "mae": 16.905254091300602,
+          "rmse": 24.982322059886187,
+          "mae_ci": [
+            14.988199079020385,
+            18.79636980565705
+          ],
+          "interval_coverage": 0.8756818834338215,
+          "interval_level": 0.9,
+          "mean_interval_width": 73.44000000000001,
+          "brier_score": 0.028118748237357986
+        },
+        {
+          "model": "population",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 20850,
+          "n_patients": 20,
+          "mae": 17.98765983593254,
+          "rmse": 26.111422351304075,
+          "mae_ci": [
+            16.063943571065,
+            20.286077424410678
+          ],
+          "interval_coverage": 0.8744364508393285,
+          "interval_level": 0.9,
+          "mean_interval_width": 74.65404622549109,
+          "brier_score": 0.058352041408187255
+        },
+        {
+          "model": "hybrid",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 20850,
+          "n_patients": 20,
+          "mae": 17.523374987675517,
+          "rmse": 25.533569618328585,
+          "mae_ci": [
+            15.64069820606876,
+            19.66367305108202
+          ],
+          "interval_coverage": 0.8780335731414868,
+          "interval_level": 0.9,
+          "mean_interval_width": 73.9942661868236,
+          "brier_score": 0.058352041408187255
+        },
+        {
+          "model": "population_no_context",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 20850,
+          "n_patients": 20,
+          "mae": 17.665106571032634,
+          "rmse": 25.527028632001468,
+          "mae_ci": [
+            15.971421001336529,
+            19.661513346658346
+          ],
+          "interval_coverage": 0.8821582733812949,
+          "interval_level": 0.9,
+          "mean_interval_width": 74.81755544860741,
+          "brier_score": 0.058352041408187255
+        },
+        {
+          "model": "persistence",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 20850,
+          "n_patients": 20,
+          "mae": 21.862791366906475,
+          "rmse": 31.802793416062496,
+          "mae_ci": [
+            19.50851562767763,
+            24.153679482347258
+          ],
+          "interval_coverage": 0.876642685851319,
+          "interval_level": 0.9,
+          "mean_interval_width": 93.60000000000001,
+          "brier_score": 0.058352041408187255
+        },
+        {
+          "model": "linear_trend",
+          "horizon_minutes": 60,
+          "phase": "all",
+          "n_predictions": 20850,
+          "n_patients": 20,
+          "mae": 30.84044892086331,
+          "rmse": 45.50760622264269,
+          "mae_ci": [
+            27.300768148395722,
+            34.25804480353201
+          ],
+          "interval_coverage": 0.8732853717026379,
+          "interval_level": 0.9,
+          "mean_interval_width": 133.20000000000005,
+          "brier_score": 0.058352041408187255
+        }
+      ],
+      "events": {
+        "30": {
+          "episode_precision": 0.6384297520661157,
+          "episode_recall": 0.7725,
+          "true_alert_episodes": 309,
+          "false_alert_episodes": 175,
+          "reachable_event_episodes": 400,
+          "matched_event_episodes": 309,
+          "false_alerts_per_patient_day": 1.006711409395973,
+          "eligible_patient_days": 173.83333333333334,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.610738255033557,
+          "recall": 0.4666666666666667
+        },
+        "60": {
+          "episode_precision": 0.6390532544378699,
+          "episode_recall": 0.81,
+          "true_alert_episodes": 324,
+          "false_alert_episodes": 183,
+          "reachable_event_episodes": 400,
+          "matched_event_episodes": 324,
+          "false_alerts_per_patient_day": 1.0543752250630176,
+          "eligible_patient_days": 173.5625,
+          "warning_lead_time_minutes": 15.0,
+          "precision": 0.6298619824341279,
+          "recall": 0.33804713804713804
+        }
+      },
+      "calibration": {
+        "30": {
+          "selected_threshold": 0.38,
+          "calibration_metrics": {
+            "episode_precision": 0.6236842105263158,
+            "episode_recall": 0.8006756756756757,
+            "true_alert_episodes": 237,
+            "false_alert_episodes": 143,
+            "reachable_event_episodes": 296,
+            "matched_event_episodes": 237,
+            "false_alerts_per_patient_day": 0.8974308687978035,
+            "eligible_patient_days": 159.34375,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.6036960985626283,
+            "recall": 0.5086505190311419
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        },
+        "60": {
+          "selected_threshold": 0.44,
+          "calibration_metrics": {
+            "episode_precision": 0.6253101736972705,
+            "episode_recall": 0.8513513513513513,
+            "true_alert_episodes": 252,
+            "false_alert_episodes": 151,
+            "reachable_event_episodes": 296,
+            "matched_event_episodes": 252,
+            "false_alerts_per_patient_day": 0.9491880565741225,
+            "eligible_patient_days": 159.08333333333334,
+            "warning_lead_time_minutes": 15.0,
+            "precision": 0.6147798742138365,
+            "recall": 0.3548094373865699
+          },
+          "selection": "maximum reachable-event recall subject to <=1 false alert episode per24 eligible forecast hours; precision then lower threshold tie-break"
+        }
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "model": "hybrid",
+      "reference": "population",
+      "horizon_minutes": 30,
+      "mae_difference": -0.20599997390947156,
+      "mae_difference_ci": [
+        -0.335785401011548,
+        -0.11017122517920176
+      ],
+      "bootstrap_unit": "patient",
+      "direction": "negative favors model",
+      "supported_improvement": true,
+      "inconclusive_at_95_percent": false
+    },
+    {
+      "model": "population",
+      "reference": "population_no_context",
+      "horizon_minutes": 30,
+      "mae_difference": 0.03210900941334746,
+      "mae_difference_ci": [
+        -0.016688493562572505,
+        0.08264730615775981
+      ],
+      "bootstrap_unit": "patient",
+      "direction": "negative favors model",
+      "supported_improvement": false,
+      "inconclusive_at_95_percent": true
+    },
+    {
+      "model": "population",
+      "reference": "persistence",
+      "horizon_minutes": 30,
+      "mae_difference": -2.1712663157846332,
+      "mae_difference_ci": [
+        -2.5074359931262067,
+        -1.835597145265233
+      ],
+      "bootstrap_unit": "patient",
+      "direction": "negative favors model",
+      "supported_improvement": true,
+      "inconclusive_at_95_percent": false
+    },
+    {
+      "model": "hybrid",
+      "reference": "population",
+      "horizon_minutes": 60,
+      "mae_difference": -0.674797292605904,
+      "mae_difference_ci": [
+        -0.9571072977788395,
+        -0.42775901440963304
+      ],
+      "bootstrap_unit": "patient",
+      "direction": "negative favors model",
+      "supported_improvement": true,
+      "inconclusive_at_95_percent": false
+    },
+    {
+      "model": "population",
+      "reference": "population_no_context",
+      "horizon_minutes": 60,
+      "mae_difference": 0.13481255005420567,
+      "mae_difference_ci": [
+        -0.04302601661358657,
+        0.33439162818355694
+      ],
+      "bootstrap_unit": "patient",
+      "direction": "negative favors model",
+      "supported_improvement": false,
+      "inconclusive_at_95_percent": true
+    },
+    {
+      "model": "population",
+      "reference": "persistence",
+      "horizon_minutes": 60,
+      "mae_difference": -2.8912033983816436,
+      "mae_difference_ci": [
+        -3.4932264474739667,
+        -2.2912161043080137
+      ],
+      "bootstrap_unit": "patient",
+      "direction": "negative favors model",
+      "supported_improvement": true,
+      "inconclusive_at_95_percent": false
+    }
+  ],
+  "event_metrics": {
+    "30": {
+      "observed_event_episodes": 1942,
+      "native_observed_event_episodes": 1942,
+      "gap_associated_observed_transitions": 0,
+      "recordings_starting_already_high": 46,
+      "overall_recall_denominator": "All observed below/equal180 to above180 transitions, including warm-up/gap-unreachable onsets; recording-start prevalent high excluded because onset is unobserved.",
+      "overall_observed_episode_recall": 0.7605561277033985,
+      "unreachable_event_episodes": 13,
+      "forecastable_event_fraction": 0.9933058702368692,
+      "episode_precision": 0.6295822676896846,
+      "episode_recall": 0.7656817003628823,
+      "false_alerts_per_patient_day": 0.9192727272727272,
+      "eligible_patient_days": 945.3125,
+      "true_alert_episodes": 1477,
+      "false_alert_episodes": 869,
+      "reachable_event_episodes": 1929,
+      "matched_event_episodes": 1477,
+      "warning_lead_time_minutes": 15.0,
+      "brier_score": 0.02480522491487757,
+      "probability_model": "separate boosted excursion classifier with calibration-only logistic adjustment"
+    },
+    "60": {
+      "observed_event_episodes": 1942,
+      "native_observed_event_episodes": 1942,
+      "gap_associated_observed_transitions": 0,
+      "recordings_starting_already_high": 46,
+      "overall_recall_denominator": "All observed below/equal180 to above180 transitions, including warm-up/gap-unreachable onsets; recording-start prevalent high excluded because onset is unobserved.",
+      "overall_observed_episode_recall": 0.790422245108136,
+      "unreachable_event_episodes": 13,
+      "forecastable_event_fraction": 0.9933058702368692,
+      "episode_precision": 0.6562633604104318,
+      "episode_recall": 0.7957490927941939,
+      "false_alerts_per_patient_day": 0.8520992261070202,
+      "eligible_patient_days": 943.5520833333334,
+      "true_alert_episodes": 1535,
+      "false_alert_episodes": 804,
+      "reachable_event_episodes": 1929,
+      "matched_event_episodes": 1535,
+      "warning_lead_time_minutes": 15.0,
+      "brier_score": 0.052461236629381715,
+      "probability_model": "separate boosted excursion classifier with calibration-only logistic adjustment"
+    }
+  },
+  "probability_reliability": {
+    "30": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "n": 82424,
+        "mean_probability": 0.008280816400763778,
+        "observed_frequency": 0.00959671940211589
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "n": 2954,
+        "mean_probability": 0.14236415483918893,
+        "observed_frequency": 0.16012186865267433
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "n": 1482,
+        "mean_probability": 0.2438512452801115,
+        "observed_frequency": 0.26045883940620784
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "n": 1019,
+        "mean_probability": 0.34800874920603786,
+        "observed_frequency": 0.3395485770363101
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "n": 787,
+        "mean_probability": 0.44773099832043683,
+        "observed_frequency": 0.41804320203303685
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "n": 648,
+        "mean_probability": 0.5494730739512997,
+        "observed_frequency": 0.5154320987654321
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "n": 596,
+        "mean_probability": 0.6492072281890731,
+        "observed_frequency": 0.662751677852349
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "n": 431,
+        "mean_probability": 0.7478765851812619,
+        "observed_frequency": 0.7911832946635731
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "n": 357,
+        "mean_probability": 0.8471619854706802,
+        "observed_frequency": 0.896358543417367
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "n": 52,
+        "mean_probability": 0.9147894998925777,
+        "observed_frequency": 0.9807692307692307
+      }
+    ],
+    "60": [
+      {
+        "lower": 0.0,
+        "upper": 0.1,
+        "n": 72716,
+        "mean_probability": 0.021647234790660587,
+        "observed_frequency": 0.02330986302876946
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "n": 7328,
+        "mean_probability": 0.1420413476847426,
+        "observed_frequency": 0.154339519650655
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.30000000000000004,
+        "n": 3430,
+        "mean_probability": 0.24449181169493733,
+        "observed_frequency": 0.23790087463556853
+      },
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "n": 2317,
+        "mean_probability": 0.34673419594304133,
+        "observed_frequency": 0.33146309883470004
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "n": 1671,
+        "mean_probability": 0.44821318876761596,
+        "observed_frequency": 0.43447037701974867
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "n": 1254,
+        "mean_probability": 0.548294438704987,
+        "observed_frequency": 0.5382775119617225
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "n": 927,
+        "mean_probability": 0.6464800114358368,
+        "observed_frequency": 0.6548004314994607
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "n": 608,
+        "mean_probability": 0.743749420826835,
+        "observed_frequency": 0.787828947368421
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "n": 308,
+        "mean_probability": 0.8394429435298045,
+        "observed_frequency": 0.8928571428571429
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "n": 22,
+        "mean_probability": 0.9127095367993422,
+        "observed_frequency": 0.9545454545454546
+      }
+    ]
+  },
+  "primary_model": "hybrid",
+  "personalization_status": "supported_internal_retrospective",
+  "primary_gate": {
+    "model": "hybrid",
+    "reference": "population",
+    "horizon_minutes": 30,
+    "mae_difference": -0.20599997390947156,
+    "mae_difference_ci": [
+      -0.335785401011548,
+      -0.11017122517920176
+    ],
+    "bootstrap_unit": "patient",
+    "direction": "negative favors model",
+    "supported_improvement": true,
+    "inconclusive_at_95_percent": false
+  },
+  "failure_cases": [
+    {
+      "patient_id": "2069",
+      "recording_id": "2069_2_20210825",
+      "timestamp": "2021-08-25T04:28:00",
+      "index": 13,
+      "current": 48.6,
+      "actual": 176.4,
+      "population": 54.35954208200842,
+      "hybrid": 52.743351707209946,
+      "probability": 0.00029688902104737077,
+      "alert_threshold": 0.4,
+      "fold": 3
+    },
+    {
+      "patient_id": "2080",
+      "recording_id": "2080_0_20210816",
+      "timestamp": "2021-08-22T08:50:00",
+      "index": 565,
+      "current": 90.0,
+      "actual": 194.4,
+      "population": 90.2191226522895,
+      "hybrid": 87.99724987084825,
+      "probability": 0.0011035970940613516,
+      "alert_threshold": 0.42,
+      "fold": 4
+    },
+    {
+      "patient_id": "2095",
+      "recording_id": "2095_0_20201116",
+      "timestamp": "2020-11-26T18:30:00",
+      "index": 985,
+      "current": 178.2,
+      "actual": 259.2,
+      "population": 151.56219127611172,
+      "hybrid": 154.83771666756186,
+      "probability": 0.10306784391029919,
+      "alert_threshold": 0.38,
+      "fold": 5
+    },
+    {
+      "patient_id": "2050",
+      "recording_id": "2050_0_20210510",
+      "timestamp": "2021-05-13T18:18:00",
+      "index": 320,
+      "current": 196.2,
+      "actual": 120.6,
+      "population": 215.4840929211578,
+      "hybrid": 216.90980018914772,
+      "probability": 0.8510064244102087,
+      "alert_threshold": 0.38,
+      "fold": 5
+    },
+    {
+      "patient_id": "2021",
+      "recording_id": "2021_0_20211013",
+      "timestamp": "2021-10-14T20:29:00",
+      "index": 136,
+      "current": 313.2,
+      "actual": 199.8,
+      "population": 286.6986678352479,
+      "hybrid": 295.4058370742188,
+      "probability": 0.0468383613572212,
+      "alert_threshold": 0.34,
+      "fold": 2
+    }
+  ],
+  "demo": {
+    "available": true,
+    "patient_id": "2072",
+    "recording_id": "2072_0_20210706",
+    "fold": 4,
+    "cursor": 850,
+    "warning_cursor": 853,
+    "outcome_cursor": 855,
+    "stable_cursor": 96,
+    "gap_cursor": 853,
+    "issued_at": "2021-07-15T12:10:00",
+    "current_glucose_mg_dl": 145.8,
+    "population_forecast_mg_dl": 188.5021731210146,
+    "hybrid_forecast_mg_dl": 187.50559254296078,
+    "actual_at_30_minutes_mg_dl": 187.2,
+    "event_probability": 0.6111340887795916,
+    "alert_threshold": 0.42,
+    "curation_note": "Retrospectively selected out-of-fold episode during the virtual weekday09-17 demonstration window, favoring a clear warning and close hybrid forecast. This selected case does not establish clinical effectiveness or actual historical staffing."
+  },
+  "data_quality": {
+    "eligible_forecast_origins_30": 111747,
+    "candidate_origins_after_history": 112026,
+    "abstention_or_unscorable_fraction": 0.002490493278346051,
+    "note": "Includes native-gap abstention and end-of-recording origins with unavailable future labels; not pure real-time abstention.",
+    "past_valid_forecast_origins": 111985,
+    "real_time_abstention_fraction_including_initial_warmup": 0.004241432661699074
+  },
+  "limitations": [
+    "Internal retrospective validation; this entire public cohort and legacy split were inspected before this experiment.",
+    "No independent external, prospective, clinical, or Indian population validation.",
+    "Historical age/sex/BMI/duration are assumed available at baseline; untimed labs, medications, and outcomes excluded.",
+    "Empirical fixed intervals and calibrated probabilities need prospective reliability assessment; no unconditional coverage guarantee.",
+    "Alert thresholds were selected on calibration patients; test alert burden may exceed the calibration budget.",
+    "24 eligible hours means below/equal180 valid native forecast time, not all calendar time or a verified staffed clinic schedule.",
+    "Cold start is online adaptation during first24h, not zero-shot; state resets for every recording.",
+    "Twin is an engineering forecast model, not physiological metabolism, medication advice, or treatment simulation.",
+    "Fold-wise median warning lead times are aggregated as a median of fold medians; event confidence intervals remain future work.",
+    "Doctor operating-point and workflow review remains pending; frozen protocol is an engineering experiment, not clinical acceptance.",
+    "Demo staffing uses a labeled historical virtual local clock; source timezone and actual historical staffing are unverified."
+  ],
+  "runtime": {
+    "demo_fold": 4,
+    "patient_fold_routing": true,
+    "note": "Use a patient's outer evaluation fold at runtime; unseen imported patients use the demo-fold model and are out of distribution."
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "scikit_learn": "1.9.1"
+  }
+}

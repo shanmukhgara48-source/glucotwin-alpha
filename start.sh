@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")"
-if [[ ! -x .venv/bin/python || ! -d frontend/node_modules || ! -f data/processed/benchmark.json ]]; then
+if [[ ! -x .venv/bin/python || ! -d frontend/node_modules || ! -f data/processed/clinic_model.joblib ]]; then
   echo "Preparing local dependencies and recorded research data..."
   ./scripts/setup.sh
 fi
@@ -28,6 +28,7 @@ cleanup() {
 trap cleanup EXIT INT TERM
 echo "GlucoTwin: http://127.0.0.1:$ui_port"
 echo "API documentation: http://127.0.0.1:$api_port/docs"
+echo "Local login accounts are generated in .run/clinic-credentials.json (keep this file private)."
 echo "Logs: .run/backend.log and .run/frontend.log"
 echo "Press Ctrl+C to stop both services."
 wait "$backend_pid" "$frontend_pid"

@@ -12,6 +12,14 @@ if [[ -f frontend/package-lock.json ]]; then
 else
   npm --prefix frontend install
 fi
-.venv/bin/python scripts/prepare_data.py
-.venv/bin/python scripts/evaluate.py
+if [[ ! -f data/processed/patients.json ]]; then
+  .venv/bin/python scripts/prepare_data.py
+fi
+if [[ ! -f data/processed/population_model.joblib ]]; then
+  .venv/bin/python scripts/evaluate.py
+fi
+if [[ ! -f data/processed/clinic_model.joblib ]]; then
+  .venv/bin/python scripts/evaluate_clinic.py
+fi
+npm --prefix frontend run build
 echo "GlucoTwin is ready. Start it with ./start.sh"

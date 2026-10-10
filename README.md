@@ -1,85 +1,94 @@
-# GlucoTwin - watch the patient model learn
+# GlucoTwin — watch the patient model learn
 
-A local research prototype for the Digital Twin Challenge 2026. The core journey is a doctor opening an anonymized patient, replaying recorded glucose observations, watching a patient state update, inspecting future forecasts, and later comparing them with observed outcomes.
+A working clinic monitoring research prototype for the Digital Twin Challenge 2026: **identify a patient → inspect the evolving twin → review a forecast → document follow-up → compare the observed outcome → export a consultation summary**.
 
-Built for the output of four workstreams: data/evaluation, twin/backend, product, and research/submission.
-
-## First measured benchmark
-
-The first reproducible split uses 70 training, 15 interval-calibration and 15 test patients, keeping all recordings from each patient together. Scores below are over eligible native windows; there are 15,843 30-minute test predictions. This is one retrospective split, not prospective validation.
-
-| Model | 30-minute MAE (mg/dL) | 60-minute MAE (mg/dL) |
-|---|---:|---:|
-| Persistence | 12.76 | 21.16 |
-| Linear trend | 16.92 | 30.56 |
-| Population + baseline context | 10.53 | 18.76 |
-| Population without baseline context | 10.26 | 17.69 |
-| Pooled-parameter filter | 14.81 | 22.55 |
-| Patient-adapted filter | 14.48 | 22.33 |
-
-The patient-adapted filter improves modestly over the same pooled filter, but performs worse than persistence and population forecasting. Its 60-minute paired patient-bootstrap improvement is inconclusive at 95%. Adding baseline context did not improve the population model in this split. The dashboard reports these findings, weak warning recall and actual failure cases. The next modeling milestone is to strengthen adaptation and evaluate repeated patient splits before making a superiority claim.
-
-The demo defaults to held-out **Patient 2079** at cursor 965. **Warning episode** jumps to cursor 968; **Reveal recorded outcome** jumps to 970. This is a retrospectively curated demonstration, separate from model fitting and runtime inputs. The 30-minute personalized estimate is 181.41 mg/dL and the observed outcome 181.8 mg/dL; this one success is not overall performance evidence.
+**Team alpha · vnrvjiet · Shanmukh sai gara · registered size 1.** Delivery is organized into four workstreams: data/evaluation, model/backend, product/design, and research/submission.
 
 ## Run locally
 
-Prerequisites: Python 3.12+ and Node.js 20+. The tested environment is Python 3.12.14 and Node 24.13.1. The app uses public data and local computation; no API keys or paid services are required. Setup uses pinned Python and npm lockfiles so the trained scikit-learn artifact matches the runtime.
+Python 3.12+ and Node 20+ are required. The tested local runtime is Python 3.12.14 / Node 24.13.1. No paid services or API keys are needed. Trained artifacts and attributed anonymized data are included; setup does not retrain them unless missing.
 
 ```bash
 ./scripts/setup.sh
 ./start.sh
 ```
 
-Open http://127.0.0.1:5173. Keep the terminal running. The API is at http://127.0.0.1:8765 and its interactive documentation at `/docs`.
+Open http://127.0.0.1:5173. The API is http://127.0.0.1:8765. On first startup, random local `admin` and `reviewer` passwords are generated in **`.run/clinic-credentials.json`**. Read that private file to sign in; never publish it. Admin can import data and set monitoring hours; reviewer can inspect evidence, record follow-up and export reports.
 
-For separate terminals:
+To run the compiled frontend and API on one origin:
 
 ```bash
-# API (from the project root)
-.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8765
-
-# Dashboard
-npm --prefix frontend run dev -- --host 127.0.0.1 --port 5173 --strictPort
+./scripts/start_production.sh
 ```
 
-If these ports are occupied, use `GLUCOTWIN_API_PORT=8766 GLUCOTWIN_UI_PORT=5174 ./start.sh`. The launcher passes the matching proxy target and stops only its own processes on Ctrl+C.
+Open http://127.0.0.1:8765. This is a local compiled demonstration, not a hosted clinical deployment. Use `GLUCOTWIN_API_PORT=8766` for another port. Development also accepts `GLUCOTWIN_UI_PORT=5174`. `.env.example` documents exported environment variables; it is not automatically loaded.
 
-## Data and model boundaries
+## Implemented care workflow
 
-ShanghaiT2DM recordings retain their native 15-minute resolution. Patient groups remain separate across model training and evaluation. The initial context excludes lab values with unverified pre-prediction availability. Every replay forecast is computed only from observations at or before its cursor. Future actuals appear only after their timestamps have been reached.
+- Patient review queue with episode deduplication, assigned reviewer, status, overdue follow-up and freshness **at issue**.
+- Native recorded CGM replay, patient context, forecast intervals and visible outcome-based adaptation.
+- Primary 30-minute excursion probability; separate 60-minute evidence; ongoing high glucose and missing-data items distinguished.
+- Configurable staffed windows. Outside hours, forecasts are retained for later review and inactive monitoring is visible.
+- Persistent `new → reviewed → follow-up planned → closed` actions with reason, note, reviewer and audit history.
+- Consultation PDFs reflecting the evidence displayed at the selected replay time, including sensor-gap restrictions.
+- Administrator intake of synthetic CSV, administrator-attested anonymized Shanghai CSV, limited local FHIR R4 bundles, and simulated readings.
+- Authenticated reviewer/admin roles, clinic checks, SQLite migrations, immutable forecast records and consistent backup/recovery tooling.
 
-The core model is an interpretable state filter with visible state updates and patient parameter adaptation. A learned population model and simple baselines provide comparisons. Numerical metrics in the benchmark are computed by `scripts/evaluate.py`; results, including negative findings, should be read with the recorded protocol and limitations.
+This is an engineering patient model, not a validated physiological simulator. Public/simulated demonstration data only. Doctor workflow review and clinical-use approvals remain pending. There is no autonomous medication recommendation or live wearable connection.
 
-This is recorded research playback, not live monitoring or clinical decision support. The high-glucose crossing is a predefined research event, not an emergency diagnosis. Predictive intervals must be assessed by held-out coverage; a displayed interval is not a guarantee. No medication adjustment or causal treatment recommendation is provided.
+## Measured internal retrospective evidence
 
-See [DATA_LICENSE.md](DATA_LICENSE.md) for source attribution and separate data terms; [backend/MODEL.md](backend/MODEL.md) and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the actual model boundary; and [data/README.md](data/README.md) for the evaluation protocol. API/schema details are in [docs/API_CONTRACT.md](docs/API_CONTRACT.md).
+The frozen protocol uses five outer patient folds, grouped inner parameter selection, and separate calibration patients. All recordings from each patient stay together. The evaluation is **internal retrospective validation**: earlier patients have been inspected. A curated demo is not a performance estimate.
 
-Validation evidence and remaining milestones are recorded in [docs/VALIDATION.md](docs/VALIDATION.md). This is the actual locally rendered dashboard:
+| Model / evidence | 30 minutes | 60 minutes |
+|---|---:|---:|
+| Population MAE, mg/dL | 9.812 | 17.295 |
+| Hybrid MAE, mg/dL | **9.606** | **16.620** |
+| Episode precision | 62.96% | 65.63% |
+| Overall observed episode recall | 76.06% | 79.04% |
+| False alerts per 24 eligible forecast hours | 0.919 | 0.852 |
 
-![GlucoTwin recorded patient playback](docs/dashboard.png)
+The paired 30-minute MAE difference is **−0.206 mg/dL**, patient-bootstrap 95% CI **[−0.336, −0.110]**. This supports a small improvement from bounded residual adaptation over the **identical** population model. Historical-context benefit was inconclusive. Primary 30-minute 90% interval coverage was 89.68%; median warning lead was 15 minutes. False-alert denominators include all eligible forecast time, not only staffed clinic windows. The clinical operating point awaits doctor review.
 
-## Reproduce
+`data/processed/clinic_benchmark.json` retains every fold, calibration results, cold-start/adapted phases and failures. [CLINIC_MODEL.md](backend/CLINIC_MODEL.md) explains the upgraded model. The legacy 70/15/15 benchmark is preserved separately; its personalized filter MAE of 14.48 is not the current primary model and its scores should not be directly compared across different cohorts.
+
+## Exact three-minute demonstration
+
+1. Sign in; choose **Start demonstration**. The app selects Patient 2072 at warning cursor 853: Thursday 12:10 on the recorded clock, within the example 09:00–17:00 weekday window.
+2. Inspect current glucose, calibrated 30-minute event probability, population/hybrid forecasts, maturity and input freshness.
+3. **Save forecast for review**; enter a clearly simulated demonstration note; mark reviewed and plan follow-up.
+4. **Reveal recorded outcome** at cursor 855; compare forecast with measured glucose 187.2 mg/dL. Save evidence at the later cursor to persist matured outcomes.
+5. Show **Sensor gap** and suppressed forecasts; return to recorded mode.
+6. Export the consultation PDF. Open **Model evidence** to show aggregate performance and unsuccessful predictions.
+
+The case is retrospectively selected for understandable demonstration; historical timezone/staffing were not verified. Stored human actions use the real audit clock, which is displayed separately from recorded observation time. See [DOCTOR_REVIEW.md](docs/DOCTOR_REVIEW.md) for five pending clinician usability cases.
+
+## Reproduce and verify
 
 ```bash
 .venv/bin/python scripts/prepare_data.py
-.venv/bin/python scripts/evaluate.py
+.venv/bin/python scripts/evaluate.py          # retained legacy protocol
+.venv/bin/python scripts/evaluate_clinic.py   # frozen five-fold clinic protocol
 .venv/bin/python -m pytest backend/tests tests
 npm --prefix frontend run build
 ```
 
-Data preparation records archive provenance and exclusions in `data/processed/manifest.json`. Model artifacts and the benchmark are written under `data/processed/`. Raw source files, the virtual environment and installed frontend dependencies are ignored by Git.
+Full evaluation can take several minutes. Do not load untrusted joblib/pickle artifacts. Point-in-time features use observation and arrival times; adaptation uses only matured available targets. Acknowledging an alert cannot change model performance. Meals/activity/symptoms remain context until predictive value is evaluated.
 
-## Demo path
+## Backup and restore
 
-1. Open a held-out patient and inspect the recorded-data label and baseline context.
-2. Play or step observations; watch the chart, state and update history.
-3. Inspect a prospective crossing warning and its interval; advance to reveal the actual observation.
-4. Compare personalized and population forecasts, then open the measured benchmark and failure cases.
-5. Enable the sensor-gap scenario; confirm forecasts are suppressed and data freshness is visible.
-6. Change patients or reset; the replay state should reset cleanly.
+```bash
+.venv/bin/python scripts/backup_restore.py backup --file .run/backup.sqlite3
+.venv/bin/python scripts/backup_restore.py verify --database .run/backup.sqlite3
+# Stop the application before restoring; the destination must not already exist.
+.venv/bin/python scripts/backup_restore.py restore --database .run/restored.sqlite3 --file .run/backup.sqlite3 --offline
+# Then launch with GLUCOTWIN_DB_PATH pointing to the restored database.
+```
 
-## Submission still requires
+Private runtime files and backups are excluded from the release. File permissions and hashed credentials are implemented; TLS, encryption at rest, retention/consent procedures, authorized device latency, external clinical validation and applicable approvals remain pilot gates. [PILOT_GATES.md](docs/PILOT_GATES.md) records them.
 
-Team/college details, final verified presentation and architecture files, a public GitHub URL, and the required explanation/demo recording of at least 20 minutes. This build does not publish a repository or submit an entry. Registration and prototype deadlines should be rechecked on the official platform before submission.
+## Submission assets
 
-Code: MIT. Data: source-specific CC BY 4.0 attribution. No CGMacros files are included.
+The `docs/submission/` folder contains the strategy, original architecture, editable presentation, presentation PDF, doctor-review packet and explanation/demo video. Synthetic narration is disclosed; the recording includes the actual local application. [TEAM.md](docs/TEAM.md) contains registration details. Public repository publication, registration and platform submission are external steps still to complete.
+
+Code: MIT. Shanghai data: CC BY 4.0 with attribution in [DATA_LICENSE.md](DATA_LICENSE.md). No CGMacros data are included. Counts: 100 patients / 109 recordings / 112,462 measured observations; 13 missing rows excluded and 11 gaps preserved. The Chinese hospital cohort does not establish Indian clinical performance.

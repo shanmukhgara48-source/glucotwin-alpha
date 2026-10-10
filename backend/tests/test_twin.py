@@ -111,7 +111,13 @@ def test_duplicate_or_reversed_timestamps_are_rejected():
 
 def test_api_error_shape_and_nan_serialization():
     client = TestClient(app)
-    result = client.get("/api/replay/missing?cursor=-1")
-    assert result.status_code == 422
-    assert "error" in result.json()
+    assert client.get("/api/replay/missing?cursor=-1").status_code == 401
+    from backend.auth import current_user
+    app.dependency_overrides[current_user] = lambda: {"id": "reviewer", "clinic_id": "demo-clinic", "role": "reviewer"}
+    try:
+        result = client.get("/api/replay/missing?cursor=-1")
+        assert result.status_code == 422
+        assert "error" in result.json()
+    finally:
+        app.dependency_overrides.pop(current_user, None)
     assert clean_json({"missing": float("nan")}) == {"missing": None}

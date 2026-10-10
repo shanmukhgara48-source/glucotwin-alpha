@@ -1,57 +1,40 @@
-# Submission workstream
+# Submission handoff
 
-The application is the first working research prototype. The final hackathon package still needs the following completed artifacts and checks.
+Team **alpha**, college **vnrvjiet**, member **Shanmukh sai gara**, registered team size **1**. Four workstreams describe output responsibilities, not registration membership. Phone details are supplied in the separate private registration handoff and are excluded from this public repository.
 
-## Required package
+## Published challenge alignment
 
-- Team and college identity in the README and platform fields (supply real details; do not invent contributors).
-- Public GitHub repository with working setup commands, code license and dataset attribution.
-- Architecture and presentation exported to PDF/PPT.
-- Accessible explanation/demo video with an exported duration of at least 20 minutes.
-- Folder named `Team Name_College Name`, with links checked in a logged-out browser.
+| Requirement | Implemented evidence |
+|---|---|
+| Historical/EHR + wearable data | Native anonymized CGM, documented baseline context, dated intake and provenance |
+| Evolving patient digital twin | Outcome-matured residual correction, model state and history |
+| Upcoming adverse event | Calibrated 30-minute any-excursion classifier before observed onset |
+| Doctor-facing dashboard | Review queue, patient evidence, persistent follow-up and PDF |
+| Technical implementation | Frozen patient-grouped evaluation, automated tests and repeated compiled-UI demo |
+| Healthcare impact | Defined staffed workflow and consultation output; doctor review pending |
 
-Official brief: https://unstop.com/hackathons/crp-digital-twin-challenge-2026-happiest-health-1757873/amp
+Published judging criteria do not include numerical weights. No winning probability is claimed.
 
-Published deadlines checked during strategy research: registration 18 October 2026, 7 PM IST; prototype submission 20 October 2026, 7 PM IST. Recheck current platform details before relying on these dates. Keep the final two hours for submission checks.
+## Files
 
-## Three-minute core journey
+`docs/submission/` contains:
 
-| Time | Action | Evidence to point at |
-|---|---|---|
-| 0:00-0:20 | Open a patient | Anonymized source ID, baseline context, recorded-data label |
-| 0:20-0:50 | Start/step playback | New readings, state updates and patient parameter changes |
-| 0:50-1:30 | Inspect warning; reveal later outcome | Prediction issued before crossing, then actual measurement |
-| 1:30-2:10 | Compare models | Same history, personalized/population predictions and intervals |
-| 2:10-2:40 | Enable sensor-gap scenario | Missing observations, freshness, forecast suppression |
-| 2:40-3:00 | Open benchmark/failure case | Actual held-out results, negative findings and limitations |
+- `GlucoTwin_Clinic_Strategy.pdf` — eight-page research and current clinic strategy.
+- `GlucoTwin_Architecture.pdf` — original architecture diagram.
+- `GlucoTwin_Presentation.pptx` and `.pdf` — editable deck and PDF export.
+- `GlucoTwin_Doctor_Review_Packet.pdf` — five cases; feedback not yet performed.
+- `GlucoTwin_Explanation_Demo.mp4` — disclosed synthetic narration and actual app recording; duration verified above the published minimum of 20 minutes.
 
-Curated examples are demonstration selections from measured results, not evidence of overall accuracy. Include a false warning or missed event. Never pick an outcome first and present it as an unselected prospective clinical trial.
+`docs/VIDEO_SCRIPT.md` retains the narration. `docs/EVIDENCE.md`, `docs/VALIDATION.md` and benchmark artifacts retain results and limitations. Code license is MIT; dataset attribution and CC BY 4.0 terms remain separate.
 
-## 22-minute recording outline
+## External steps still required
 
-1. Problem and doctor workflow: 2 minutes.
-2. Data provenance, cohort, timing and licenses: 3 minutes.
-3. Architecture, filtering, personalization and causal replay: 4 minutes.
-4. Core journey, stable example and failure/missing-data example: 5 minutes.
-5. Evaluation splits, baselines, metrics and uncertainty: 4 minutes.
-6. Related work, cohort limits and unsupported claims: 2 minutes.
-7. Fresh setup and reproducibility: 2 minutes.
+1. Complete registration using the participant account and accurate contact details.
+2. Ask the doctor to perform the five-case review and record actual feedback; resolve critical misunderstandings.
+3. Publish the included source as a public GitHub repository. Verify fresh setup and add its URL to the entry.
+4. Upload/access-check architecture, presentation and the explanation/demo video; verify the platform accepts the chosen file/link format.
+5. Verify team details and all requirements on the official entry page; submit before the deadline.
 
-## Claim check before recording
+Published registration deadline: **18 October 2026, 7 PM IST**. Prototype deadline: **20 October 2026, 7 PM IST**. Stop code changes by **5 PM IST on 20 October**. Recheck the official platform for changes before submission.
 
-- Call it an engineering state filter with patient parameter adaptation; do not claim a validated physiological simulator.
-- Describe the measured result, including negative or inconclusive personalization findings.
-- Keep cold-start, post-24-hour adaptation and nominal interval coverage distinct.
-- State that baseline-context timing is an assumption where source timestamps are unavailable.
-- Label recorded observations and intentionally withheld sensor-gap scenarios.
-- No clinical validation, medication dosing, remission, live sensor integration or Indian generalization claim.
-- No numeric risk probability unless independently calibrated; a point forecast crossing a threshold is a research warning.
-
-## Pre-demo check
-
-- Start fresh and run the exact path three times consecutively.
-- Verify no browser console errors, visible data freshness and correct patient resets.
-- Confirm every earlier prediction is invariant to future-record changes.
-- Test on the presentation screen resolution.
-- Keep a recording and screenshots as backup; preserve a known-working Git commit.
-- Freeze optional features on 17 October and protect recording/packaging time.
+[Official brief and submission rules](https://unstop.com/hackathons/crp-digital-twin-challenge-2026-happiest-health-1757873/amp)

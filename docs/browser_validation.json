@@ -1,0 +1,35 @@
+[
+  {
+    "run": 1,
+    "fresh_start": true,
+    "compiled_same_origin": true,
+    "review_persisted": true,
+    "outcome_revealed": true,
+    "gap_suppressed": true,
+    "outside_hours_inactive": true,
+    "pdf_exported": true,
+    "errors": []
+  },
+  {
+    "run": 2,
+    "fresh_start": true,
+    "compiled_same_origin": true,
+    "review_persisted": true,
+    "outcome_revealed": true,
+    "gap_suppressed": true,
+    "outside_hours_inactive": true,
+    "pdf_exported": true,
+    "errors": []
+  },
+  {
+    "run": 3,
+    "fresh_start": true,
+    "compiled_same_origin": true,
+    "review_persisted": true,
+    "outcome_revealed": true,
+    "gap_suppressed": true,
+    "outside_hours_inactive": true,
+    "pdf_exported": true,
+    "errors": []
+  }
+]
