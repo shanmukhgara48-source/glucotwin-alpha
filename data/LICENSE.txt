@@ -1,0 +1,23 @@
+ShanghaiT2DM data attribution
+
+The source data and processed observations/profiles in this folder are licensed
+under Creative Commons Attribution 4.0 International (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+Zhao et al. A publicly available dataset of continuous glucose monitoring records
+in patients with diabetes. Scientific Data 10, 35 (2023).
+https://doi.org/10.1038/s41597-023-01940-7
+
+Source archive: Figshare diabetes_datasets.zip, article 21600933, version 5.
+https://figshare.com/articles/dataset/diabetes_datasets_zip/21600933
+
+Changes made by GlucoTwin: matched T2DM recording IDs to historical profiles;
+retained only timestamped measured CGM observations and an allowlist of baseline
+context; removed invalid/missing glucose and duplicate timestamps; normalized
+field names and serialized to CSV/JSON. No imputation or resampling is performed.
+See processed/manifest.json for the exact checksum, counts and exclusion audit.
+
+The source data are research records. GlucoTwin predictions have not undergone
+prospective clinical validation and must not be used for treatment decisions.
+
+The repository's software license does not replace this dataset license.

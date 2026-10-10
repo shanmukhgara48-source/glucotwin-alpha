@@ -1,0 +1,13 @@
+.venv/
+.run/
+__pycache__/
+.pytest_cache/
+*.pyc
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
+data/raw/
+.DS_Store
+.env
+.env.*
+!.env.example

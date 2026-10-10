@@ -1,0 +1,1147 @@
+{
+  "generated_at": "2026-10-10T09:49:02.089194+00:00",
+  "dataset": "ShanghaiT2DM",
+  "source_url": "https://figshare.com/articles/dataset/diabetes_datasets_zip/21600933",
+  "paper_url": "https://www.nature.com/articles/s41597-023-01940-7",
+  "article_version": 5,
+  "download_url": "https://ndownloader.figshare.com/files/42966622",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "attribution": "Zhao et al. A publicly available dataset of continuous glucose monitoring records in patients with diabetes. Scientific Data 10, 35 (2023). doi:10.1038/s41597-023-01940-7. Figshare diabetes_datasets.zip, article 21600933, version 5.",
+  "archive_bytes": 3738354,
+  "archive_md5": "4bfb61cfa506b48155fd9e841ee48e21",
+  "archive_sha256": "59b5f5c4053a32bb6b7827844a0191597dc82228fe88ce332a189fdfc659c4cb",
+  "patients": 100,
+  "recordings": 109,
+  "observations": 112462,
+  "matched_summary_rows": 109,
+  "spreadsheet_formats": {
+    ".xlsx": 20,
+    ".xls": 89
+  },
+  "published_expected_counts_match": true,
+  "units": "mg/dL",
+  "native_sampling_minutes": 15,
+  "resampled": false,
+  "imputed": false,
+  "removed_rows": {
+    "missing_glucose_or_timestamp": 13,
+    "outside_20_to_600_mg_dl": 0,
+    "conflicting_duplicate_rows": 0,
+    "identical_duplicate_rows": 0
+  },
+  "native_15_minute_intervals": 112342,
+  "gap_intervals_over_15_minutes": 11,
+  "other_short_intervals": 0,
+  "profile_feature_allowlist": [
+    "age",
+    "bmi",
+    "diabetes_duration_years",
+    "sex"
+  ],
+  "excluded_feature_groups": [
+    "Laboratory values with unverified pre-CGM timing",
+    "Hypoglycemia retrospective outcome",
+    "Medication/event fields without verified availability",
+    "Clinical complications and free text"
+  ],
+  "context_timing": "Age, sex, BMI and duration are matched historical summary context. The source supplies no exact collection timestamp for these fields; this is a prototype baseline-context assumption. All laboratory values and retrospective outcomes are excluded.",
+  "limitations": [
+    "Single Chinese clinical cohort; no Indian or prospective clinical validation",
+    "Hospital monitoring and treatment changes may differ from outpatient use",
+    "CGM gaps are retained; no synthetic sensor observations",
+    "First prototype uses ShanghaiT2DM only; CGMacros is not included"
+  ],
+  "recordings_audit": [
+    {
+      "patient_id": "2000",
+      "recording_id": "2000_0_20201230",
+      "observation_count": 1339,
+      "start": "2020-12-30T13:54:00",
+      "end": "2021-01-13T12:24:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2001",
+      "recording_id": "2001_0_20201102",
+      "observation_count": 1195,
+      "start": "2020-11-02T09:40:00",
+      "end": "2020-11-14T20:10:00",
+      "native_15_minute_intervals": 1194,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2001",
+      "recording_id": "2001_1_20201117",
+      "observation_count": 1339,
+      "start": "2020-11-17T09:19:00",
+      "end": "2020-12-01T07:49:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2002",
+      "recording_id": "2002_0_20210513",
+      "observation_count": 571,
+      "start": "2021-05-13T16:22:00",
+      "end": "2021-05-19T14:52:00",
+      "native_15_minute_intervals": 570,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2003",
+      "recording_id": "2003_0_20210615",
+      "observation_count": 669,
+      "start": "2021-06-15T17:20:00",
+      "end": "2021-06-22T16:20:00",
+      "native_15_minute_intervals": 668,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2004",
+      "recording_id": "2004_0_20211028",
+      "observation_count": 484,
+      "start": "2021-10-28T14:28:00",
+      "end": "2021-11-02T15:13:00",
+      "native_15_minute_intervals": 483,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2005",
+      "recording_id": "2005_0_20211201",
+      "observation_count": 691,
+      "start": "2021-12-01T15:55:00",
+      "end": "2021-12-08T20:25:00",
+      "native_15_minute_intervals": 690,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2006",
+      "recording_id": "2006_0_20211112",
+      "observation_count": 480,
+      "start": "2021-11-12T15:20:00",
+      "end": "2021-11-17T15:05:00",
+      "native_15_minute_intervals": 479,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2007",
+      "recording_id": "2007_0_20220108",
+      "observation_count": 831,
+      "start": "2022-01-08T16:46:00",
+      "end": "2022-01-17T08:16:00",
+      "native_15_minute_intervals": 830,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2008",
+      "recording_id": "2008_0_20220118",
+      "observation_count": 533,
+      "start": "2022-01-18T16:29:00",
+      "end": "2022-01-24T05:29:00",
+      "native_15_minute_intervals": 532,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2009",
+      "recording_id": "2009_0_20211103",
+      "observation_count": 494,
+      "start": "2021-11-03T09:43:00",
+      "end": "2021-11-08T12:58:00",
+      "native_15_minute_intervals": 493,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2010",
+      "recording_id": "2010_0_20220111",
+      "observation_count": 539,
+      "start": "2022-01-11T17:44:00",
+      "end": "2022-01-17T08:14:00",
+      "native_15_minute_intervals": 538,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2011",
+      "recording_id": "2011_0_20220123",
+      "observation_count": 462,
+      "start": "2022-01-23T16:58:00",
+      "end": "2022-01-28T12:13:00",
+      "native_15_minute_intervals": 461,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2012",
+      "recording_id": "2012_0_20220126",
+      "observation_count": 288,
+      "start": "2022-01-26T12:33:00",
+      "end": "2022-01-29T12:18:00",
+      "native_15_minute_intervals": 287,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2013",
+      "recording_id": "2013_0_20220123",
+      "observation_count": 350,
+      "start": "2022-01-23T17:00:00",
+      "end": "2022-01-27T08:15:00",
+      "native_15_minute_intervals": 349,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2014",
+      "recording_id": "2014_0_20201224",
+      "observation_count": 1333,
+      "start": "2020-12-24T11:53:00",
+      "end": "2021-01-07T08:53:00",
+      "native_15_minute_intervals": 1332,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2014",
+      "recording_id": "2014_1_20210317",
+      "observation_count": 1339,
+      "start": "2021-03-17T15:16:00",
+      "end": "2021-03-31T13:46:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2015",
+      "recording_id": "2015_0_20210203",
+      "observation_count": 1339,
+      "start": "2021-02-03T14:30:00",
+      "end": "2021-02-17T13:00:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2015",
+      "recording_id": "2015_1_20210219",
+      "observation_count": 1318,
+      "start": "2021-02-19T11:58:00",
+      "end": "2021-03-05T05:13:00",
+      "native_15_minute_intervals": 1317,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2016",
+      "recording_id": "2016_0_20201224",
+      "observation_count": 1339,
+      "start": "2020-12-24T10:27:00",
+      "end": "2021-01-07T08:57:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2017",
+      "recording_id": "2017_0_20210102",
+      "observation_count": 1337,
+      "start": "2021-01-04T09:50:00",
+      "end": "2021-01-18T07:50:00",
+      "native_15_minute_intervals": 1336,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2017",
+      "recording_id": "2017_1_20201118",
+      "observation_count": 1337,
+      "start": "2020-11-18T09:53:00",
+      "end": "2020-12-02T07:53:00",
+      "native_15_minute_intervals": 1336,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2018",
+      "recording_id": "2018_0_20210420",
+      "observation_count": 1231,
+      "start": "2021-04-20T11:33:00",
+      "end": "2021-05-03T07:03:00",
+      "native_15_minute_intervals": 1230,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2019",
+      "recording_id": "2019_0_20210513",
+      "observation_count": 751,
+      "start": "2021-05-13T16:43:00",
+      "end": "2021-05-21T12:13:00",
+      "native_15_minute_intervals": 750,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2020",
+      "recording_id": "2020_0_20210423",
+      "observation_count": 539,
+      "start": "2021-04-23T18:26:00",
+      "end": "2021-04-29T08:56:00",
+      "native_15_minute_intervals": 538,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2021",
+      "recording_id": "2021_0_20211013",
+      "observation_count": 1135,
+      "start": "2021-10-13T10:29:00",
+      "end": "2021-10-25T05:59:00",
+      "native_15_minute_intervals": 1134,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2022",
+      "recording_id": "2022_0_20210419",
+      "observation_count": 945,
+      "start": "2021-04-19T11:23:00",
+      "end": "2021-04-29T07:23:00",
+      "native_15_minute_intervals": 944,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2023",
+      "recording_id": "2023_0_20210812",
+      "observation_count": 541,
+      "start": "2021-08-12T15:07:00",
+      "end": "2021-08-18T06:52:00",
+      "native_15_minute_intervals": 539,
+      "gap_intervals_over_15_minutes": 1,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2024",
+      "recording_id": "2024_0_20210429",
+      "observation_count": 729,
+      "start": "2021-04-29T16:43:00",
+      "end": "2021-05-07T06:43:00",
+      "native_15_minute_intervals": 728,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2025",
+      "recording_id": "2025_0_20210506",
+      "observation_count": 761,
+      "start": "2021-05-06T09:34:00",
+      "end": "2021-05-14T07:34:00",
+      "native_15_minute_intervals": 760,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2026",
+      "recording_id": "2026_0_20210916",
+      "observation_count": 1136,
+      "start": "2021-09-16T17:55:00",
+      "end": "2021-09-28T13:40:00",
+      "native_15_minute_intervals": 1135,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2027",
+      "recording_id": "2027_0_20210521",
+      "observation_count": 1133,
+      "start": "2021-05-21T16:21:00",
+      "end": "2021-06-02T11:21:00",
+      "native_15_minute_intervals": 1132,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2028",
+      "recording_id": "2028_0_20210426",
+      "observation_count": 823,
+      "start": "2021-04-26T17:08:00",
+      "end": "2021-05-05T06:38:00",
+      "native_15_minute_intervals": 822,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2029",
+      "recording_id": "2029_0_20210526",
+      "observation_count": 832,
+      "start": "2021-05-26T16:14:00",
+      "end": "2021-06-04T11:16:00",
+      "native_15_minute_intervals": 830,
+      "gap_intervals_over_15_minutes": 1,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2030",
+      "recording_id": "2030_0_20210531",
+      "observation_count": 946,
+      "start": "2021-05-31T11:47:00",
+      "end": "2021-06-10T08:02:00",
+      "native_15_minute_intervals": 945,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2031",
+      "recording_id": "2031_0_20210601",
+      "observation_count": 922,
+      "start": "2021-06-01T17:16:00",
+      "end": "2021-06-11T07:31:00",
+      "native_15_minute_intervals": 921,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2032",
+      "recording_id": "2032_0_20210727",
+      "observation_count": 281,
+      "start": "2021-07-27T16:21:00",
+      "end": "2021-07-30T14:21:00",
+      "native_15_minute_intervals": 280,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2033",
+      "recording_id": "2033_0_20210615",
+      "observation_count": 726,
+      "start": "2021-06-15T17:43:00",
+      "end": "2021-06-23T06:58:00",
+      "native_15_minute_intervals": 725,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2034",
+      "recording_id": "2034_0_20210624",
+      "observation_count": 387,
+      "start": "2021-06-24T12:31:00",
+      "end": "2021-06-28T13:01:00",
+      "native_15_minute_intervals": 386,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2035",
+      "recording_id": "2035_0_20210629",
+      "observation_count": 247,
+      "start": "2021-06-29T17:04:00",
+      "end": "2021-07-02T06:34:00",
+      "native_15_minute_intervals": 246,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2036",
+      "recording_id": "2036_0_20210803",
+      "observation_count": 531,
+      "start": "2021-08-03T19:56:00",
+      "end": "2021-08-09T08:26:00",
+      "native_15_minute_intervals": 530,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2037",
+      "recording_id": "2037_0_20201221",
+      "observation_count": 1338,
+      "start": "2020-12-21T09:44:00",
+      "end": "2021-01-04T07:59:00",
+      "native_15_minute_intervals": 1337,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2038",
+      "recording_id": "2038_0_20210608",
+      "observation_count": 546,
+      "start": "2021-06-08T17:01:00",
+      "end": "2021-06-14T09:16:00",
+      "native_15_minute_intervals": 545,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2039",
+      "recording_id": "2039_0_20210615",
+      "observation_count": 633,
+      "start": "2021-06-15T17:22:00",
+      "end": "2021-06-22T07:22:00",
+      "native_15_minute_intervals": 632,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2040",
+      "recording_id": "2040_0_20210729",
+      "observation_count": 1024,
+      "start": "2021-07-29T16:08:00",
+      "end": "2021-08-09T08:08:00",
+      "native_15_minute_intervals": 1022,
+      "gap_intervals_over_15_minutes": 1,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2041",
+      "recording_id": "2041_0_20210813",
+      "observation_count": 392,
+      "start": "2021-08-13T09:58:00",
+      "end": "2021-08-17T11:43:00",
+      "native_15_minute_intervals": 391,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2042",
+      "recording_id": "2042_0_20211019",
+      "observation_count": 400,
+      "start": "2021-10-19T15:44:00",
+      "end": "2021-10-23T19:29:00",
+      "native_15_minute_intervals": 399,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2043",
+      "recording_id": "2043_0_20210513",
+      "observation_count": 825,
+      "start": "2021-05-13T17:10:00",
+      "end": "2021-05-22T07:10:00",
+      "native_15_minute_intervals": 824,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2044",
+      "recording_id": "2044_0_20211101",
+      "observation_count": 641,
+      "start": "2021-11-01T15:21:00",
+      "end": "2021-11-08T07:21:00",
+      "native_15_minute_intervals": 640,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2045",
+      "recording_id": "2045_0_20201216",
+      "observation_count": 1339,
+      "start": "2020-12-16T08:32:00",
+      "end": "2020-12-30T07:02:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2046",
+      "recording_id": "2046_0_20201216",
+      "observation_count": 1147,
+      "start": "2020-12-16T09:20:00",
+      "end": "2020-12-28T07:50:00",
+      "native_15_minute_intervals": 1146,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2047",
+      "recording_id": "2047_0_20210420",
+      "observation_count": 1217,
+      "start": "2021-04-20T16:02:00",
+      "end": "2021-05-03T08:02:00",
+      "native_15_minute_intervals": 1216,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2048",
+      "recording_id": "2048_0_20210426",
+      "observation_count": 1235,
+      "start": "2021-04-26T23:20:00",
+      "end": "2021-05-09T19:50:00",
+      "native_15_minute_intervals": 1234,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2049",
+      "recording_id": "2049_0_20210426",
+      "observation_count": 1133,
+      "start": "2021-04-26T12:13:00",
+      "end": "2021-05-08T07:13:00",
+      "native_15_minute_intervals": 1132,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2050",
+      "recording_id": "2050_0_20210510",
+      "observation_count": 1278,
+      "start": "2021-05-10T10:18:00",
+      "end": "2021-05-23T17:33:00",
+      "native_15_minute_intervals": 1277,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2051",
+      "recording_id": "2051_0_20210512",
+      "observation_count": 1218,
+      "start": "2021-05-12T03:42:00",
+      "end": "2021-05-24T19:57:00",
+      "native_15_minute_intervals": 1217,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2052",
+      "recording_id": "2052_0_20210511",
+      "observation_count": 1249,
+      "start": "2021-05-11T16:44:00",
+      "end": "2021-05-24T16:44:00",
+      "native_15_minute_intervals": 1248,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2053",
+      "recording_id": "2053_0_20210518",
+      "observation_count": 1222,
+      "start": "2021-05-18T15:05:00",
+      "end": "2021-05-31T08:20:00",
+      "native_15_minute_intervals": 1221,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2054",
+      "recording_id": "2054_0_20210524",
+      "observation_count": 525,
+      "start": "2021-05-24T12:18:00",
+      "end": "2021-05-29T23:18:00",
+      "native_15_minute_intervals": 524,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2055",
+      "recording_id": "2055_0_20210524",
+      "observation_count": 1045,
+      "start": "2021-05-24T10:21:00",
+      "end": "2021-06-04T07:21:00",
+      "native_15_minute_intervals": 1044,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2055",
+      "recording_id": "2055_1_20201207",
+      "observation_count": 1339,
+      "start": "2020-12-07T10:10:00",
+      "end": "2020-12-21T08:40:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2056",
+      "recording_id": "2056_0_20210524",
+      "observation_count": 567,
+      "start": "2021-05-24T10:50:00",
+      "end": "2021-05-30T08:20:00",
+      "native_15_minute_intervals": 566,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2057",
+      "recording_id": "2057_0_20210525",
+      "observation_count": 1225,
+      "start": "2021-05-25T15:00:00",
+      "end": "2021-06-07T09:00:00",
+      "native_15_minute_intervals": 1224,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2058",
+      "recording_id": "2058_0_20210524",
+      "observation_count": 1282,
+      "start": "2021-05-24T09:47:00",
+      "end": "2021-06-06T18:02:00",
+      "native_15_minute_intervals": 1281,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2059",
+      "recording_id": "2059_0_20210525",
+      "observation_count": 1257,
+      "start": "2021-05-25T15:19:00",
+      "end": "2021-06-07T17:19:00",
+      "native_15_minute_intervals": 1256,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2060",
+      "recording_id": "2060_0_20201214",
+      "observation_count": 1333,
+      "start": "2020-12-14T11:00:00",
+      "end": "2020-12-28T08:00:00",
+      "native_15_minute_intervals": 1332,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2061",
+      "recording_id": "2061_0_20210601",
+      "observation_count": 934,
+      "start": "2021-06-01T14:43:00",
+      "end": "2021-06-11T07:58:00",
+      "native_15_minute_intervals": 933,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2062",
+      "recording_id": "2062_0_20210601",
+      "observation_count": 1205,
+      "start": "2021-06-01T16:24:00",
+      "end": "2021-06-14T05:24:00",
+      "native_15_minute_intervals": 1204,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2063",
+      "recording_id": "2063_0_20210608",
+      "observation_count": 1223,
+      "start": "2021-06-08T14:43:00",
+      "end": "2021-06-21T08:13:00",
+      "native_15_minute_intervals": 1222,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2064",
+      "recording_id": "2064_0_20210608",
+      "observation_count": 1220,
+      "start": "2021-06-08T14:55:00",
+      "end": "2021-06-21T07:40:00",
+      "native_15_minute_intervals": 1219,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2065",
+      "recording_id": "2065_0_20210615",
+      "observation_count": 847,
+      "start": "2021-06-15T17:25:00",
+      "end": "2021-06-24T12:55:00",
+      "native_15_minute_intervals": 846,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2066",
+      "recording_id": "2066_0_20210615",
+      "observation_count": 1220,
+      "start": "2021-06-15T14:50:00",
+      "end": "2021-06-28T07:35:00",
+      "native_15_minute_intervals": 1219,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2067",
+      "recording_id": "2067_0_20210615",
+      "observation_count": 1224,
+      "start": "2021-06-15T14:38:00",
+      "end": "2021-06-28T08:23:00",
+      "native_15_minute_intervals": 1223,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2068",
+      "recording_id": "2068_0_20210616",
+      "observation_count": 1264,
+      "start": "2021-06-16T10:41:00",
+      "end": "2021-06-29T14:26:00",
+      "native_15_minute_intervals": 1263,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2069",
+      "recording_id": "2069_0_20210621",
+      "observation_count": 1243,
+      "start": "2021-06-21T19:59:00",
+      "end": "2021-07-04T18:29:00",
+      "native_15_minute_intervals": 1242,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2069",
+      "recording_id": "2069_1_20210705",
+      "observation_count": 1244,
+      "start": "2021-07-05T20:25:00",
+      "end": "2021-07-18T19:10:00",
+      "native_15_minute_intervals": 1243,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2069",
+      "recording_id": "2069_2_20210825",
+      "observation_count": 1237,
+      "start": "2021-08-25T01:13:00",
+      "end": "2021-09-06T22:13:00",
+      "native_15_minute_intervals": 1236,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2070",
+      "recording_id": "2070_0_20210629",
+      "observation_count": 1230,
+      "start": "2021-06-29T15:04:00",
+      "end": "2021-07-12T10:19:00",
+      "native_15_minute_intervals": 1229,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2071",
+      "recording_id": "2071_0_20210705",
+      "observation_count": 1292,
+      "start": "2021-07-05T09:52:00",
+      "end": "2021-07-18T20:37:00",
+      "native_15_minute_intervals": 1291,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2072",
+      "recording_id": "2072_0_20210706",
+      "observation_count": 1220,
+      "start": "2021-07-06T14:55:00",
+      "end": "2021-07-19T07:40:00",
+      "native_15_minute_intervals": 1219,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2073",
+      "recording_id": "2073_0_20210703",
+      "observation_count": 1339,
+      "start": "2021-07-03T15:18:00",
+      "end": "2021-07-17T13:48:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2074",
+      "recording_id": "2074_0_20210707",
+      "observation_count": 1145,
+      "start": "2021-07-07T16:46:00",
+      "end": "2021-07-19T14:46:00",
+      "native_15_minute_intervals": 1144,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2074",
+      "recording_id": "2074_1_20210720",
+      "observation_count": 978,
+      "start": "2021-07-20T16:01:00",
+      "end": "2021-07-30T20:16:00",
+      "native_15_minute_intervals": 977,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2075",
+      "recording_id": "2075_0_20210720",
+      "observation_count": 938,
+      "start": "2021-07-20T14:43:00",
+      "end": "2021-07-30T08:58:00",
+      "native_15_minute_intervals": 937,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2076",
+      "recording_id": "2076_0_20210720",
+      "observation_count": 1218,
+      "start": "2021-07-20T15:22:00",
+      "end": "2021-08-02T07:37:00",
+      "native_15_minute_intervals": 1217,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2077",
+      "recording_id": "2077_0_20210803",
+      "observation_count": 1023,
+      "start": "2021-08-03T15:58:00",
+      "end": "2021-08-14T07:28:00",
+      "native_15_minute_intervals": 1022,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2078",
+      "recording_id": "2078_0_20210803",
+      "observation_count": 1339,
+      "start": "2021-08-03T15:36:00",
+      "end": "2021-08-17T14:06:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2078",
+      "recording_id": "2078_1_20210817",
+      "observation_count": 1333,
+      "start": "2021-08-17T16:22:00",
+      "end": "2021-08-31T13:22:00",
+      "native_15_minute_intervals": 1332,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2079",
+      "recording_id": "2079_0_20210809",
+      "observation_count": 1333,
+      "start": "2021-08-09T10:34:00",
+      "end": "2021-08-23T07:34:00",
+      "native_15_minute_intervals": 1332,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2080",
+      "recording_id": "2080_0_20210816",
+      "observation_count": 1329,
+      "start": "2021-08-16T11:35:00",
+      "end": "2021-08-30T08:20:00",
+      "native_15_minute_intervals": 1326,
+      "gap_intervals_over_15_minutes": 2,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2081",
+      "recording_id": "2081_0_20210817",
+      "observation_count": 1221,
+      "start": "2021-08-17T15:15:00",
+      "end": "2021-08-30T08:15:00",
+      "native_15_minute_intervals": 1220,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2082",
+      "recording_id": "2082_0_20210907",
+      "observation_count": 1047,
+      "start": "2021-09-07T15:34:00",
+      "end": "2021-09-18T13:04:00",
+      "native_15_minute_intervals": 1046,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2083",
+      "recording_id": "2083_0_20201214",
+      "observation_count": 1331,
+      "start": "2020-12-14T12:20:00",
+      "end": "2020-12-28T08:50:00",
+      "native_15_minute_intervals": 1330,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2084",
+      "recording_id": "2084_0_20211013",
+      "observation_count": 663,
+      "start": "2021-10-13T11:28:00",
+      "end": "2021-10-20T09:28:00",
+      "native_15_minute_intervals": 661,
+      "gap_intervals_over_15_minutes": 1,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2085",
+      "recording_id": "2085_0_20200907",
+      "observation_count": 1339,
+      "start": "2020-09-07T11:23:00",
+      "end": "2020-09-21T09:53:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2086",
+      "recording_id": "2086_0_20200914",
+      "observation_count": 1338,
+      "start": "2020-09-14T09:20:00",
+      "end": "2020-09-28T07:35:00",
+      "native_15_minute_intervals": 1337,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2087",
+      "recording_id": "2087_0_20201012",
+      "observation_count": 1339,
+      "start": "2020-10-12T10:58:00",
+      "end": "2020-10-26T09:28:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2088",
+      "recording_id": "2088_0_20201123",
+      "observation_count": 1332,
+      "start": "2020-11-23T11:28:00",
+      "end": "2020-12-07T08:13:00",
+      "native_15_minute_intervals": 1331,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2089",
+      "recording_id": "2089_0_20201019",
+      "observation_count": 1334,
+      "start": "2020-10-19T11:06:00",
+      "end": "2020-11-02T08:21:00",
+      "native_15_minute_intervals": 1333,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2090",
+      "recording_id": "2090_0_20201130",
+      "observation_count": 1330,
+      "start": "2020-11-30T11:38:00",
+      "end": "2020-12-14T07:53:00",
+      "native_15_minute_intervals": 1329,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2091",
+      "recording_id": "2091_0_20201029",
+      "observation_count": 1339,
+      "start": "2020-10-29T15:32:00",
+      "end": "2020-11-12T14:02:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2092",
+      "recording_id": "2092_0_20201109",
+      "observation_count": 1333,
+      "start": "2020-11-09T10:51:00",
+      "end": "2020-11-23T07:51:00",
+      "native_15_minute_intervals": 1332,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2093",
+      "recording_id": "2093_0_20201109",
+      "observation_count": 1339,
+      "start": "2020-11-09T10:55:00",
+      "end": "2020-11-23T09:25:00",
+      "native_15_minute_intervals": 1338,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2094",
+      "recording_id": "2094_0_20211109",
+      "observation_count": 1338,
+      "start": "2020-11-09T11:22:00",
+      "end": "2020-11-23T09:37:00",
+      "native_15_minute_intervals": 1337,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2095",
+      "recording_id": "2095_0_20201116",
+      "observation_count": 1329,
+      "start": "2020-11-16T12:00:00",
+      "end": "2020-11-30T09:15:00",
+      "native_15_minute_intervals": 1323,
+      "gap_intervals_over_15_minutes": 5,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2096",
+      "recording_id": "2096_0_20201116",
+      "observation_count": 1328,
+      "start": "2020-11-16T11:47:00",
+      "end": "2020-11-30T07:32:00",
+      "native_15_minute_intervals": 1327,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2097",
+      "recording_id": "2097_0_20201116",
+      "observation_count": 1337,
+      "start": "2020-11-16T11:30:00",
+      "end": "2020-11-30T09:30:00",
+      "native_15_minute_intervals": 1336,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2098",
+      "recording_id": "2098_0_20201106",
+      "observation_count": 1325,
+      "start": "2020-11-16T12:58:00",
+      "end": "2020-11-30T07:58:00",
+      "native_15_minute_intervals": 1324,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    },
+    {
+      "patient_id": "2099",
+      "recording_id": "2099_0_20201116",
+      "observation_count": 1329,
+      "start": "2020-11-16T12:47:00",
+      "end": "2020-11-30T08:47:00",
+      "native_15_minute_intervals": 1328,
+      "gap_intervals_over_15_minutes": 0,
+      "other_short_intervals": 0
+    }
+  ]
+}
