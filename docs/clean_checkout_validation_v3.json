@@ -1,0 +1,28 @@
+{
+  "release": "0.3",
+  "code_commit_verified": "296d7338f3be6d395d9314ccb92654a96c72d83c",
+  "source": "Fresh local Git clone of committed release, separate Python virtual environment and freshly built frontend",
+  "setup": {
+    "pinned_python_install": "passed",
+    "npm_ci": "passed",
+    "typescript_vite_build": "passed",
+    "model_retraining_needed": false
+  },
+  "fresh_runtime": {
+    "sqlite_schema": 7,
+    "unauthenticated_queue_status": 401,
+    "deep_route_frontend_status": 200,
+    "cookie_login": "passed",
+    "source": "explicit synthetic native 15-minute source",
+    "seeded_observations": 8,
+    "automatic_saved_receipts": 1,
+    "readiness": "passed after trusted artifact startup warming",
+    "clinical_ready": false,
+    "recorded_captures": [
+      853,
+      855
+    ],
+    "arrival_and_recorded_pdf_downloads": "passed"
+  },
+  "boundary": "Local source/install/API smoke verification. Browser journeys are separately documented; no hosted deployment or authorized wearable evidence."
+}

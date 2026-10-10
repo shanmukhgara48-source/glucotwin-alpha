@@ -117,6 +117,16 @@ The research key is generated privately under `.run/` unless supplied by environ
 
 ## Submission assets
 
-The `docs/submission/` folder contains the refreshed live strategy, continuous architecture, editable presentation, clinical-source packet and explanation video with actual interface captures. The v3 video is a narrated editable presentation with actual UI screenshots and synthesized macOS Samantha speech, not an interactive browser recording. The v0.2 materials remain as legacy reference; use the files marked Live for the current release. [TEAM.md](docs/TEAM.md) contains registration details. Public source: https://github.com/shanmukhgara48-source/glucotwin-alpha. Registration and platform submission remain external steps.
+The `docs/submission/` folder contains the refreshed live strategy, continuous architecture, editable presentation, clinical-source packet and explanation video with actual interface captures.
+
+- [30-minute explanation video](docs/submission/GlucoTwin_Live_Platform_Explanation.mp4) — 30 minutes 38 seconds; synthesized narration and actual current interface captures.
+- [Editable presentation](docs/submission/GlucoTwin_Live_Platform_Presentation.pptx).
+- [Architecture PDF](docs/submission/GlucoTwin_Live_Architecture.pdf).
+- [Eight-page platform strategy](docs/submission/GlucoTwin_Live_Platform_Strategy.pdf).
+- [Clinic partnership packet](docs/submission/GlucoTwin_Clinic_Partnership_Packet.pdf).
+
+The submission index is [alpha_vnrvjiet](alpha_vnrvjiet/README.md); the downloadable project package uses the required `alpha_vnrvjiet/` root folder.
+
+ The v3 video is a narrated editable presentation with actual UI screenshots and synthesized macOS Samantha speech, not an interactive browser recording. The v0.2 materials remain as legacy reference; use the files marked Live for the current release. [TEAM.md](docs/TEAM.md) contains registration details. Public source: https://github.com/shanmukhgara48-source/glucotwin-alpha. Registration and platform submission remain external steps.
 
 Code: MIT. Shanghai data: CC BY 4.0 with attribution in [DATA_LICENSE.md](DATA_LICENSE.md). No CGMacros data are included. Counts: 100 patients / 109 recordings / 112,462 measured observations; 13 missing rows excluded and 11 gaps preserved. The Chinese hospital cohort does not establish Indian clinical performance.
