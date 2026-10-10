@@ -27,11 +27,15 @@ Published judging criteria do not include numerical weights. No winning probabil
 
 `docs/VIDEO_SCRIPT.md` retains the narration. `docs/EVIDENCE.md`, `docs/VALIDATION.md` and benchmark artifacts retain results and limitations. Code license is MIT; dataset attribution and CC BY 4.0 terms remain separate.
 
+## Public repository
+
+[glucotwin-alpha](https://github.com/shanmukhgara48-source/glucotwin-alpha) is public and includes the source, attributed data/model artifacts and submission assets. Its default branch is `codex/glucotwin`.
+
 ## External steps still required
 
 1. Complete registration using the participant account and accurate contact details.
 2. Ask the doctor to perform the five-case review and record actual feedback; resolve critical misunderstandings.
-3. Publish the included source as a public GitHub repository. Verify fresh setup and add its URL to the entry.
+3. Add the public repository URL above to the entry and verify it remains accessible.
 4. Upload/access-check architecture, presentation and the explanation/demo video; verify the platform accepts the chosen file/link format.
 5. Verify team details and all requirements on the official entry page; submit before the deadline.
 

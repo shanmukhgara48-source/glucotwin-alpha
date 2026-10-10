@@ -89,6 +89,6 @@ Private runtime files and backups are excluded from the release. File permission
 
 ## Submission assets
 
-The `docs/submission/` folder contains the strategy, original architecture, editable presentation, presentation PDF, doctor-review packet and explanation/demo video. Synthetic narration is disclosed; the recording includes the actual local application. [TEAM.md](docs/TEAM.md) contains registration details. Public repository publication, registration and platform submission are external steps still to complete.
+The `docs/submission/` folder contains the strategy, original architecture, editable presentation, presentation PDF, doctor-review packet and explanation/demo video. Synthetic narration is disclosed; the recording includes the actual local application. [TEAM.md](docs/TEAM.md) contains registration details. Public source: https://github.com/shanmukhgara48-source/glucotwin-alpha. Registration and platform submission remain external steps.
 
 Code: MIT. Shanghai data: CC BY 4.0 with attribution in [DATA_LICENSE.md](DATA_LICENSE.md). No CGMacros data are included. Counts: 100 patients / 109 recordings / 112,462 measured observations; 13 missing rows excluded and 11 gaps preserved. The Chinese hospital cohort does not establish Indian clinical performance.
