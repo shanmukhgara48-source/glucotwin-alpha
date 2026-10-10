@@ -1,69 +1,725 @@
-import { useEffect, useState } from 'react';
-import type { FormEvent } from 'react';
-import { Activity, ArrowRight, BarChart3, CalendarClock, Check, ChevronRight, ClipboardList, Database, Download, FileUp, Fingerprint, FlaskConical, LoaderCircle, LogOut, RefreshCw, ShieldCheck, Waves } from 'lucide-react';
-import { api, download, getToken, post, setToken } from './api';
-import { InternalEvidence } from './ClinicBenchmark';
-import { EvidenceTimeline, IntakeView, ModelEvidence, MonitoringBanner, MonitoringView, QueueView, ReviewPanel } from './ClinicViews';
-import { BenchmarkView, ProvenanceView, Replay } from './ResearchViews';
-import type { Benchmark, Forecast, Monitoring, Patient, Provenance, QueueData, Snapshot, User } from './types';
-import { Badge, card, Empty, Eyebrow, field, label, num, primary, secondary, Title } from './ui';
-
-type View = 'queue' | 'patient' | 'monitoring' | 'intake' | 'benchmark' | 'provenance';
-const views = [{ id: 'queue', title: 'Review queue', icon: ClipboardList }, { id: 'patient', title: 'Patient workspace', icon: Activity }, { id: 'monitoring', title: 'Monitoring hours', icon: CalendarClock }, { id: 'intake', title: 'Data intake', icon: FileUp }, { id: 'benchmark', title: 'Model evidence', icon: BarChart3 }, { id: 'provenance', title: 'Data lineage', icon: Database }] as const;
-
-function Login({ signedIn, expired }: { signedIn: (user: User) => void; expired: boolean }) {
-  const [username, setUsername] = useState('reviewer'); const [password, setPassword] = useState(''); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
-  async function submit(event: FormEvent) { event.preventDefault(); setBusy(true); setError(''); try { const data = await post<{ token: string; user: User }>('/auth/login', { username, password }); setToken(data.token); signedIn(data.user); } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); } finally { setBusy(false); } }
-  return <div className="flex min-h-screen items-center justify-center bg-[#f4f7f3] px-5 py-10"><div className="grid w-full max-w-[980px] gap-8 lg:grid-cols-[1fr_400px]"><div className="flex flex-col justify-center"><div className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#184a40] text-[#b4dfca]"><Waves size={26} /></div><div className="text-2xl font-semibold tracking-[-0.05em] text-[#234e43]">GlucoTwin</div></div><p className="mt-8 text-[10px] font-bold uppercase tracking-[0.18em] text-[#6a8172]">Clinic monitoring workspace</p><h1 className="mt-3 max-w-lg text-[37px] font-semibold leading-[1.12] tracking-[-0.05em] text-[#193e3b]">A patient model.<br />An accountable next step.</h1><p className="mt-5 max-w-md text-sm leading-relaxed text-[#647c69]">Inspect evolving glucose forecasts, review the evidence, and record follow-up in one care-team workflow.</p><div className="mt-8 flex flex-wrap gap-2"><Badge><Fingerprint size={12} />Anonymized research data</Badge><Badge><ShieldCheck size={12} />Role-based workspace</Badge></div><p className="mt-5 max-w-md text-[11px] leading-relaxed text-[#6f8173]">A hackathon research prototype. Clinician workflow review and prospective clinical validation remain pending.</p></div><section className={card + ' p-7 sm:p-8'}><Eyebrow>Authorized workspace access</Eyebrow><h2 className="mt-3 text-xl font-semibold text-[#264e43]">Sign in</h2><p className="mt-2 text-xs leading-relaxed text-[#6b7b70]">Use the local reviewer or administrator account provided with this installation.</p>{expired && <p role="status" className="mt-4 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">Your session expired. Sign in again to continue.</p>}<form className="mt-6 space-y-4" onSubmit={(e) => void submit(e)}><label className="block text-xs font-medium text-[#5d7662]">Username<input aria-label="Username" autoComplete="username" className={field + ' mt-1.5'} value={username} onChange={(e) => setUsername(e.target.value)} required /></label><label className="block text-xs font-medium text-[#5d7662]">Password<input aria-label="Password" type="password" autoComplete="current-password" className={field + ' mt-1.5'} value={password} onChange={(e) => setPassword(e.target.value)} required /></label>{error && <p role="alert" className="text-xs leading-relaxed text-amber-800">{error}</p>}<button className={primary + ' mt-2 w-full'} disabled={busy}>{busy ? <LoaderCircle size={14} className="animate-spin" /> : <ArrowRight size={14} />}Sign in</button></form><p className="mt-5 border-t border-[#e5eee5] pt-4 text-[10px] leading-relaxed text-[#758476]">Credentials stay out of public source and demo artifacts. An administrator can supply access if you do not have an account.</p></section></div></div>;
+import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
+import {
+  BrowserRouter,
+  Navigate,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  Activity,
+  ArrowRight,
+  BarChart3,
+  ChevronRight,
+  ClipboardList,
+  Database,
+  FileUp,
+  Fingerprint,
+  FlaskConical,
+  HeartHandshake,
+  LogOut,
+  Menu,
+  ShieldCheck,
+  Users,
+  Waves,
+  WifiOff,
+  X,
+} from "lucide-react";
+import { api, post, setCsrf, setToken } from "./api";
+import type { Benchmark, Provenance, User } from "./types";
+import { InternalEvidence } from "./ClinicBenchmark";
+import { BenchmarkView, ProvenanceView } from "./ResearchViews";
+import {
+  PatientDirectory,
+  PatientWorkspace,
+  ReviewDesk,
+} from "./ClinicalWorkspace";
+import {
+  AccountSecurity,
+  AdminView,
+  IntakeDesk,
+  OperationsView,
+  PatientCompanion,
+} from "./PlatformViews";
+import {
+  Chip,
+  ErrorBox,
+  Field,
+  Heading,
+  human,
+  input,
+  Loading,
+  Logo,
+  outline,
+  solid,
+  surface,
+} from "./Design";
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 15000, retry: 1, refetchOnWindowFocus: true },
+  },
+});
+interface Session {
+  user: User;
+  csrf_token: string;
+  expires_at?: string;
 }
-
+function Login({
+  signedIn,
+  expired,
+}: {
+  signedIn: (s: Session) => void;
+  expired: boolean;
+}) {
+  const [username, setUsername] = useState("reviewer");
+  const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [activation, setActivation] = useState(false);
+  const [invitation, setInvitation] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      if (activation) {
+        await post("/v2/auth/activate", {
+          invitation_code: invitation,
+          password,
+        });
+        setActivation(false);
+        setPassword("");
+        setInvitation("");
+        setNotice(
+          "Invitation activated. Sign in with the username supplied by your administrator.",
+        );
+      } else {
+        const data = await post<Session>("/v2/auth/login", {
+          username,
+          password,
+          ...(otp ? { otp } : {}),
+        });
+        setCsrf(data.csrf_token);
+        signedIn(data);
+      }
+    } catch (c) {
+      setError(c instanceof Error ? c.message : String(c));
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="grid min-h-dvh bg-[#f4f6f8] lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative flex min-h-[340px] flex-col justify-between overflow-hidden bg-[#102d35] px-7 py-8 text-white sm:px-12 lg:px-16 lg:py-12">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10">
+              <Waves size={26} />
+            </div>
+            <p className="text-xl font-semibold tracking-tight">
+              GlucoTwin<span className="text-teal-300">.</span>
+            </p>
+          </div>
+          <span className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-teal-100">
+            Research workspace
+          </span>
+        </div>
+        <div className="relative my-12 max-w-xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-teal-300">
+            A model that learns. A record that remembers.
+          </p>
+          <h1 className="mt-5 text-[38px] font-medium leading-[1.08] tracking-[-0.05em] sm:text-[48px] lg:text-[56px]">
+            Better care starts
+            <br />
+            with clearer evidence.
+          </h1>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-slate-300">
+            Watch a patient model evolve, inspect what it knew, and turn a
+            forecast into an accountable next step.
+          </p>
+          <div className="mt-9 rounded-2xl border border-white/15 bg-white/5 p-5">
+            <div className="flex items-center justify-between text-xs text-slate-300">
+              <span>THE GLUCOTWIN EVIDENCE LOOP</span>
+              <Fingerprint size={16} />
+            </div>
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              {["Observe", "Forecast", "Review", "Learn"].map((v, i) => (
+                <span key={v} className="flex items-center gap-2">
+                  <span
+                    className={
+                      "rounded-lg px-3 py-2 text-sm " +
+                      (i === 1
+                        ? "bg-teal-300 text-teal-950"
+                        : "bg-white/10 text-white")
+                    }
+                  >
+                    {v}
+                  </span>
+                  {i < 3 && (
+                    <ChevronRight size={14} className="text-teal-300" />
+                  )}
+                </span>
+              ))}
+            </div>
+            <svg
+              viewBox="0 0 450 100"
+              role="img"
+              aria-label="Decorative trajectory; no patient data"
+              className="mt-5 h-20 w-full"
+            >
+              <path
+                d="M0 72 L25 68 L55 72 L85 65 L105 52 L130 60 L158 39 L185 43 L218 24 L245 34 L265 29 L290 41 L315 31 L342 39"
+                fill="none"
+                stroke="#99e1d3"
+                strokeWidth="2.5"
+              />
+              <path
+                d="M342 39 L375 20 L410 28 L450 13"
+                fill="none"
+                stroke="#5eead4"
+                strokeWidth="2.5"
+                strokeDasharray="5 5"
+              />
+              <path
+                d="M342 39 L375 8 L410 9 L450 0 L450 39 L410 46 L375 40 Z"
+                fill="#5eead4"
+                opacity=".1"
+              />
+              <line
+                x1="342"
+                y1="0"
+                x2="342"
+                y2="95"
+                stroke="#94a3b8"
+                strokeDasharray="3 4"
+              />
+            </svg>
+          </div>
+        </div>
+        <p className="max-w-lg text-xs leading-relaxed text-slate-400">
+          Public CGM playback and labeled synthetic collection. Clinical device
+          access, clinician workflow review, and prospective validation remain
+          pending.
+        </p>
+      </div>
+      <main className="flex items-center justify-center p-6 sm:p-10">
+        <div className="w-full max-w-[420px]">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal-700">
+            Authorized access
+          </p>
+          <h2 className="mt-3 text-[30px] font-semibold tracking-tight text-slate-900">
+            {activation
+              ? "Activate your invitation"
+              : "Welcome to your workspace"}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-slate-500">
+            {activation
+              ? "Use the private code from your clinic administrator."
+              : "Sign in as a clinician, coordinator, administrator, or linked research patient."}
+          </p>
+          {expired && (
+            <p
+              role="status"
+              className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"
+            >
+              Your session ended. Sign in to continue. Unsaved care notes remain
+              private to this browser tab.
+            </p>
+          )}
+          {notice && (
+            <p
+              role="status"
+              className="mt-5 rounded-xl bg-teal-50 p-4 text-sm text-teal-800"
+            >
+              {notice}
+            </p>
+          )}
+          <form className="mt-7 space-y-5" onSubmit={(e) => void submit(e)}>
+            {activation ? (
+              <Field label="Private invitation code">
+                <input
+                  aria-label="Invitation code"
+                  className={input}
+                  value={invitation}
+                  onChange={(e) => setInvitation(e.target.value)}
+                  required
+                  autoComplete="off"
+                />
+              </Field>
+            ) : (
+              <Field label="Username">
+                <input
+                  aria-label="Username"
+                  className={input}
+                  autoComplete="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </Field>
+            )}
+            <Field
+              label={activation ? "Choose a password" : "Password"}
+              hint={activation ? "Use at least 12 characters." : undefined}
+            >
+              <input
+                aria-label="Password"
+                className={input}
+                type="password"
+                autoComplete={activation ? "new-password" : "current-password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={activation ? 12 : undefined}
+              />
+            </Field>
+            {!activation && (
+              <details>
+                <summary className="min-h-11 cursor-pointer text-sm text-slate-500">
+                  Using a two-factor code?
+                </summary>
+                <Field label="Authenticator code">
+                  <input
+                    aria-label="Authenticator code"
+                    className={input}
+                    autoComplete="one-time-code"
+                    inputMode="numeric"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                  />
+                </Field>
+              </details>
+            )}
+            <ErrorBox error={error} />
+            <button className={solid + " w-full"} disabled={busy}>
+              {busy
+                ? "Please wait…"
+                : activation
+                  ? "Activate account"
+                  : "Sign in securely"}
+              <ArrowRight size={17} />
+            </button>
+          </form>
+          <button
+            className="mt-4 min-h-11 text-sm font-medium text-teal-800 underline underline-offset-4"
+            onClick={() => {
+              setActivation(!activation);
+              setError("");
+              setNotice("");
+            }}
+          >
+            {activation ? "Return to sign in" : "Activate a clinic invitation"}
+          </button>
+          <div className="mt-8 flex items-start gap-3 border-t border-slate-200 pt-5">
+            <ShieldCheck size={18} className="mt-0.5 shrink-0 text-teal-700" />
+            <p className="text-xs leading-relaxed text-slate-500">
+              Sessions use protected cookies. Credentials and activation codes
+              stay out of public source and demonstration recordings.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
+function EvidencePage() {
+  const current = useQuery({
+    queryKey: ["clinic-benchmark"],
+    queryFn: () => api<Record<string, unknown>>("/clinic-benchmark"),
+  });
+  const legacy = useQuery({
+    queryKey: ["benchmarks"],
+    queryFn: () => api<Benchmark>("/benchmarks"),
+  });
+  return (
+    <div className="space-y-6">
+      <Heading
+        overline="Model evidence"
+        title="Make the result easy to challenge."
+      >
+        Measured retrospective evaluation, calibration, ablations, and
+        unsuccessful forecasts.
+      </Heading>
+      <ErrorBox error={current.error || legacy.error} />
+      {current.isPending ? (
+        <Loading />
+      ) : (
+        <InternalEvidence evidence={current.data || null} />
+      )}
+      <details className={surface + " p-5"}>
+        <summary className="min-h-11 cursor-pointer text-base font-semibold text-slate-700">
+          Legacy reference benchmark
+        </summary>
+        <p className="mb-4 text-sm text-slate-500">
+          A different earlier split; results are not a paired improvement
+          comparison with the current five-fold model.
+        </p>
+        <BenchmarkView benchmark={legacy.data || null} />
+      </details>
+    </div>
+  );
+}
+function LineagePage() {
+  const p = useQuery({
+    queryKey: ["provenance"],
+    queryFn: () => api<Provenance>("/provenance"),
+  });
+  return (
+    <div className="space-y-5">
+      <ErrorBox error={p.error} />
+      {p.isPending ? (
+        <Loading />
+      ) : (
+        <ProvenanceView provenance={p.data || null} />
+      )}
+    </div>
+  );
+}
+const nav = [
+  { path: "/review", label: "Review desk", icon: ClipboardList },
+  { path: "/patients", label: "Patient directory", icon: Users },
+  { path: "/operations", label: "Operations", icon: Activity },
+  { path: "/intake", label: "Data intake", icon: FileUp, admin: true },
+  { path: "/evidence", label: "Model evidence", icon: BarChart3 },
+  { path: "/lineage", label: "Data lineage", icon: Database },
+  { path: "/admin", label: "Clinic settings", icon: ShieldCheck, admin: true },
+];
+function Workspace() {
+  const client = useQueryClient();
+  const location = useLocation();
+  const [session, setSession] = useState<Session | null>(null);
+  const [ready, setReady] = useState(false);
+  const [expired, setExpired] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const navigationRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!menu || window.matchMedia("(min-width: 1024px)").matches) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const panel = navigationRef.current;
+    const focusable = () =>
+      Array.from(
+        panel?.querySelectorAll<HTMLElement>(
+          "a[href],button:not([disabled])",
+        ) || [],
+      ).filter((el) => el.getClientRects().length);
+    focusable()[0]?.focus();
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenu(false);
+      }
+      if (event.key !== "Tab") return;
+      const items = focusable();
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    document.addEventListener("keydown", key);
+    return () => {
+      document.removeEventListener("keydown", key);
+      previous?.focus();
+    };
+  }, [menu]);
+  const [online, setOnline] = useState(navigator.onLine);
+  const [install, setInstall] = useState<
+    (Event & { prompt: () => Promise<void> }) | null
+  >(null);
+  useEffect(() => {
+    setToken(null);
+    api<Session>("/v2/auth/me")
+      .then((s) => {
+        setSession(s);
+        setCsrf(s.csrf_token);
+      })
+      .catch(() => undefined)
+      .finally(() => setReady(true));
+    const expiry = () => {
+      setSession(null);
+      setCsrf("");
+      setExpired(true);
+      client.clear();
+    };
+    const online = () => setOnline(navigator.onLine);
+    const prompt = (e: Event) => {
+      e.preventDefault();
+      setInstall(e as Event & { prompt: () => Promise<void> });
+    };
+    window.addEventListener("glucotwin:session-expired", expiry);
+    window.addEventListener("online", online);
+    window.addEventListener("offline", online);
+    window.addEventListener("beforeinstallprompt", prompt);
+    return () => {
+      window.removeEventListener("glucotwin:session-expired", expiry);
+      window.removeEventListener("online", online);
+      window.removeEventListener("offline", online);
+      window.removeEventListener("beforeinstallprompt", prompt);
+    };
+  }, [client]);
+  useEffect(() => {
+    setMenu(false);
+    document.title =
+      "GlucoTwin · " +
+      (session?.user.role === "patient"
+        ? "Your companion"
+        : nav.find((n) => location.pathname.startsWith(n.path))?.label ||
+          "Patient workspace");
+  }, [location.pathname, session?.user.role]);
+  useEffect(() => {
+    if (!session || session.user.role === "patient") return;
+    const event = new EventSource("/api/v2/events", { withCredentials: true });
+    const update = () => {
+      for (const key of [
+        "queue",
+        "receipts",
+        "receipt",
+        "operations",
+        "timeline",
+        "patients",
+      ])
+        void client.invalidateQueries({ queryKey: [key] });
+    };
+    event.addEventListener("update", update);
+    return () => event.close();
+  }, [session, client]);
+  async function logout() {
+    try {
+      await post("/v2/auth/logout", {});
+    } finally {
+      setCsrf("");
+      setToken(null);
+      setSession(null);
+      setExpired(false);
+      client.clear();
+      for (const key of Object.keys(sessionStorage))
+        if (key.startsWith("glucotwin.draft.")) sessionStorage.removeItem(key);
+    }
+  }
+  if (!ready)
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-slate-50">
+        <Loading label="Restoring protected session…" />
+      </div>
+    );
+  if (!session)
+    return (
+      <Login
+        expired={expired}
+        signedIn={(s) => {
+          setSession(s);
+          setExpired(false);
+          client.clear();
+        }}
+      />
+    );
+  const user = session.user;
+  const isPatient = user.role === "patient";
+  const links = isPatient
+    ? [{ path: "/companion", label: "Your companion", icon: HeartHandshake }]
+    : nav.filter((n) => !n.admin || user.role === "admin");
+  const active = location.pathname.startsWith("/patients/")
+    ? { label: "Patient twin workspace" }
+    : links.find((n) => location.pathname.startsWith(n.path));
+  return (
+    <div className="min-h-dvh bg-[#f4f6f8] text-slate-700 lg:grid lg:grid-cols-[232px_minmax(0,1fr)]">
+      <a
+        className="fixed left-4 top-3 z-[80] -translate-y-20 rounded-xl bg-teal-900 px-5 py-3 text-white focus:translate-y-0"
+        href="#main"
+      >
+        Skip to main content
+      </a>
+      <aside
+        ref={navigationRef}
+        className={
+          "fixed inset-y-0 left-0 z-40 flex w-[260px] flex-col border-r border-slate-200 bg-white p-4 shadow-xl transition-transform lg:sticky lg:top-0 lg:h-dvh lg:w-auto lg:translate-x-0 lg:shadow-none " +
+          (menu ? "translate-x-0" : "hidden lg:flex")
+        }
+      >
+        <div className="flex items-center justify-between px-1 py-3">
+          <Logo />
+          <button
+            className={outline + " !px-3 lg:hidden"}
+            onClick={() => setMenu(false)}
+            aria-label="Close navigation"
+          >
+            <X size={18} />
+          </button>
+        </div>
+        <p className="mt-8 px-3 text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+          {isPatient ? "Personal workspace" : "Clinic workspace"}
+        </p>
+        <nav aria-label="Main navigation" className="mt-3 space-y-1.5">
+          {links.map(({ path, label, icon: Icon }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className={({ isActive }) =>
+                "flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors " +
+                (isActive
+                  ? "bg-teal-50 text-teal-900"
+                  : "text-slate-500 hover:bg-slate-50 hover:text-slate-800")
+              }
+            >
+              <Icon size={18} />
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+        <div className="mt-auto pt-6">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-100 text-xs font-semibold text-teal-900">
+                {(user.name || user.username)
+                  .split(" ")
+                  .slice(0, 2)
+                  .map((s) => s[0])
+                  .join("")
+                  .toUpperCase()}
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-slate-800">
+                  {user.name || user.username}
+                </p>
+                <p className="text-xs text-slate-500">{human(user.role)}</p>
+              </div>
+            </div>
+            <button
+              className={outline + " mt-4 w-full"}
+              onClick={() => void logout()}
+            >
+              <LogOut size={15} />
+              Sign out
+            </button>
+          </div>
+          {install && (
+            <button
+              className={outline + " mt-3 w-full"}
+              onClick={() => void install.prompt().then(() => setInstall(null))}
+            >
+              Install workspace
+            </button>
+          )}
+          {!isPatient && <AccountSecurity />}
+          <p className="px-2 pt-4 text-xs leading-relaxed text-slate-400">
+            Team alpha · Research prototype
+            <br />
+            Clinical release gates pending
+          </p>
+        </div>
+      </aside>
+      {menu && (
+        <button
+          className="fixed inset-0 z-30 bg-slate-950/25 lg:hidden"
+          aria-label="Close navigation overlay"
+          onClick={() => setMenu(false)}
+        />
+      )}
+      <div className="min-w-0">
+        <header className="sticky top-0 z-20 flex min-h-[72px] items-center justify-between gap-3 border-b border-slate-200 bg-white/95 px-4 backdrop-blur sm:px-7">
+          <div className="flex min-w-0 items-center gap-3">
+            <button
+              className={outline + " !px-3 lg:hidden"}
+              onClick={() => setMenu(true)}
+              aria-label="Open navigation"
+            >
+              <Menu size={19} />
+            </button>
+            <div className="flex min-w-0 items-center gap-2 text-sm">
+              <span className="hidden text-slate-400 sm:inline">
+                {isPatient ? "My record" : user.clinic_id}
+              </span>
+              <ChevronRight
+                size={14}
+                className="hidden text-slate-300 sm:block"
+              />
+              <span className="truncate font-medium text-slate-700">
+                {active?.label || "Patient twin workspace"}
+              </span>
+            </div>
+          </div>
+          <Chip tone="violet">
+            <FlaskConical size={12} />
+            <span className="hidden sm:inline">Research environment · </span>
+            Clinical gates pending
+          </Chip>
+        </header>
+        {!online && (
+          <div
+            role="status"
+            className="flex items-center gap-2 border-b border-amber-200 bg-amber-50 px-5 py-3 text-sm text-amber-900"
+          >
+            <WifiOff size={17} />
+            Connection unavailable. New actions require the server; unsaved
+            notes remain in this browser tab.
+          </div>
+        )}
+        <main
+          id="main"
+          tabIndex={-1}
+          className="mx-auto min-w-0 max-w-[1600px] px-4 py-6 outline-none sm:px-7 sm:py-7"
+        >
+          <Routes>
+            {isPatient ? (
+              <>
+                <Route path="/companion" element={<PatientCompanion />} />
+                <Route
+                  path="*"
+                  element={<Navigate to="/companion" replace />}
+                />
+              </>
+            ) : (
+              <>
+                <Route path="/review" element={<ReviewDesk user={user} />} />
+                <Route path="/patients" element={<PatientDirectory />} />
+                <Route
+                  path="/patients/:patientId"
+                  element={<PatientWorkspace user={user} />}
+                />
+                <Route
+                  path="/operations"
+                  element={<OperationsView user={user} />}
+                />
+                <Route path="/evidence" element={<EvidencePage />} />
+                <Route path="/lineage" element={<LineagePage />} />
+                {user.role === "admin" && (
+                  <>
+                    <Route
+                      path="/intake"
+                      element={<IntakeDesk user={user} />}
+                    />
+                    <Route path="/admin" element={<AdminView user={user} />} />
+                  </>
+                )}
+                <Route path="*" element={<Navigate to="/review" replace />} />
+              </>
+            )}
+          </Routes>
+        </main>
+      </div>
+    </div>
+  );
+}
 export default function App() {
-  const [user, setUser] = useState<User | null>(null); const [authReady, setAuthReady] = useState(!getToken()); const [expired, setExpired] = useState(false); const [view, setView] = useState<View>('queue');
-  const [patients, setPatients] = useState<Patient[]>([]); const [patientId, setPatientId] = useState(''); const [snapshot, setSnapshot] = useState<Snapshot | null>(null); const [benchmark, setBenchmark] = useState<Benchmark | null>(null); const [internalEvidence, setInternalEvidence] = useState<Record<string, unknown> | null>(null); const [provenance, setProvenance] = useState<Provenance | null>(null);
-  const [queue, setQueue] = useState<QueueData | null>(null); const [monitoring, setMonitoring] = useState<Monitoring | null>(null); const [queueLoading, setQueueLoading] = useState(false); const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
-  const [cursor, setCursor] = useState(96); const [scenario, setScenario] = useState('recorded'); const [playing, setPlaying] = useState(false); const [speed, setSpeed] = useState(1); const [loading, setLoading] = useState(false); const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [notice, setNotice] = useState(''); const [reload, setReload] = useState(0); const [timelineRefresh, setTimelineRefresh] = useState(0); const [streamRefresh, setStreamRefresh] = useState(0);
-  useEffect(() => { const expire = () => { setToken(null); setUser(null); setExpired(true); setPlaying(false); setPatients([]); setSnapshot(null); setQueue(null); setMonitoring(null); setPatientId(''); setSelectedReviewId(null); setNotice(''); setError(''); setAuthReady(true); }; window.addEventListener('glucotwin:session-expired', expire); if (getToken()) api<User>('/auth/me').then((value) => setUser(value)).catch(() => { setToken(null); }).finally(() => setAuthReady(true)); return () => window.removeEventListener('glucotwin:session-expired', expire); }, []);
-  async function refreshQueue() { setQueueLoading(true); try { const data = await api<QueueData>('/clinic/queue'); setQueue(data); setMonitoring(data.monitoring); } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); } finally { setQueueLoading(false); } }
-  useEffect(() => {
-    if (!user) return;
-    const controller = new AbortController(); setLoading(true); setError('');
-    Promise.allSettled([api<Patient[]>('/patients', controller.signal), api<Benchmark>('/benchmarks', controller.signal), api<Provenance>('/provenance', controller.signal), api<QueueData>('/clinic/queue', controller.signal), api<Record<string, unknown>>('/clinic-benchmark', controller.signal)]).then(([patientResult, benchmarkResult, provenanceResult, queueResult, evidenceResult]) => {
-      if (controller.signal.aborted) return;
-      if (patientResult.status === 'rejected') { setError(String(patientResult.reason?.message || patientResult.reason)); setLoading(false); return; }
-      const data = patientResult.value.map((patient) => ({ ...patient, display_name: patient.display_name || patient.name || 'Patient ' + patient.id })); const bench = benchmarkResult.status === 'fulfilled' ? benchmarkResult.value : null; setPatients(data); setBenchmark(bench); setProvenance(provenanceResult.status === 'fulfilled' ? provenanceResult.value : null); setInternalEvidence(evidenceResult.status === 'fulfilled' ? evidenceResult.value : null);
-      if (queueResult.status === 'fulfilled') { setQueue(queueResult.value); setMonitoring(queueResult.value.monitoring); }
-      const chosenDemo = (evidenceResult.status === 'fulfilled' ? evidenceResult.value.demo : null) as Benchmark['demo']; const selected = data.find((patient) => patient.id === patientId) || data.find((patient) => patient.id === (chosenDemo?.patient_id || bench?.demo?.patient_id)) || data[0];
-      if (selected) { setPatientId(selected.id); if (!patientId) setCursor(chosenDemo?.patient_id === selected.id ? chosenDemo.cursor : bench?.demo?.patient_id === selected.id ? bench.demo.cursor : Math.min(96, (selected.observation_count || 97) - 1)); }
-      else setError('No anonymized patient profiles are available. Prepare the source data or import a synthetic scenario.'); setLoading(false);
-    }); return () => controller.abort();
-  }, [user, reload]);
-  useEffect(() => {
-    if (!user || !patientId) return;
-    const controller = new AbortController(); setLoading(true); setError('');
-    api<Snapshot>('/replay/' + encodeURIComponent(patientId) + '?cursor=' + cursor + '&scenario=' + scenario, controller.signal).then((data) => { if (controller.signal.aborted) return; setSnapshot(data); setLoading(false); if (data.cursor !== cursor) setCursor(data.cursor); }).catch((cause: Error) => { if (!controller.signal.aborted) { setError(cause.message); setLoading(false); setPlaying(false); } }); return () => controller.abort();
-  }, [user, patientId, cursor, scenario, streamRefresh]);
-  useEffect(() => { if (!playing || !snapshot) return; const timer = window.setInterval(() => setCursor((value) => { if (value >= snapshot.total_observations - 1) { setPlaying(false); return value; } return value + 1; }), 1500 / speed); return () => window.clearInterval(timer); }, [playing, snapshot, speed]);
-  const patient = patients.find((item) => item.id === patientId);
-  const currentSnapshot = snapshot?.patient.id === patientId ? snapshot : null;
-  const clinicModel = currentSnapshot?.clinic_model;
-  const activeSnapshot: Snapshot | null = currentSnapshot && clinicModel ? { ...currentSnapshot, model: clinicModel.model, event_risks: clinicModel.event_risks, adaptation: clinicModel.adaptation, forecasts: { ...currentSnapshot.forecasts, ...clinicModel.forecasts, twin: (clinicModel.model.primary === 'hybrid' ? clinicModel.forecasts.hybrid : clinicModel.forecasts.population) as Forecast[] }, forecast_history: clinicModel.forecast_history.map((row) => ({ issued_at: row.issued_at, target_time: row.target_at, horizon_minutes: row.horizon_minutes, twin: clinicModel.model.primary === 'hybrid' ? row.hybrid_mg_dl : row.population_mg_dl, population: row.population_mg_dl, actual: row.actual_mg_dl })) } : currentSnapshot;
-  const clinicDemo = internalEvidence?.demo as Benchmark['demo'];
-  const patientItems = (queue?.items || []).filter((item) => item.patient_id === patientId);
-  const review = patientItems.find((item) => item.id === selectedReviewId) || patientItems.find((item) => item.status !== 'closed') || patientItems[0];
-  function selectPatient(id: string, desiredCursor?: number) { setPatientId(id); setCursor(desiredCursor ?? Math.min(96, (patients.find((item) => item.id === id)?.observation_count || 97) - 1)); setScenario('recorded'); setPlaying(false); setSelectedReviewId(null); setNotice(''); }
-  function demonstration() { const demo = clinicDemo || benchmark?.demo; selectPatient(demo?.patient_id || patients[0]?.id || '', demo?.warning_cursor ?? demo?.cursor ?? 96); setView('patient'); }
-  async function capture() { if (!currentSnapshot) return; setPlaying(false); setBusy(true); setError(''); setNotice(''); try { const data = await post<{ review_id?: string | null; forecast_id?: string; monitoring?: Monitoring }>('/clinic/capture/' + encodeURIComponent(patientId), { cursor, scenario, ...((patientId.startsWith('SIM-') || patientId.startsWith('PUB-')) ? { current_time: currentSnapshot.current_time } : {}) }); setSelectedReviewId(data.review_id || null); if (data.monitoring) setMonitoring(data.monitoring); setNotice(data.review_id ? 'Forecast saved and linked to a persistent review episode.' : 'Forecast saved. No warning review episode was needed at this time.'); await refreshQueue(); setTimelineRefresh((value) => value + 1); } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); } finally { setBusy(false); } }
-  async function exportReport() { if (!currentSnapshot) return; setBusy(true); setError(''); try { await download('/clinic/report/' + encodeURIComponent(patientId) + '?at=' + encodeURIComponent(currentSnapshot.current_time) + '&scenario=' + encodeURIComponent(scenario), 'GlucoTwin_' + patientId + '_Consultation.pdf'); setNotice('Consultation summary downloaded.'); } catch (cause) { setError(cause instanceof Error ? cause.message : String(cause)); } finally { setBusy(false); } }
-  function imported(id?: string) { setReload((value) => value + 1); setStreamRefresh((value) => value + 1); if (id) { selectPatient(id); setView('patient'); } }
-  if (!authReady) return <div className="flex min-h-screen items-center justify-center gap-3 bg-[#f4f7f3] text-sm text-[#527260]"><LoaderCircle size={19} className="animate-spin" />Restoring workspace session…</div>;
-  if (!user) return <Login expired={expired} signedIn={(value) => { setUser(value); setExpired(false); setView('queue'); }} />;
-  return <div className="min-h-screen bg-[#f4f7f3] text-[#34523b] lg:grid lg:grid-cols-[224px_minmax(0,1fr)]"><aside className="flex flex-col border-b border-[#dee8d9] bg-[#fcfdfb] lg:min-h-screen lg:border-r lg:border-b-0"><div className="flex items-center gap-3 px-5 py-6"><div className="flex h-9 w-9 items-center justify-center rounded-[11px] bg-[#194740] text-[#b5d6c7]"><Waves size={23} /></div><div><div className="text-lg font-semibold tracking-[-0.04em] text-[#285241]">GlucoTwin</div><div className="mt-0.5 text-[9px] font-medium uppercase tracking-[0.15em] text-[#626f58]">Clinic workspace</div></div></div><nav className="flex flex-wrap gap-1 px-3 lg:flex-col" aria-label="Main workspace">{views.map(({ id, title, icon: Icon }) => <button key={id} onClick={() => { setPlaying(false); setView(id); setNotice(''); }} className={'flex items-center gap-3 rounded-xl px-3 py-3 text-xs font-medium transition-colors ' + (view === id ? 'bg-[#e9f3e8] text-[#38734b]' : 'text-[#626e5a] hover:bg-[#f0f5ec]')}><Icon size={16} />{title}{view === id && <ChevronRight size={12} className="ml-auto hidden lg:block" />}</button>)}</nav><div className="px-5 py-5 lg:mt-5"><Eyebrow>Patient record</Eyebrow><label className="sr-only" htmlFor="patient">Select patient</label><select id="patient" aria-label="Select patient" className={field + ' mt-3 !text-xs'} value={patientId} onChange={(e) => { selectPatient(e.target.value); setView('patient'); }} disabled={!patients.length}>{!patients.length && <option>Loading patients…</option>}{patients.map((item) => <option key={item.id} value={item.id}>{item.display_name}</option>)}</select>{patient && <div className="mt-4 hidden space-y-3 lg:block">{[['Age', patient.age == null ? 'Not provided' : num(patient.age, 0) + ' years'], ['Sex', patient.sex || 'Not provided'], ['BMI', patient.bmi == null ? 'Not provided' : num(patient.bmi) + ' kg/m²'], ['Diabetes history', patient.diabetes_duration_years == null ? 'Not provided' : num(patient.diabetes_duration_years) + ' years']].map(([title, value]) => <div key={title} className="flex items-center justify-between gap-2 text-[10px]"><span className="text-[#636f5a]">{title}</span><span className="font-medium text-[#5a7249]">{value}</span></div>)}<p className="rounded-lg border border-[#e1ead8] bg-[#f7faf1] p-3 text-[10px] leading-relaxed text-[#6e7a5c]">{patient.id.startsWith('SIM-') ? 'Fully synthetic scenario. No measured patient linkage.' : patient.id.startsWith('PUB-') ? 'Imported public CGM. Matched demographics were not supplied.' : 'Matched source context; baseline collection timing is assumed.'}</p></div>}</div><div className="mt-auto px-5 py-5"><div className="rounded-xl border border-[#dee9d0] bg-[#f7faf1] p-4"><div className="flex items-center gap-2 text-xs font-semibold text-[#587339]"><ShieldCheck size={15} />{user.name || user.username}</div><p className="mt-2 text-[10px] text-[#647050]">{label(user.role)} · {user.clinic_id}</p><button className={secondary + ' mt-3 w-full !py-2 !text-[11px]'} onClick={() => { void post('/auth/logout', {}).catch(() => undefined); setToken(null); setUser(null); setPlaying(false); setPatients([]); setSnapshot(null); setQueue(null); setPatientId(''); setSelectedReviewId(null); }}><LogOut size={12} />Sign out</button></div></div></aside><div className="min-w-0"><header className="flex flex-wrap items-center justify-between gap-3 border-b border-[#e0e8d8] bg-white/70 px-5 py-3.5 sm:px-8"><div className="flex items-center gap-2 text-[11px] text-[#626d58]"><span>Clinic</span><ChevronRight size={11} /><span className="font-medium text-[#5c704e]">{views.find((item) => item.id === view)?.title}</span></div><span className="flex items-center gap-1.5 rounded-md bg-[#f6f5ea] px-2 py-1 text-[10px] text-[#726b48]"><FlaskConical size={11} />Research only · no treatment guidance</span></header><main className="mx-auto max-w-[1520px] space-y-5 px-4 py-6 sm:px-8 sm:py-7">{error && <div role="alert" className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#ecd5bb] bg-[#fff8ee] px-4 py-3 text-xs leading-relaxed text-[#836744]"><span>{error}</span><button className={secondary} onClick={() => { setReload((value) => value + 1); setStreamRefresh((value) => value + 1); }}><RefreshCw size={13} />Retry connection</button></div>}{notice && <div role="status" className="flex items-center gap-2 rounded-xl border border-[#cee4d6] bg-[#edf8f0] px-4 py-3 text-xs text-[#427253]"><Check size={14} />{notice}</div>}
-      {view === 'queue' && <QueueView queue={queue} loading={queueLoading || loading} refresh={() => void refreshQueue()} open={(item) => { selectPatient(item.patient_id, item.cursor); setSelectedReviewId(item.id); setScenario(item.scenario || 'recorded'); setView('patient'); }} demo={demonstration} />}
-      {view === 'patient' && <><MonitoringBanner monitoring={currentSnapshot?.monitoring || monitoring} /><div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#dce8de] bg-white px-4 py-3"><div className="text-[11px] leading-relaxed text-[#607768]">Issued forecasts and care-team decisions are saved explicitly. Playback itself is read-only.</div><div className="flex flex-wrap gap-2"><button className={primary} onClick={() => void capture()} disabled={busy || loading || !currentSnapshot}>{busy ? <LoaderCircle size={13} className="animate-spin" /> : <ClipboardList size={13} />}Save forecast for review</button><button className={secondary} onClick={() => void exportReport()} disabled={busy || loading || !currentSnapshot}><Download size={13} />Export consultation PDF</button></div></div><Replay snapshot={activeSnapshot} loading={loading} playing={playing} setPlaying={setPlaying} cursor={cursor} setCursor={setCursor} scenario={scenario} setScenario={setScenario} speed={speed} setSpeed={setSpeed} patient={patient} demo={clinicDemo || benchmark?.demo} /><ModelEvidence snapshot={activeSnapshot} /><ReviewPanel item={review} saved={() => { void refreshQueue(); setTimelineRefresh((value) => value + 1); setNotice('Review decision saved with its audit history.'); }} report={() => void exportReport()} busy={busy || loading} /><EvidenceTimeline patient={patient} at={currentSnapshot?.current_time} scenario={scenario} refreshKey={timelineRefresh} saved={() => setTimelineRefresh((value) => value + 1)} /></>}
-      {view === 'monitoring' && <MonitoringView initial={monitoring} user={user} saved={() => void refreshQueue()} />}
-      {view === 'intake' && <IntakeView user={user} patient={patient} imported={imported} />}
-      {view === 'benchmark' && <div className="space-y-5"><Title eyebrow="Model evidence" title="Compare before claiming">Internal retrospective evaluation of the clinic model, alongside the original patient-separated benchmark.</Title><InternalEvidence evidence={internalEvidence} /><div className="border-t border-[#dce8dc] pt-6"><Eyebrow>Legacy model benchmark — retained for comparison</Eyebrow><div className="mt-4"><BenchmarkView benchmark={benchmark} /></div></div></div>}
-      {view === 'provenance' && <ProvenanceView provenance={provenance} />}
-      {!patients.length && !loading && view === 'patient' && <Empty>No patient is loaded.</Empty>}
-    </main></div></div>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Workspace />
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
 }

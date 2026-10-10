@@ -1,6 +1,6 @@
-# GlucoTwin — watch the patient model learn
+# GlucoTwin — an auditable patient model and care workflow
 
-A working clinic monitoring research prototype for the Digital Twin Challenge 2026: **identify a patient → inspect the evolving twin → review a forecast → document follow-up → compare the observed outcome → export a consultation summary**.
+A continuous diabetes care research platform for the Digital Twin Challenge 2026: **identify a patient → inspect the evolving twin → review a forecast → document follow-up → compare the observed outcome → export a consultation summary**.
 
 **Team alpha · vnrvjiet · Shanmukh sai gara · registered size 1.** Delivery is organized into four workstreams: data/evaluation, model/backend, product/design, and research/submission.
 
@@ -13,7 +13,7 @@ Python 3.12+ and Node 20+ are required. The tested local runtime is Python 3.12.
 ./start.sh
 ```
 
-Open http://127.0.0.1:5173. The API is http://127.0.0.1:8765. On first startup, random local `admin` and `reviewer` passwords are generated in **`.run/clinic-credentials.json`**. Read that private file to sign in; never publish it. Admin can import data and set monitoring hours; reviewer can inspect evidence, record follow-up and export reports.
+Open http://127.0.0.1:5173. The API is http://127.0.0.1:8765. On first startup, random local `admin`, `reviewer`, `clinician`, `coordinator` and `patient` passwords are generated in **`.run/clinic-credentials.json`**. Read that private file to sign in; never publish it. Admin can provision staff and synthetic sources; care-team accounts review evidence and publish follow-up. The patient account sees only SIM-COMPANION. New UI sessions use HttpOnly cookies and CSRF protection.
 
 To run the compiled frontend and API on one origin:
 
@@ -23,18 +23,31 @@ To run the compiled frontend and API on one origin:
 
 Open http://127.0.0.1:8765. This is a local compiled demonstration, not a hosted clinical deployment. Use `GLUCOTWIN_API_PORT=8766` for another port. Development also accepts `GLUCOTWIN_UI_PORT=5174`. `.env.example` documents exported environment variables; it is not automatically loaded.
 
-## Implemented care workflow
+## Implemented v0.3 platform
 
-- Patient review queue with episode deduplication, assigned reviewer, status, overdue follow-up and freshness **at issue**.
-- Native recorded CGM replay, patient context, forecast intervals and visible outcome-based adaptation.
-- Primary 30-minute excursion probability; separate 60-minute evidence; ongoing high glucose and missing-data items distinguished.
-- Configurable staffed windows. Outside hours, forecasts are retained for later review and inactive monitoring is visible.
-- Persistent `new → reviewed → follow-up planned → closed` actions with reason, note, reviewer and audit history.
-- Consultation PDFs reflecting the evidence displayed at the selected replay time, including sensor-gap restrictions.
-- Administrator intake of synthetic CSV, administrator-attested anonymized Shanghai CSV, limited local FHIR R4 bundles, and simulated readings.
-- Authenticated reviewer/admin roles, clinic checks, SQLite migrations, immutable forecast records and consistent backup/recovery tooling.
+- Premium routed clinician review desk and patient workspace with saved forecast selection, input-boundary lens, accessible chart summary/table and adjacent review actions.
+- Server-driven synthetic streams, transactional ingestion/jobs, leased worker retries, automatic immutable forecast receipts and deduplicated review episodes.
+- Measurement, trusted receipt, issuance and target clocks preserved. Delay reduces remaining lead; unsupported cadence and stale/gap histories abstain visibly.
+- Optimistic review revisions, structured dispositions, assigned responsibility, monitoring windows, persistent notes and follow-up.
+- Own-record patient companion/PWA: self-reported context, clinician-published tasks and approved notes, completion, consent history, revocation and a patient-safe summary.
+- Admin enrollment/source controls, scoped connector keys, CSV row preview, operational briefing, audit access and staff invitation/deactivation.
+- Cookie/CSRF sessions, sign-in throttling, optional encrypted TOTP with prior-session revocation, clinic/patient scope checks and append-only evidence paths.
+- SQLite schema 7, explicit Alembic/SQLAlchemy PostgreSQL migrations, encrypted local SQLite recovery and checksum-verified model rollback.
 
-This is an engineering patient model, not a validated physiological simulator. Public/simulated demonstration data only. Doctor workflow review and clinical-use approvals remain pending. There is no autonomous medication recommendation or live wearable connection.
+**Clinic connection pending.** No CGM or authorized clinic source has been supplied. Synthetic server arrivals are a continuous engineering demonstration, not measured patient data. Recorded Shanghai cases remain separate. The only enabled environment is the public-data/synthetic research release; private clinical intake and patient forecast alerts are disabled.
+
+No clinical or regulatory approval, live wearable integration, doctor feedback, full WCAG conformance, always-on hosting or off-host recovery is claimed. The model is an engineering predictor, not a validated physiological simulator.
+
+## Continuous source demonstration
+
+1. Sign in as admin and open **Operations**. Create a synthetic source with a SIM- patient ID and native 15-minute cadence.
+2. Start its server generator. Its initial 8 backfilled native readings arrive now; later readings are generated on the real wall clock, independent of the browser.
+3. Open the automatically created review episode and its immutable arrival receipt. Population is primary; adaptation and intervals remain research evidence.
+4. Inspect trusted receipt/input cutoff, actual target and remaining lead, then document a review and follow-up.
+5. Pause/revoke the source or choose an unsupported cadence to demonstrate prediction eligibility separately from connection status.
+6. Sign in as patient to add context and complete an explicitly published follow-up. No research predictions are exposed.
+
+A 15-minute source waits 15 actual minutes between native readings. Accelerated 1-minute streams test transport but correctly show unsupported model cadence. Changing browser speed does not turn synthetic data into a real CGM.
 
 ## Measured internal retrospective evidence
 
@@ -52,16 +65,18 @@ The paired 30-minute MAE difference is **−0.206 mg/dL**, patient-bootstrap 95%
 
 `data/processed/clinic_benchmark.json` retains every fold, calibration results, cold-start/adapted phases and failures. [CLINIC_MODEL.md](backend/CLINIC_MODEL.md) explains the upgraded model. The legacy 70/15/15 benchmark is preserved separately; its personalized filter MAE of 14.48 is not the current primary model and its scores should not be directly compared across different cohorts.
 
-## Exact three-minute demonstration
+## Current core demonstration: synthetic, recorded and gap evidence
 
-1. Sign in; choose **Start demonstration**. The app selects Patient 2072 at warning cursor 853: Thursday 12:10 on the recorded clock, within the example 09:00–17:00 weekday window.
-2. Inspect current glucose, calibrated 30-minute event probability, population/hybrid forecasts, maturity and input freshness.
-3. **Save forecast for review**; enter a clearly simulated demonstration note; mark reviewed and plan follow-up.
-4. **Reveal recorded outcome** at cursor 855; compare forecast with measured glucose 187.2 mg/dL. Save evidence at the later cursor to persist matured outcomes.
-5. Show **Sensor gap** and suppressed forecasts; return to recorded mode.
-6. Export the consultation PDF. Open **Model evidence** to show aggregate performance and unsuccessful predictions.
+Prepare a seeded 15-minute synthetic source in **Operations** before the short walkthrough; later readings require 15 actual minutes. The current interface uses the controls below, rather than the legacy v2 demonstration buttons.
 
-The case is retrospectively selected for understandable demonstration; historical timezone/staffing were not verified. Stored human actions use the real audit clock, which is displayed separately from recorded observation time. See [DOCTOR_REVIEW.md](docs/DOCTOR_REVIEW.md) for five pending clinician usability cases.
+1. Sign in as a care-team user. Open the seeded synthetic episode from the review desk and inspect its immutable arrival receipt, **What the model knew**, source quality and actual target/remaining lead. This is a synthetic engineering feed.
+2. In **Review status**, save a review and then a follow-up with a reason and clearly simulated note. Reload to show the persisted action history and revision. Review state does not change predictions.
+3. Open recorded Patient **2072** at cursor **853** in the patient workspace. Choose **Freeze forecast for review** to create the original recorded receipt. Historical timezone and staffing are unverified.
+4. Use **Next reading** twice to reach cursor **855**, then **Freeze forecast for review** again to append the later evidence/outcome. Select the original entry under **Issued forecast receipts** and show its unchanged forecast alongside the observed **187.2 mg/dL** outcome.
+5. Choose **Demonstrate sensor gap** and show withheld predictions. Choose **Restore recorded sensor** to return to recorded mode.
+6. Download **Consultation summary**. Open **Model evidence** to inspect aggregate errors, uncertainty and failures.
+
+The recorded case is retrospectively selected for clarity, not a performance estimate. Public recorded values, server-time synthetic receipts and real-clock review actions remain labelled separately. The v3 video is a narrated presentation with actual UI screenshots; it is not a recording of this complete interactive path. See [VALIDATION.md](docs/VALIDATION.md) for current interface checks and separate legacy browser evidence, and [DOCTOR_REVIEW.md](docs/DOCTOR_REVIEW.md) for pending usability cases.
 
 ## Reproduce and verify
 
@@ -75,20 +90,33 @@ npm --prefix frontend run build
 
 Full evaluation can take several minutes. Do not load untrusted joblib/pickle artifacts. Point-in-time features use observation and arrival times; adaptation uses only matured available targets. Acknowledging an alert cannot change model performance. Meals/activity/symptoms remain context until predictive value is evaluated.
 
-## Backup and restore
+## Arrival-aware evidence and operations
+
+The new adapter remains population-primary. In the 20-patient sparse synthetic arrival stress, population MAE was 12.550 mg/dL versus 12.676 experimental hybrid on 40 scored endpoints. No arrival personalization gain is established. Event probabilities retain the saved native target definition and are suppressed when any scheduled target is already past. Source timezone compatibility and real-device calibration are unestablished.
 
 ```bash
-.venv/bin/python scripts/backup_restore.py backup --file .run/backup.sqlite3
-.venv/bin/python scripts/backup_restore.py verify --database .run/backup.sqlite3
-# Stop the application before restoring; the destination must not already exist.
-.venv/bin/python scripts/backup_restore.py restore --database .run/restored.sqlite3 --file .run/backup.sqlite3 --offline
-# Then launch with GLUCOTWIN_DB_PATH pointing to the restored database.
+.venv/bin/python scripts/evaluate_arrivals.py --patients 20 --origins 3 --bootstrap 1000
+# PostgreSQL: target only a dedicated research database you provision.
+.venv/bin/python scripts/migrate_database.py --url 'postgresql+psycopg:///glucotwin_research'
+# Export GLUCOTWIN_DATABASE_URL to the same URL before starting API/worker.
 ```
 
-Private runtime files and backups are excluded from the release. File permissions and hashed credentials are implemented; TLS, encryption at rest, retention/consent procedures, authorized device latency, external clinical validation and applicable approvals remain pilot gates. [PILOT_GATES.md](docs/PILOT_GATES.md) records them.
+See [LIVE_MODEL.md](docs/LIVE_MODEL.md), [OPERATIONS.md](docs/OPERATIONS.md) and [API_CONTRACT.md](docs/API_CONTRACT.md). Actual local PostgreSQL migration, auth, intake and worker smoke tests are verified; PostgreSQL failover and backup recovery remain unverified.
+
+## Backup, restore and model selection
+
+```bash
+.venv/bin/python scripts/encrypted_backup.py backup --database .run/clinic.sqlite3 --file .run/recovery.gtbackup
+# Stop API and worker; restore into a new destination with the same separately retained key.
+.venv/bin/python scripts/encrypted_backup.py restore --database .run/restored.sqlite3 --file .run/recovery.gtbackup --offline
+# Select an approved trusted model artifact, preserving the prior bytes for rollback.
+.venv/bin/python scripts/model_release.py --candidate /private/approved.joblib --destination data/processed/clinic_model.joblib --sha256 APPROVED_SHA256
+```
+
+The research key is generated privately under `.run/` unless supplied by environment. Keep it separate from backup copies. Source SQLite is plaintext; encrypted backups/MFA secrets do not establish encrypted clinical storage. Local recovery and rollback are tested. Off-host arrangements, operational MFA requirements, TLS, privacy/retention procedures and clinical gates remain pending.
 
 ## Submission assets
 
-The `docs/submission/` folder contains the strategy, original architecture, editable presentation, presentation PDF, doctor-review packet and explanation/demo video. Synthetic narration is disclosed; the recording includes the actual local application. [TEAM.md](docs/TEAM.md) contains registration details. Public source: https://github.com/shanmukhgara48-source/glucotwin-alpha. Registration and platform submission remain external steps.
+The `docs/submission/` folder contains the refreshed live strategy, continuous architecture, editable presentation, clinical-source packet and explanation video with actual interface captures. The v3 video is a narrated editable presentation with actual UI screenshots and synthesized macOS Samantha speech, not an interactive browser recording. The v0.2 materials remain as legacy reference; use the files marked Live for the current release. [TEAM.md](docs/TEAM.md) contains registration details. Public source: https://github.com/shanmukhgara48-source/glucotwin-alpha. Registration and platform submission remain external steps.
 
 Code: MIT. Shanghai data: CC BY 4.0 with attribution in [DATA_LICENSE.md](DATA_LICENSE.md). No CGMacros data are included. Counts: 100 patients / 109 recordings / 112,462 measured observations; 13 missing rows excluded and 11 gaps preserved. The Chinese hospital cohort does not establish Indian clinical performance.

@@ -1,5 +1,13 @@
 # Gates before clinical use
 
+## v0.3 release boundary
+
+Only `GLUCOTWIN_ENV=research` is enabled. No genuine device source or clinic authorization has been supplied; `clinic_pending` connections cannot ingest readings. Patient forecast alerts stay disabled. Enrollment and server generators create separate synthetic identities. The clinical-source packet is prepared for participant-owned outreach; no outreach has been sent.
+
+Local cookie/CSRF sessions, role isolation, optional encrypted TOTP, invitation/deactivation, durable ingestion, revision conflicts, encrypted SQLite recovery and model rollback are implemented. PostgreSQL migrations and a scoped intake/worker integration were tested against an isolated local database. These checks do not establish an operational clinical deployment.
+
+The source SQLite database is plaintext. Off-host recovery, verified TLS/encrypted deployment, mandatory operational-staff MFA/access review, applicable approvals and prospective clinical thresholds remain pending.
+
 The current software is a research clinic-workflow prototype. The gate status below starts as pending; engineering checks are documented separately in VALIDATION.md.
 
 | Gate | Evidence to collect | Status |

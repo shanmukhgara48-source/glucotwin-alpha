@@ -1,0 +1,1835 @@
+{
+  "sqlite_schema_version": 6,
+  "tables": [
+    {
+      "name": "actions",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "review_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "reason",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "note",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "next_review_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "recorded_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "disposition",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'none'"
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "review_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "reviews",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "audit",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "event",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "resource",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "details_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "recorded_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "auth_attempts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "identity",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "attempted_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "auth_attempt_lookup",
+          "column_names": [
+            "identity",
+            "attempted_at"
+          ],
+          "unique": 0,
+          "dialect_options": {}
+        }
+      ]
+    },
+    {
+      "name": "auth_mfa",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "encrypted_secret",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "enabled",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "0"
+        }
+      ],
+      "pk": [
+        "user_id"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "users",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "auth_session_meta",
+      "columns": [
+        {
+          "name": "token_hash",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "csrf_hash",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "last_seen",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "mfa_verified",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "0"
+        }
+      ],
+      "pk": [
+        "token_hash"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "token_hash"
+          ],
+          "referred_schema": null,
+          "referred_table": "sessions",
+          "referred_columns": [
+            "token_hash"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "context",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "kind",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "value_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "observed_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "available_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provenance",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_by",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "dedupe_key",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "context_dedupe",
+          "column_names": [
+            "clinic_id",
+            "patient_id",
+            "dedupe_key"
+          ],
+          "unique": 1,
+          "dialect_options": {
+            "sqlite_where": "dedupe_key IS NOT NULL"
+          }
+        }
+      ]
+    },
+    {
+      "name": "event_outcomes",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "forecast_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "horizon_minutes",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "target_time",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "event_occurred",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "available_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "provenance",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "recorded_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "forecast_id",
+            "horizon_minutes"
+          ]
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "forecast_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "forecasts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "forecast_jobs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "connection_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "event_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "issue_cutoff",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'pending'"
+        },
+        {
+          "name": "attempts",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "available_after",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "lease_owner",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "lease_until",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "last_error",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "forecast_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "completed_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "event_id"
+          ]
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "forecast_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "forecasts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        },
+        {
+          "name": null,
+          "constrained_columns": [
+            "event_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "ingest_events",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": [
+        {
+          "name": "jobs_due",
+          "column_names": [
+            "status",
+            "available_after",
+            "lease_until"
+          ],
+          "unique": 0,
+          "dialect_options": {}
+        }
+      ]
+    },
+    {
+      "name": "forecast_outcomes",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "forecast_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "horizon_minutes",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "target_time",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "available_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actual_glucose_mg_dl",
+          "type": "REAL",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "event_occurred",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "provenance",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "recorded_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "forecast_id",
+            "horizon_minutes"
+          ]
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "forecast_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "forecasts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "forecasts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "issued_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "input_cutoff",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "model_version",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "scenario",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "snapshot_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "recorded_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_connection_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "input_digest",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clock_kind",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'recorded'"
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "clinic_id",
+            "patient_id",
+            "issued_at",
+            "scenario",
+            "model_version"
+          ]
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "operational_forecast_input",
+          "column_names": [
+            "clinic_id",
+            "patient_id",
+            "source_connection_id",
+            "input_digest",
+            "model_version"
+          ],
+          "unique": 1,
+          "dialect_options": {
+            "sqlite_where": "source_connection_id IS NOT NULL"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ingest_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "connection_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_event_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "payload_digest",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "observation_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "measured_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "declared_available_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "received_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "connection_id",
+            "source_event_id"
+          ]
+        }
+      ],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "connection_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "source_connections",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "ingest_quarantine",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "connection_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_event_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "reason",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "payload_digest",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "received_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "monitoring",
+      "columns": [
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "config_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "clinic_id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "observations",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "timestamp",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "available_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "glucose_mg_dl",
+          "type": "REAL",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "received_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "connection_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "source_event_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "clinic_id",
+            "patient_id",
+            "timestamp"
+          ]
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "observations_prefix",
+          "column_names": [
+            "clinic_id",
+            "patient_id",
+            "timestamp",
+            "available_at"
+          ],
+          "unique": 0,
+          "dialect_options": {}
+        }
+      ]
+    },
+    {
+      "name": "operational_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "type",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "resource_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "platform_bindings",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "user_id"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "users",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "platform_consents",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "actor_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "action",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "purpose",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "connection_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "recorded_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "platform_invites",
+      "columns": [
+        {
+          "name": "token_hash",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "user_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "expires_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "used_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "pk": [
+        "token_hash"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "users",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "platform_tasks",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "title",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "instructions",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "due_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "published",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_by",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "completed_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "platform_user_state",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "active",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "1"
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "user_id"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "users",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "profiles",
+      "columns": [
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "profile_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "clinic_id",
+        "patient_id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "reviews",
+      "columns": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "forecast_id",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "type",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "issued_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "assigned_reviewer",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "message",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "probability",
+          "type": "REAL",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "last_review",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "next_review_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "closed_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "revision",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "0"
+        },
+        {
+          "name": "disposition",
+          "type": "TEXT",
+          "nullable": false,
+          "default": "'none'"
+        },
+        {
+          "name": "latest_forecast_id",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "last_seen_at",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "occurrence_count",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": "1"
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "latest_forecast_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "forecasts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        },
+        {
+          "name": null,
+          "constrained_columns": [
+            "forecast_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "forecasts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reviews_queue",
+          "column_names": [
+            "clinic_id",
+            "status",
+            "issued_at"
+          ],
+          "unique": 0,
+          "dialect_options": {}
+        }
+      ]
+    },
+    {
+      "name": "sessions",
+      "columns": [
+        {
+          "name": "token_hash",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "user_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "expires_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "token_hash"
+      ],
+      "uniques": [],
+      "foreign_keys": [
+        {
+          "name": null,
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": null,
+          "referred_table": "users",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {}
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "source_connections",
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_type",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "patient_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "device_id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "cadence_minutes",
+          "type": "INTEGER",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "source_timezone",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "config_json",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_by",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "connection_key_hash",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "users",
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "username",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "password_hash",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "role",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "clinic_id",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [
+        {
+          "name": null,
+          "column_names": [
+            "username"
+          ]
+        }
+      ],
+      "foreign_keys": [],
+      "indexes": []
+    },
+    {
+      "name": "worker_status",
+      "columns": [
+        {
+          "name": "id",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null
+        },
+        {
+          "name": "last_heartbeat_at",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null
+        }
+      ],
+      "pk": [
+        "id"
+      ],
+      "uniques": [],
+      "foreign_keys": [],
+      "indexes": []
+    }
+  ],
+  "triggers": [
+    {
+      "name": "actions_immutable",
+      "table": "actions",
+      "sql": "CREATE TRIGGER actions_immutable BEFORE UPDATE ON actions BEGIN SELECT RAISE(ABORT,'Review actions are immutable'); END"
+    },
+    {
+      "name": "actions_no_delete",
+      "table": "actions",
+      "sql": "CREATE TRIGGER actions_no_delete BEFORE DELETE ON actions BEGIN SELECT RAISE(ABORT,'Review actions are immutable'); END"
+    },
+    {
+      "name": "audit_no_delete",
+      "table": "audit",
+      "sql": "CREATE TRIGGER audit_no_delete BEFORE DELETE ON audit BEGIN SELECT RAISE(ABORT,'Audit is append only'); END"
+    },
+    {
+      "name": "audit_no_update",
+      "table": "audit",
+      "sql": "CREATE TRIGGER audit_no_update BEFORE UPDATE ON audit BEGIN SELECT RAISE(ABORT,'Audit is append only'); END"
+    },
+    {
+      "name": "consents_no_delete",
+      "table": "platform_consents",
+      "sql": "CREATE TRIGGER consents_no_delete BEFORE DELETE ON platform_consents BEGIN SELECT RAISE(ABORT,'Consent history is append only'); END"
+    },
+    {
+      "name": "consents_no_update",
+      "table": "platform_consents",
+      "sql": "CREATE TRIGGER consents_no_update BEFORE UPDATE ON platform_consents BEGIN SELECT RAISE(ABORT,'Consent history is append only'); END"
+    },
+    {
+      "name": "event_outcomes_no_delete",
+      "table": "event_outcomes",
+      "sql": "CREATE TRIGGER event_outcomes_no_delete BEFORE DELETE ON event_outcomes BEGIN SELECT RAISE(ABORT,'Event outcomes are immutable'); END"
+    },
+    {
+      "name": "event_outcomes_no_update",
+      "table": "event_outcomes",
+      "sql": "CREATE TRIGGER event_outcomes_no_update BEFORE UPDATE ON event_outcomes BEGIN SELECT RAISE(ABORT,'Event outcomes are immutable'); END"
+    },
+    {
+      "name": "forecasts_immutable",
+      "table": "forecasts",
+      "sql": "CREATE TRIGGER forecasts_immutable BEFORE UPDATE ON forecasts BEGIN SELECT RAISE(ABORT,'Issued forecasts are immutable'); END"
+    },
+    {
+      "name": "forecasts_no_delete",
+      "table": "forecasts",
+      "sql": "CREATE TRIGGER forecasts_no_delete BEFORE DELETE ON forecasts BEGIN SELECT RAISE(ABORT,'Issued forecasts are immutable'); END"
+    },
+    {
+      "name": "outcomes_immutable",
+      "table": "forecast_outcomes",
+      "sql": "CREATE TRIGGER outcomes_immutable BEFORE UPDATE ON forecast_outcomes BEGIN SELECT RAISE(ABORT,'Forecast outcomes are immutable'); END"
+    },
+    {
+      "name": "outcomes_no_delete",
+      "table": "forecast_outcomes",
+      "sql": "CREATE TRIGGER outcomes_no_delete BEFORE DELETE ON forecast_outcomes BEGIN SELECT RAISE(ABORT,'Forecast outcomes are immutable'); END"
+    }
+  ],
+  "source": "Disposable synthetic SQLite schema; no runtime rows included"
+}

@@ -1,0 +1,8 @@
+{
+  "public_candidate_files_checked": 125,
+  "private_phone_and_current_runtime_credentials_scanned": true,
+  "pdf_text_and_pptx_xml_checked": true,
+  "runtime_paths_excluded": true,
+  "findings": [],
+  "boundary": "Scans known current private values and runtime paths; not a general secret-detection certification."
+}

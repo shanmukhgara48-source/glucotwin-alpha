@@ -53,13 +53,21 @@ def consultation_pdf(evidence: dict, user: dict) -> bytes:
     for event in forecasts:
         for outcome in event["outcomes"]:
             actual = f"{outcome['actual']:.1f}" if outcome["actual"] is not None else "Not yet observed / unavailable"
-            rows.append([paragraph(event["timestamp"]), paragraph(f"{outcome['horizon_minutes']} min"), paragraph(f"{outcome['predicted']:.1f} / {actual}")])
+            from backend.clinic import time_key
+            lead = (time_key(outcome["target_time"]) - time_key(event["timestamp"])).total_seconds() / 60
+            clock = "Server issuance" if event.get("clock_kind") == "server_received" else "Recorded clock (zone unverified)"
+            rows.append([paragraph(f"Receipt #{event['id']} | {clock}\n{event['timestamp']}"), paragraph(f"Scheduled {outcome['horizon_minutes']} min; {lead:.1f} min remaining at issue"), paragraph(f"Target: {outcome['target_time']}\n{outcome['predicted']:.1f} / {actual}")])
     if len(rows) > 1:
         table = Table(rows, colWidths=[66 * mm, 22 * mm, 82 * mm], repeatRows=1, hAlign="LEFT")
         table.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#E7F4F1")), ("VALIGN", (0, 0), (-1, -1), "TOP"), ("BOTTOMPADDING", (0, 0), (-1, -1), 6), ("LINEBELOW", (0, 0), (-1, -1), .3, colors.HexColor("#D8E1E8"))]))
         story.append(table)
+        for event in forecasts:
+            story.append(paragraph(f"Receipt #{event['id']} | Model: {event['model_version']} | Available-input cutoff: {event.get('input_cutoff', event['timestamp'])}."))
+            temporal = event.get("temporal") or {}
+            if temporal:
+                story.append(paragraph(f"Measurement anchor: {temporal.get('data_cutoff_at', temporal.get('measurement_anchor_at', 'Not recorded'))}. Arrival-mode estimates and calibration remain research evidence; clinic-device validation pending."))
     else:
-        story.append(paragraph("No forecasts have been explicitly captured for this patient."))
+        story.append(paragraph("No issued forecasts are available in the selected evidence period."))
     story.append(Paragraph("Unresolved reviews", styles["Heading2"]))
     open_reviews = [row for row in evidence["reviews"] if row["status"] != "closed"]
     if not open_reviews:

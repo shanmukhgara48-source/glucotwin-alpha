@@ -21,6 +21,11 @@ def utc_now() -> str:
 
 
 def initialize() -> None:
+    configured = os.environ.get("GLUCOTWIN_DATABASE_URL")
+    if configured:
+        from backend.dbcore import initialize_postgres
+        initialize_postgres(configured)
+        return
     path = db_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(path, timeout=30) as db:
@@ -74,11 +79,77 @@ def initialize() -> None:
             CREATE TRIGGER outcomes_immutable BEFORE UPDATE ON forecast_outcomes BEGIN SELECT RAISE(ABORT,'Forecast outcomes are immutable'); END;
             PRAGMA user_version=3;
             """)
+        if db.execute("PRAGMA user_version").fetchone()[0] < 4:
+            db.executescript("""
+            ALTER TABLE observations ADD COLUMN received_at TEXT;
+            ALTER TABLE observations ADD COLUMN connection_id TEXT;
+            ALTER TABLE observations ADD COLUMN source_event_id TEXT;
+            ALTER TABLE forecasts ADD COLUMN source_connection_id TEXT;
+            ALTER TABLE forecasts ADD COLUMN input_digest TEXT;
+            ALTER TABLE forecasts ADD COLUMN clock_kind TEXT NOT NULL DEFAULT 'recorded';
+            ALTER TABLE reviews ADD COLUMN revision INTEGER NOT NULL DEFAULT 0;
+            ALTER TABLE reviews ADD COLUMN disposition TEXT NOT NULL DEFAULT 'none';
+            ALTER TABLE reviews ADD COLUMN latest_forecast_id INTEGER REFERENCES forecasts(id);
+            ALTER TABLE reviews ADD COLUMN last_seen_at TEXT;
+            ALTER TABLE reviews ADD COLUMN occurrence_count INTEGER NOT NULL DEFAULT 1;
+            CREATE TABLE source_connections(id TEXT PRIMARY KEY,clinic_id TEXT NOT NULL,name TEXT NOT NULL,
+              source_type TEXT NOT NULL,status TEXT NOT NULL,patient_id TEXT,device_id TEXT,
+              cadence_minutes INTEGER NOT NULL,source_timezone TEXT NOT NULL,config_json TEXT NOT NULL,
+              created_by TEXT NOT NULL,created_at TEXT NOT NULL,connection_key_hash TEXT);
+            CREATE TABLE ingest_events(id TEXT PRIMARY KEY,clinic_id TEXT NOT NULL,connection_id TEXT NOT NULL REFERENCES source_connections(id),
+              patient_id TEXT NOT NULL,source_event_id TEXT NOT NULL,payload_digest TEXT NOT NULL,
+              observation_json TEXT NOT NULL,measured_at TEXT NOT NULL,declared_available_at TEXT,
+              received_at TEXT NOT NULL,status TEXT NOT NULL,
+              UNIQUE(connection_id,source_event_id));
+            CREATE TABLE ingest_quarantine(id INTEGER PRIMARY KEY,clinic_id TEXT NOT NULL,connection_id TEXT NOT NULL,
+              patient_id TEXT NOT NULL,source_event_id TEXT NOT NULL,reason TEXT NOT NULL,
+              payload_digest TEXT NOT NULL,received_at TEXT NOT NULL);
+            CREATE TABLE forecast_jobs(id INTEGER PRIMARY KEY,clinic_id TEXT NOT NULL,patient_id TEXT NOT NULL,
+              connection_id TEXT NOT NULL,event_id TEXT NOT NULL UNIQUE REFERENCES ingest_events(id),
+              issue_cutoff TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'pending',attempts INTEGER NOT NULL DEFAULT 0,
+              available_after TEXT NOT NULL,lease_owner TEXT,lease_until TEXT,last_error TEXT,
+              forecast_id INTEGER REFERENCES forecasts(id),created_at TEXT NOT NULL,completed_at TEXT);
+            CREATE INDEX jobs_due ON forecast_jobs(status,available_after,lease_until);
+            CREATE TABLE event_outcomes(id INTEGER PRIMARY KEY,clinic_id TEXT NOT NULL,forecast_id INTEGER NOT NULL REFERENCES forecasts(id),
+              horizon_minutes INTEGER NOT NULL,target_time TEXT NOT NULL,event_occurred INTEGER NOT NULL,
+              available_at TEXT NOT NULL,provenance TEXT NOT NULL,recorded_at TEXT NOT NULL,
+              UNIQUE(forecast_id,horizon_minutes));
+            CREATE TABLE operational_events(id INTEGER PRIMARY KEY,clinic_id TEXT NOT NULL,type TEXT NOT NULL,
+              patient_id TEXT,resource_id TEXT,created_at TEXT NOT NULL);
+            CREATE TABLE worker_status(id TEXT PRIMARY KEY,last_heartbeat_at TEXT NOT NULL,status TEXT NOT NULL);
+            CREATE TRIGGER forecasts_no_delete BEFORE DELETE ON forecasts BEGIN SELECT RAISE(ABORT,'Issued forecasts are immutable'); END;
+            CREATE TRIGGER actions_no_delete BEFORE DELETE ON actions BEGIN SELECT RAISE(ABORT,'Review actions are immutable'); END;
+            CREATE TRIGGER outcomes_no_delete BEFORE DELETE ON forecast_outcomes BEGIN SELECT RAISE(ABORT,'Forecast outcomes are immutable'); END;
+            CREATE TRIGGER event_outcomes_no_update BEFORE UPDATE ON event_outcomes BEGIN SELECT RAISE(ABORT,'Event outcomes are immutable'); END;
+            CREATE TRIGGER event_outcomes_no_delete BEFORE DELETE ON event_outcomes BEGIN SELECT RAISE(ABORT,'Event outcomes are immutable'); END;
+            CREATE TRIGGER audit_no_update BEFORE UPDATE ON audit BEGIN SELECT RAISE(ABORT,'Audit is append only'); END;
+            CREATE TRIGGER audit_no_delete BEFORE DELETE ON audit BEGIN SELECT RAISE(ABORT,'Audit is append only'); END;
+            PRAGMA user_version=4;
+            """)
+        if db.execute("PRAGMA user_version").fetchone()[0] < 5:
+            columns = {row[1] for row in db.execute("PRAGMA table_info(source_connections)")}
+            if "connection_key_hash" not in columns:
+                db.execute("ALTER TABLE source_connections ADD COLUMN connection_key_hash TEXT")
+            db.execute("CREATE UNIQUE INDEX IF NOT EXISTS operational_forecast_input ON forecasts(clinic_id,patient_id,source_connection_id,input_digest,model_version) WHERE source_connection_id IS NOT NULL")
+            db.execute("PRAGMA user_version=5")
+        if db.execute("PRAGMA user_version").fetchone()[0] < 6:
+            db.execute("ALTER TABLE actions ADD COLUMN disposition TEXT NOT NULL DEFAULT 'none'")
+            db.execute("PRAGMA user_version=6")
+        if db.execute("PRAGMA user_version").fetchone()[0] < 7:
+            db.execute("ALTER TABLE context ADD COLUMN received_at TEXT")
+            db.execute("PRAGMA user_version=7")
     os.chmod(path, 0o600)
 
 
 @contextmanager
 def connection():
+    configured = os.environ.get("GLUCOTWIN_DATABASE_URL")
+    if configured:
+        from backend.dbcore import initialize_postgres, postgres_connection
+        initialize_postgres(configured)
+        with postgres_connection(configured) as db:
+            yield db
+        return
     initialize()
     db = sqlite3.connect(db_path(), timeout=30)
     db.row_factory = sqlite3.Row
@@ -99,6 +170,8 @@ def audit(db, user: dict, event: str, resource: str, details: dict | None = None
 
 
 def backup(destination: Path) -> None:
+    if os.environ.get("GLUCOTWIN_DATABASE_URL"):
+        raise ValueError("PostgreSQL uses its own verified backup procedure; SQLite backup is disabled for this configuration.")
     initialize()
     destination.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(db_path()) as source, sqlite3.connect(destination) as target:
@@ -107,6 +180,8 @@ def backup(destination: Path) -> None:
 
 
 def restore(source: Path) -> None:
+    if os.environ.get("GLUCOTWIN_DATABASE_URL"):
+        raise ValueError("PostgreSQL uses its own offline restore procedure; SQLite restore is disabled for this configuration.")
     # Restore only while the API is stopped; SQLite's backup API includes WAL changes.
     if not source.exists():
         raise ValueError("Backup file does not exist")

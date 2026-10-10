@@ -1,0 +1,64 @@
+{
+  "release": "0.3",
+  "pdfs": [
+    {
+      "file": "GlucoTwin_Live_Platform_Strategy.pdf",
+      "pages": 8,
+      "clickable_links": 9,
+      "text_extraction_verified": true,
+      "all_pages_rendered_and_visually_inspected": true,
+      "sha256": "bf32ed47ef086de46454d5a18b440447a7e13c4c3501ad2bc27750e726a13af2"
+    },
+    {
+      "file": "GlucoTwin_Clinic_Partnership_Packet.pdf",
+      "pages": 3,
+      "clickable_links": 3,
+      "text_extraction_verified": true,
+      "all_pages_rendered_and_visually_inspected": true,
+      "sha256": "6c0cf57b9e9761204f33dabcda6780d8bf81c66e377e3f2edaab325de95062f3"
+    },
+    {
+      "file": "GlucoTwin_Live_Architecture.pdf",
+      "pages": 1,
+      "clickable_links": 0,
+      "text_extraction_verified": true,
+      "all_pages_rendered_and_visually_inspected": true,
+      "sha256": "6b686388d34b078a568e05a57c1b837ab30e86d98fc488c25096c63deb090efe"
+    }
+  ],
+  "clinical_source": "pending",
+  "doctor_review": "pending",
+  "clinical_deployment_verified": false,
+  "presentation": {
+    "file": "GlucoTwin_Live_Platform_Presentation.pptx",
+    "slides": 21,
+    "native_editable_text_chart_and_workbook": true,
+    "speaker_notes": 21,
+    "package_font_geometry_and_first_party_import_checks": "pass",
+    "all_slides_visually_inspected": true,
+    "native_powerpoint_execution_verified": false,
+    "sha256": "a1c8b5adbcc8126be2dadd6ecca981d1f2c21820331dce4b3429aa81b514a0ec"
+  },
+  "video": {
+    "file": "GlucoTwin_Live_Platform_Explanation.mp4",
+    "duration_seconds": 1837.91,
+    "format": "Narrated editable presentation with actual v0.3 interface screenshots",
+    "contains_actual_current_interface_captures": true,
+    "interactive_browser_recording": false,
+    "synthetic_voice": "macOS Samantha",
+    "doctor_review": "pending",
+    "clinic_source": "pending",
+    "clinical_deployment_verified": false,
+    "duration_display": "30 minutes 37.9 seconds",
+    "h264_video_and_aac_audio": true,
+    "mean_volume_db": -18.8,
+    "max_volume_db": -4.0,
+    "sha256": "e65f52e791faf7616b659bdfa787aafdbb77a801bbed290f68094f73a6edc64c",
+    "representative_beginning_interface_model_and_end_frames_visually_inspected": true
+  },
+  "consultation_exports": {
+    "arrival": "receipt/server issuance/actual target/input cutoff verified; one rendered page inspected",
+    "recorded": "saved forecast 187.5 mg/dL versus measured 187.2 verified; two rendered pages inspected",
+    "source_label_refinement": "Synthetic arrival provenance separated from recorded playback"
+  }
+}

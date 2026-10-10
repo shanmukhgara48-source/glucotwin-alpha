@@ -1,0 +1,185 @@
+{
+  "generated_at": "2026-10-10T11:45:01.860633+00:00",
+  "policy_version": "arrival-research-v1",
+  "status": "synthetic_arrival_stress_evidence",
+  "artifact_sha256": "dbbdf717605fa9cd8779a932a22dede2aac23f75fef2bd2418147e6bd9310d85",
+  "source_patients": 100,
+  "sampled_patients": 20,
+  "origins_per_patient_requested": 3,
+  "seed": 20261010,
+  "stress_scenarios": [
+    {
+      "delay_minutes": 0,
+      "n_issuances": 60,
+      "n_native_30_targets_scored": 40,
+      "n_event_probabilities_30": 60,
+      "n_research_reviews_eligible": 4,
+      "n_clinical_queue_eligible": 0,
+      "sum_matured_sample_counts_at_issuance": 60,
+      "n_reordering_checks": 60,
+      "n_unavailable_backfill_checks": 60,
+      "remaining_30_minute_leads": [
+        30.0
+      ],
+      "synthetic_sample_population_mae_mg_dl": 12.54994049690897,
+      "synthetic_sample_arrival_hybrid_mae_mg_dl": 12.676383487138995
+    },
+    {
+      "delay_minutes": 1,
+      "n_issuances": 60,
+      "n_native_30_targets_scored": 40,
+      "n_event_probabilities_30": 60,
+      "n_research_reviews_eligible": 4,
+      "n_clinical_queue_eligible": 0,
+      "sum_matured_sample_counts_at_issuance": 60,
+      "n_reordering_checks": 60,
+      "n_unavailable_backfill_checks": 60,
+      "remaining_30_minute_leads": [
+        29.0
+      ],
+      "synthetic_sample_population_mae_mg_dl": 12.54994049690897,
+      "synthetic_sample_arrival_hybrid_mae_mg_dl": 12.676383487138995
+    },
+    {
+      "delay_minutes": 5,
+      "n_issuances": 60,
+      "n_native_30_targets_scored": 40,
+      "n_event_probabilities_30": 60,
+      "n_research_reviews_eligible": 4,
+      "n_clinical_queue_eligible": 0,
+      "sum_matured_sample_counts_at_issuance": 60,
+      "n_reordering_checks": 60,
+      "n_unavailable_backfill_checks": 60,
+      "remaining_30_minute_leads": [
+        25.0
+      ],
+      "synthetic_sample_population_mae_mg_dl": 12.54994049690897,
+      "synthetic_sample_arrival_hybrid_mae_mg_dl": 12.676383487138995
+    },
+    {
+      "delay_minutes": 20,
+      "n_issuances": 60,
+      "n_native_30_targets_scored": 40,
+      "n_event_probabilities_30": 0,
+      "n_research_reviews_eligible": 0,
+      "n_clinical_queue_eligible": 0,
+      "sum_matured_sample_counts_at_issuance": 60,
+      "n_reordering_checks": 60,
+      "n_unavailable_backfill_checks": 60,
+      "remaining_30_minute_leads": [
+        10.0
+      ],
+      "synthetic_sample_population_mae_mg_dl": 12.54994049690897,
+      "synthetic_sample_arrival_hybrid_mae_mg_dl": 12.676383487138995
+    }
+  ],
+  "fixed_legacy_oof_event_uncertainty": {
+    "30": {
+      "n_patients": 100,
+      "ledger_sha256": "de2ace4919e1f6dd38a8c2c840e014fc36f0f2e3aacd2d6d64877d88d8e7dc14",
+      "estimates": {
+        "episode_precision": {
+          "point": 0.6295822676896846,
+          "patient_bootstrap_95_ci": [
+            0.5950915522558646,
+            0.6637546727065717
+          ]
+        },
+        "reachable_episode_recall": {
+          "point": 0.7656817003628823,
+          "patient_bootstrap_95_ci": [
+            0.7436740800197871,
+            0.7914926864833787
+          ]
+        },
+        "overall_observed_episode_recall": {
+          "point": 0.7605561277033985,
+          "patient_bootstrap_95_ci": [
+            0.7382477887789203,
+            0.786672131147541
+          ]
+        },
+        "false_alerts_per_24_eligible_hours": {
+          "point": 0.9192727272727274,
+          "patient_bootstrap_95_ci": [
+            0.7870003097680798,
+            1.0591242951479978
+          ]
+        }
+      },
+      "counts": {
+        "true_alerts": 1477,
+        "false_alerts": 869,
+        "matched_onsets": 1477,
+        "reachable_onsets": 1929,
+        "all_observed_onsets": 1942,
+        "eligible_patient_days": 945.3124999999999
+      }
+    },
+    "60": {
+      "n_patients": 100,
+      "ledger_sha256": "1b114e29c320b2b50cdb206326693e6269ebd419b0d1d6261b99955bc8d763cb",
+      "estimates": {
+        "episode_precision": {
+          "point": 0.6562633604104318,
+          "patient_bootstrap_95_ci": [
+            0.6200158818530394,
+            0.6944068453139229
+          ]
+        },
+        "reachable_episode_recall": {
+          "point": 0.7957490927941939,
+          "patient_bootstrap_95_ci": [
+            0.7690617360258608,
+            0.8250061881188119
+          ]
+        },
+        "overall_observed_episode_recall": {
+          "point": 0.790422245108136,
+          "patient_bootstrap_95_ci": [
+            0.7642302248559459,
+            0.8197190829394606
+          ]
+        },
+        "false_alerts_per_24_eligible_hours": {
+          "point": 0.8520992261070199,
+          "patient_bootstrap_95_ci": [
+            0.7188319991923268,
+            0.9996349509816618
+          ]
+        }
+      },
+      "counts": {
+        "true_alerts": 1535,
+        "false_alerts": 804,
+        "matched_onsets": 1535,
+        "reachable_onsets": 1929,
+        "all_observed_onsets": 1942,
+        "eligible_patient_days": 943.5520833333337
+      }
+    }
+  },
+  "bootstrap_repetitions": 1000,
+  "bootstrap_unit": "patient",
+  "boundaries": [
+    "No live device, clinician review, new training, or clinical validation.",
+    "UTC assignment is synthetic and preserves printed source hours; actual source timezone is unverified.",
+    "Sparse sampled issuances learn only from these actually generated stress issuances; legacy imaginary forecasts are not used.",
+    "Sampled stress MAE is a functional measurement, not a representative accuracy estimate or transfer of the legacy benchmark.",
+    "Event CIs use the unchanged full legacy out-of-fold ledger, not arrival-mode predictions; training/selection uncertainty is excluded.",
+    "Endpoint targets stay anchored to measurement time; event targets partly in the past are suppressed."
+  ],
+  "source_timezone_stress": {
+    "patient_id": "2002",
+    "zones": [
+      "UTC",
+      "Asia/Kolkata"
+    ],
+    "population_30_predictions_mg_dl": [
+      203.25191703651888,
+      203.47998705360308
+    ],
+    "same_target_time": true,
+    "interpretation": "Feature-clock sensitivity only; neither clock assignment is verified for the source cohort."
+  }
+}

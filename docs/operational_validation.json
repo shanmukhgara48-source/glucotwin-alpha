@@ -1,0 +1,59 @@
+{
+  "protocol": "Short isolated local synthetic concurrency and durable-pipeline check",
+  "backend": "SQLite WAL; separate operational check on isolated PostgreSQL validation database",
+  "environment": {
+    "python": "3.12.14",
+    "operating_system": "macOS",
+    "model": "Saved arrival research adapter over the existing clinic artifact",
+    "physical_devices": 0,
+    "private_patient_records": 0
+  },
+  "deterministic_correctness_test": {
+    "streams": 50,
+    "observations": 250,
+    "completed_jobs": 250,
+    "immutable_receipts": 50,
+    "isolated_patient_snapshots": 50,
+    "forecaster": "Deterministic synthetic test function; no predictive performance claim"
+  },
+  "actual_saved_model_batch": {
+    "streams": 50,
+    "concurrent_intake_threads": 10,
+    "observations": 400,
+    "accepted_jobs": 400,
+    "completed_jobs": 400,
+    "pending_jobs": 0,
+    "failed_jobs": 0,
+    "immutable_receipts": 50,
+    "review_episodes": 50,
+    "receipts_with_model_outputs": 50,
+    "clinical_queue_eligible_receipts": 0,
+    "ingestion_seconds": 0.373,
+    "raw_ingestion_p50_ms": 0.63,
+    "raw_ingestion_p95_ms": 23.77,
+    "forecast_job_drain_seconds": 4.081
+  },
+  "postgresql_operational_pipeline": {
+    "database": "isolated local validation database",
+    "schema_version": 7,
+    "synthetic_observations": 8,
+    "completed_jobs": 8,
+    "pending_jobs": 0,
+    "failed_jobs": 0,
+    "immutable_receipts": 1,
+    "clinical_queue_eligible": false
+  },
+  "additional_checks": [
+    "Observation and outbox transaction",
+    "Connection-scoped source event idempotency and conflict quarantine",
+    "Lease expiry, stale owner exclusion and five-attempt failure",
+    "Late intermediate reading completes a separate event outcome",
+    "Optimistic review revision conflicts",
+    "Backward queue clock and cross-clinic receipt restrictions",
+    "Native wall-clock synthetic generator, revoke stop and outage gaps",
+    "One-minute feed arrivals with unsupported model cadence",
+    "Scoped connection key cannot read clinic records or another source",
+    "Required local model/checksum/schema/worker readiness"
+  ],
+  "evidence_boundary": "These are short local engineering checks. They do not establish sustained capacity, production SLA, live CGM access, clinical safety or efficacy, prospective accuracy, Indian applicability, regulatory approval or completed physician review."
+}

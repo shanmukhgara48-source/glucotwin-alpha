@@ -1,4 +1,4 @@
-"""Local, stateless FastAPI service for recorded ShanghaiT2DM replay."""
+"""Persistent research care platform with recorded and synthetic arrival modes."""
 from __future__ import annotations
 
 import csv
@@ -18,20 +18,33 @@ from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from backend.twin import forecast_prefix, parse_time, population_forecasts, predict_stream
-from backend.auth import bootstrap, current_user, router as auth_router
+from backend.auth import bootstrap, clinic_user, router as auth_router
 from backend.clinic import clinic_patients, router as clinic_router, snapshot_for
+from backend.platform import initialize_platform, router as platform_router
+from backend.operational import router as operational_router
+from backend.worker import ForecastWorker
 
 APP_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = Path(os.environ.get("GLUCOTWIN_DATA_DIR", APP_ROOT / "data" / "processed"))
 @asynccontextmanager
 async def clinic_lifespan(app: FastAPI):
+    if os.environ.get("GLUCOTWIN_ENV", "research") != "research":
+        raise RuntimeError("Only the anonymized/synthetic research release is enabled. Private clinical service requires the source and clinical release gates.")
     bootstrap()
-    yield
+    initialize_platform()
+    worker = ForecastWorker()
+    worker.start()
+    try:
+        yield
+    finally:
+        worker.stop()
 
 
-app = FastAPI(title="GlucoTwin", version="0.2.0", description="Authenticated clinic research prototype; no clinical validation.", lifespan=clinic_lifespan)
+app = FastAPI(title="GlucoTwin", version="0.3.0", description="Arrival-aware care platform research release; clinic source and clinical validation pending.", lifespan=clinic_lifespan)
 app.include_router(auth_router)
 app.include_router(clinic_router)
+app.include_router(platform_router)
+app.include_router(operational_router)
 FRONTEND_DIST = APP_ROOT / "frontend" / "dist"
 if (FRONTEND_DIST / "assets").is_dir():
     app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="frontend-assets")
@@ -43,6 +56,17 @@ def frontend():
     if not index.is_file():
         return JSONResponse(status_code=503, content={"error": "Frontend not built. Run npm run build in frontend or use Vite locally."})
     return FileResponse(index, headers={"Cache-Control": "no-store"})
+
+
+@app.middleware("http")
+async def private_response_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["X-Frame-Options"] = "DENY"
+    if request.url.path.startswith("/api"):
+        response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 def clean_json(value: Any) -> Any:
@@ -170,20 +194,20 @@ def health():
 
 
 @app.get("/api/patients")
-def patients(user: dict = Depends(current_user)):
+def patients(user: dict = Depends(clinic_user)):
     return success(clinic_patients(user))
 
 
 @app.get("/api/replay/{patient_id}")
 def replay(patient_id: str, cursor: int = Query(default=0, ge=0), scenario: str = "recorded",
-           current_time: str | None = None, user: dict = Depends(current_user)):
+           current_time: str | None = None, user: dict = Depends(clinic_user)):
     if scenario not in {"recorded", "sensor_gap"}:
         return JSONResponse(status_code=422, content={"error": "Scenario must be recorded or sensor_gap."})
     return success(snapshot_for(patient_id, user, cursor, scenario, current_time))
 
 
 @app.get("/api/benchmarks")
-def benchmarks(user: dict = Depends(current_user)):
+def benchmarks(user: dict = Depends(clinic_user)):
     benchmark = read_json("benchmark.json")
     if benchmark is None:
         return JSONResponse(status_code=503, content={"error": "Evaluation has not been run. Run scripts/evaluate.py."})
@@ -191,7 +215,7 @@ def benchmarks(user: dict = Depends(current_user)):
 
 
 @app.get("/api/provenance")
-def provenance(user: dict = Depends(current_user)):
+def provenance(user: dict = Depends(clinic_user)):
     manifest = read_json("manifest.json")
     if manifest is None:
         return JSONResponse(status_code=503, content={"error": "Dataset has not been prepared. Run scripts/prepare_data.py."})
@@ -199,8 +223,18 @@ def provenance(user: dict = Depends(current_user)):
 
 
 @app.get("/api/clinic-benchmark")
-def clinic_benchmark(user: dict = Depends(current_user)):
+def clinic_benchmark(user: dict = Depends(clinic_user)):
     benchmark = read_json("clinic_benchmark.json")
     if benchmark is None:
         return JSONResponse(status_code=503, content={"error": "Clinic model evaluation has not been run."})
     return success(benchmark)
+
+
+@app.get("/{path:path}", include_in_schema=False)
+def frontend_route(path: str):
+    if path.startswith("api/"):
+        return JSONResponse(status_code=404, content={"error": "API route not found."})
+    candidate = (FRONTEND_DIST / path).resolve()
+    if candidate.is_relative_to(FRONTEND_DIST.resolve()) and candidate.is_file():
+        return FileResponse(candidate, headers={"Cache-Control": "no-store"})
+    return frontend()

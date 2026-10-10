@@ -1,0 +1,11 @@
+{
+  "file": "GlucoTwin_Live_Platform_Explanation.mp4",
+  "duration_seconds": 1837.9,
+  "format": "Narrated editable presentation with actual v0.3 interface screenshots",
+  "contains_actual_current_interface_captures": true,
+  "interactive_browser_recording": false,
+  "synthetic_voice": "macOS Samantha",
+  "doctor_review": "pending",
+  "clinic_source": "pending",
+  "clinical_deployment_verified": false
+}

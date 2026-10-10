@@ -1,4 +1,28 @@
-# Local validation — 10 October 2026
+# v0.3 validation — 10 October 2026
+
+## Current continuous research release
+
+- **105 automated checks passed** in one final combined run with actual isolated PostgreSQL enabled (97 default-suite checks plus 8 PostgreSQL checks). One nonblocking Starlette/httpx test-client deprecation warning.
+- Temporal checks cover ordinary positive arrival delay, future measurement quarantine, backfill, reordering, actual-issued-only adaptation, missing native slots, unsupported cadence, target expiry and separate delayed event-window completion.
+- Durable jobs/outbox, source-event and issuance idempotency, expired leases, a five-attempt cap including crashed owners, explicit failed-job retry, source revocation and server-driven native wall-clock generators are tested.
+- Two-reviewer conflicts, cookie CSRF, throttling, encrypted TOTP, pre-enrollment session revocation, concurrent single-use invitation activation, clinic/patient isolation, approved sharing and own-record exports are tested.
+- Actual local PostgreSQL 16.14 migration/upgrades reached schema 7 / Alembic 20261010_02. API cookie sign-in, eight synthetic arrivals and actual-model worker drain produced one immutable receipt; private/live data remained disabled.
+- Fifty synthetic streams with ten concurrent intake threads accepted 400 readings/jobs. Actual model drain: 4.081 seconds; 400 completed, 50 immutable receipts and 50 reviews, 0 failed. All receipts clinical eligibility false. This short local batch is not sustained capacity or clinical performance evidence. See operational_validation.json.
+- Full research database encrypted backup/offline restore: integrity ok, schema 7, manifest SHA verified and existing database preserved. Trusted artifact rollback restored exact original bytes in an isolated drill without changing the active model. Off-host/private hosting remains unverified. See recovery_validation.json.
+
+## Model boundaries
+
+The legacy five-fold internal benchmark remains 9.606 versus 9.812 mg/dL MAE. It is not a new-device result. In 20 sampled patients with sparse synthetic actual issuances, population 12.550 versus hybrid 12.676 mg/dL on 40 endpoints; no arrival personalization improvement established. Population stays primary. Native scheduled target semantics and an unverified source timezone remain explicit. Full event confidence intervals are in arrival_stress.json/LIVE_MODEL.md.
+
+## Current interface and artifact checks
+
+After the final consultation metadata/provenance label changes, 30 clinic/operational checks passed. Current targeted browser/viewport evidence is recorded separately in `ui_validation_v3.json`; this is distinct from the final 105-check automated run. Legacy browser checks below apply only to the previous release. Current reports and slides retain clinic/source/doctor gates as pending. The 21-slide v3 video is a narrated editable presentation with actual UI screenshots and synthesized macOS Samantha speech; it is not an interactive browser recording. Its metadata reports 1,837.9 seconds (30 minutes 37.9 seconds). Accessibility targets are not conformance certification.
+
+No genuine CGM connection, completed doctor review, prospective study, hosted private deployment, off-host recovery or clinical approval is established.
+
+---
+
+# Legacy v0.2 validation — 10 October 2026
 
 ## Current clinic release
 

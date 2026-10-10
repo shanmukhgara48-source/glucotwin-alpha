@@ -1,0 +1,227 @@
+{
+  "scope": "Local browser QA of research prototype, not clinical validation, penetration test, or accessibility certification.",
+  "browser": "Chrome via CUA; all UI interactions used CUA, no shell Playwright.",
+  "fresh_journeys": [
+    {
+      "run": 1,
+      "origin": "http://127.0.0.1:8771",
+      "initial_state": "Isolated fresh SQLite store; one SIM-REHEARSAL episode generated from eight explicit synthetic backfill readings received at actual server time; reviewer signed in through UI.",
+      "steps": [
+        {
+          "action": "Open queue episode 1 and inspect saved arrival receipt 1",
+          "result": "Synthetic provenance, measurement clock, server receipt boundary and unvalidated arrival interval visible."
+        },
+        {
+          "action": "Record clinician review",
+          "result": "Episode 1 reviewed, revision 1; server success and audit note visible."
+        },
+        {
+          "action": "Plan follow-up with next review 11 October 2026 09:00 device local time",
+          "result": "Episode 1 follow_up_planned, revision 2, disposition follow_up_scheduled; reload retains status and audit history."
+        },
+        {
+          "action": "Open recorded public patient 2072 at cursor 853; freeze receipt 2",
+          "result": "Forecast 187.5 mg/dL issued at dataset clock 12:10; 30-minute future target 12:40; outcome pending before target."
+        },
+        {
+          "action": "Advance to cursor 855 and freeze new receipt 3; reopen original receipt 2",
+          "result": "Original forecast preserved; actual target 187.2 mg/dL; absolute error 0.3 mg/dL; ongoing high distinct from upcoming excursion."
+        },
+        {
+          "action": "Demonstrate sensor gap",
+          "result": "45-minute age, gap state, unsupported active forecasts withheld; original receipt retained."
+        },
+        {
+          "action": "Click Consultation summary",
+          "result": "PDF saved to Downloads and opened by Chrome; native viewer title GlucoTwin consultation evidence."
+        }
+      ],
+      "application_console_errors": []
+    },
+    {
+      "run": 2,
+      "origin": "http://127.0.0.1:8772",
+      "initial_state": "Isolated fresh SQLite store; one SIM-REHEARSAL episode generated from eight explicit synthetic backfill readings received at actual server time; reviewer signed in through UI.",
+      "steps": [
+        {
+          "action": "Open queue episode 1 and inspect saved arrival receipt 1",
+          "result": "Synthetic provenance, measurement clock, server receipt boundary and unvalidated arrival interval visible."
+        },
+        {
+          "action": "Record clinician review",
+          "result": "Episode 1 reviewed, revision 1; server success and audit note visible."
+        },
+        {
+          "action": "Plan follow-up with next review 11 October 2026 09:00 device local time",
+          "result": "Episode 1 follow_up_planned, revision 2, disposition follow_up_scheduled; reload retains status and audit history."
+        },
+        {
+          "action": "Open recorded public patient 2072 at cursor 853; freeze receipt 2",
+          "result": "Forecast 187.5 mg/dL issued at dataset clock 12:10; 30-minute future target 12:40; outcome pending before target."
+        },
+        {
+          "action": "Advance to cursor 855 and freeze new receipt 3; reopen original receipt 2",
+          "result": "Original forecast preserved; actual target 187.2 mg/dL; absolute error 0.3 mg/dL; ongoing high distinct from upcoming excursion."
+        },
+        {
+          "action": "Demonstrate sensor gap",
+          "result": "45-minute age, gap state, unsupported active forecasts withheld; original receipt retained."
+        },
+        {
+          "action": "Click Consultation summary",
+          "result": "PDF saved to Downloads and opened by Chrome; native viewer title GlucoTwin consultation evidence."
+        }
+      ],
+      "application_console_errors": []
+    },
+    {
+      "run": 3,
+      "origin": "http://127.0.0.1:8773",
+      "initial_state": "Isolated fresh SQLite store; one SIM-REHEARSAL episode generated from eight explicit synthetic backfill readings received at actual server time; reviewer signed in through UI.",
+      "steps": [
+        {
+          "action": "Open queue episode 1 and inspect saved arrival receipt 1",
+          "result": "Synthetic provenance, measurement clock, server receipt boundary and unvalidated arrival interval visible."
+        },
+        {
+          "action": "Record clinician review",
+          "result": "Episode 1 reviewed, revision 1; server success and audit note visible."
+        },
+        {
+          "action": "Plan follow-up with next review 11 October 2026 09:00 device local time",
+          "result": "Episode 1 follow_up_planned, revision 2, disposition follow_up_scheduled; reload retains status and audit history."
+        },
+        {
+          "action": "Open recorded public patient 2072 at cursor 853; freeze receipt 2",
+          "result": "Forecast 187.5 mg/dL issued at dataset clock 12:10; 30-minute future target 12:40; outcome pending before target."
+        },
+        {
+          "action": "Advance to cursor 855 and freeze new receipt 3; reopen original receipt 2",
+          "result": "Original forecast preserved; actual target 187.2 mg/dL; absolute error 0.3 mg/dL; ongoing high distinct from upcoming excursion."
+        },
+        {
+          "action": "Demonstrate sensor gap",
+          "result": "45-minute age, gap state, unsupported active forecasts withheld; original receipt retained."
+        },
+        {
+          "action": "Click Consultation summary",
+          "result": "PDF saved to Downloads and opened by Chrome; native viewer title GlucoTwin consultation evidence."
+        }
+      ],
+      "application_console_errors": []
+    }
+  ],
+  "viewport_checks": [
+    {
+      "width": 390,
+      "height": 844,
+      "screens": [
+        "clinician workspace",
+        "admin",
+        "patient companion"
+      ],
+      "document_scroll_width": 390,
+      "result": "No document horizontal overflow; stacked layout; tables use contained horizontal scrolling."
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "screens": [
+        "operations"
+      ],
+      "document_scroll_width": 768,
+      "result": "No document horizontal overflow; tablet cards reflow."
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "screens": [
+        "review desk",
+        "receipt",
+        "operations",
+        "admin"
+      ],
+      "document_scroll_width": 1366,
+      "result": "No document horizontal overflow on inspected main screens; clinician evidence and actions split."
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "screens": [
+        "operations"
+      ],
+      "document_scroll_width": 1920,
+      "result": "No document horizontal overflow."
+    }
+  ],
+  "zoom": {
+    "percent": 200,
+    "mechanism": "Native Google Chrome keyboard zoom after resetting viewport override.",
+    "native_accessibility_signal": "Zoom: 200%",
+    "device_pixel_ratio": 2,
+    "inner_width": 960,
+    "document_scroll_width": 960,
+    "screen": "admin",
+    "result": "Reflow and controls visible without document horizontal overflow; restored 100% afterwards."
+  },
+  "keyboard": {
+    "mobile_navigation": "Open focuses Close navigation; Shift+Tab wraps to Account security, Tab wraps to Close navigation; Escape closes and restores Open navigation focus.",
+    "radix_dialog": "Invite dialog opens with Close dialog focused; Escape closes. Explicit focus restoration added to final component; targeted final verification recorded separately.",
+    "skip_link": "Present and keyboard focus style implemented.",
+    "reduced_motion": "CSS media query implemented; OS reduced-motion mode was not separately toggled."
+  },
+  "other_workflows": {
+    "patient_companion": "Linked synthetic patient SIM-COMPANION only. Added self-reported context and completed seeded published task; reload retained completed task. Clinician-approved shared note published separately from private review and visible with accurate provenance. Patient screen has no forecast controls or clinician private notes.",
+    "admin": "Role-scoped staff list, monitored hours, audit history and pending clinical gates inspected; private invitation dialog opened and closed; no new privileged access created through browser.",
+    "report_feed_boundary": "Final UI omits at parameter in feed mode, retains current replay cursor time in replay mode. Targeted feed Consultation summary action on SIM-REHEARSAL succeeded.",
+    "no_receipt_feed": "Final code fixes disabled-query pending spinner and labels unconnected SIM as Synthetic research profile."
+  },
+  "downloads": [
+    {
+      "bytes": 3636,
+      "pdf_header": "%PDF-",
+      "file": "GlucoTwin_2072_Consultation.pdf"
+    },
+    {
+      "bytes": 4346,
+      "pdf_header": "%PDF-",
+      "file": "GlucoTwin_2072_Consultation (1).pdf"
+    },
+    {
+      "bytes": 4359,
+      "pdf_header": "%PDF-",
+      "file": "GlucoTwin_2072_Consultation (2).pdf"
+    },
+    {
+      "bytes": 4277,
+      "pdf_header": "%PDF-",
+      "file": "GlucoTwin_SIM-REHEARSAL_Consultation.pdf"
+    }
+  ],
+  "console_boundary": "No application-origin console errors observed in three fresh runs. Grammarly Chrome-extension errors appeared and were excluded from application errors.",
+  "final_build": "npm run build passed after final report cutoff and model lead eligibility changes; TypeScript and Vite succeeded with no chunk-size warning.",
+  "captures": [
+    "qa-ui/forecast-receipt.jpg",
+    "qa-ui/patient-companion.jpg",
+    "qa-ui/operations-populated.jpg",
+    "qa-ui/rehearsal-3-outcome.jpg",
+    "qa-ui/clinician-390.jpg",
+    "qa-ui/admin-200-percent.jpg"
+  ],
+  "limits": [
+    "Public Shanghai data uses dataset clock with original timezone unverified.",
+    "Generated stream is synthetic, not connected clinical CGM. Browser QA inspected seeded arrival receipts; it did not wait for a subsequent 15-minute timer tick.",
+    "Root separately verifies PDF extracted text and API protection tests.",
+    "No claim of clinical safety, prospective performance, WCAG certification, or vendor device integration.",
+    "Recorded captures in files may predate minor final label/focus changes; current build was checked separately."
+  ],
+  "final_dialog_focus_check": {
+    "verified": true,
+    "action": "Open private invitation dialog, then Escape",
+    "dialog_closed": true,
+    "focus_returned_to": "Invite a team member",
+    "viewport_override_reset": true,
+    "native_zoom_restored": "100%",
+    "security_access_mutation": false
+  }
+}

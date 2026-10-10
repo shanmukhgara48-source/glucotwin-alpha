@@ -11,3 +11,5 @@ data/raw/
 .env
 .env.*
 !.env.example
+work/
+*.gtbackup

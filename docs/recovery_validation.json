@@ -1,0 +1,20 @@
+{
+  "performed_at": "2026-10-10T11:55:44.664830+00:00",
+  "sqlite_backup": {
+    "encrypted": true,
+    "schema_version": 7,
+    "ciphertext_bytes": 32012,
+    "off_host_copy_verified": false
+  },
+  "sqlite_restore": {
+    "integrity": "ok",
+    "schema_version": 7,
+    "sha256_verified": true,
+    "existing_database_overwritten": false
+  },
+  "model_rollback": {
+    "exact_original_bytes_restored": true,
+    "active_model_changed": false
+  },
+  "private_or_off_host_deployment_verified": false
+}

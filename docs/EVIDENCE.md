@@ -1,3 +1,11 @@
+# v0.3 evidence additions
+
+The current continuous release adds real server-received **synthetic** arrivals, automatic durable processing, immutable evidence, patient-scoped companion and administration. Clinic source/access remains pending. See LIVE_MODEL.md, operational_validation.json, recovery_validation.json, OPERATIONS.md and VALIDATION.md for exact evidence.
+
+The old five-fold model result below is retained; it does not transfer to the arrival adapter. Sparse arrival adaptation was worse (12.676 versus12.550mg/dL MAE); primary forecasts remain population-based and adaptation experimental. Clinical eligibility is disabled. An immutable endpoint outcome is separate from the complete-window event outcome.
+
+---
+
 # GlucoTwin evidence ledger — 10 October 2026
 
 This ledger distinguishes implemented software, measured internal research, and

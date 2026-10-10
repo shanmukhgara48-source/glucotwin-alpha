@@ -15,7 +15,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
-from backend.auth import admin_user, current_user
+from backend.auth import admin_user, clinic_user
 from backend.storage import audit, connection, utc_now
 
 router = APIRouter()
@@ -158,7 +158,8 @@ def mature_outcomes(patient_id: str, user: dict, records: list[dict], cutoff: st
                     continue
                 horizon = point["horizon_minutes"]
                 expected = [origin + timedelta(minutes=offset) for offset in range(15, horizon + 1, 15)]
-                event = int(any(known[stamp]["glucose_mg_dl"] > 180 for stamp in expected)) if all(stamp in known for stamp in expected) else None
+                # Arrival-mode event windows use their measurement anchor in the separate event ledger.
+                event = None if snapshot.get("clock_kind") == "server_received" else int(any(known[stamp]["glucose_mg_dl"] > 180 for stamp in expected)) if all(stamp in known for stamp in expected) else None
                 current = db.execute("INSERT OR IGNORE INTO forecast_outcomes(clinic_id,forecast_id,horizon_minutes,target_time,available_at,actual_glucose_mg_dl,event_occurred,provenance,recorded_at) VALUES(?,?,?,?,?,?,?,?,?)",
                                      (user["clinic_id"], row["id"], horizon, point["timestamp"], observed.get("available_at", observed["timestamp"]), observed["glucose_mg_dl"], event, observed.get("source", "measured"), utc_now()))
                 if current.rowcount:
@@ -172,7 +173,7 @@ class Capture(BaseModel):
 
 
 @router.post("/api/clinic/capture/{patient_id}")
-def capture(patient_id: str, payload: Capture, user: dict = Depends(current_user)):
+def capture(patient_id: str, payload: Capture, user: dict = Depends(clinic_user)):
     if payload.scenario not in {"recorded", "sensor_gap"}:
         raise HTTPException(422, "Unknown replay scenario.")
     snapshot = snapshot_for(patient_id, user, payload.cursor, payload.scenario, payload.current_time)
@@ -181,12 +182,16 @@ def capture(patient_id: str, payload: Capture, user: dict = Depends(current_user
     issued = snapshot["current_time"]
     # Persist a compact issuance record; observed targets are derived from prefix-safe evidence later.
     stored = {key: snapshot.get(key) for key in ["patient", "current_time", "cursor", "quality", "forecasts", "alerts", "state", "clinic_model", "monitoring", "scenario"]}
+    stored["observations"] = snapshot["observations"][-96:]
+    input_digest = hashlib.sha256(json.dumps(snapshot["observations"], sort_keys=True).encode()).hexdigest()
     if stored.get("clinic_model"):
         stored["clinic_model"] = {key: value for key, value in stored["clinic_model"].items() if key != "forecast_history"}
     with connection() as db:
         mature_outcomes(patient_id, user, snapshot["observations"], issued, db)
-        db.execute("INSERT OR IGNORE INTO forecasts(clinic_id,patient_id,issued_at,input_cutoff,model_version,scenario,snapshot_json,recorded_at) VALUES(?,?,?,?,?,?,?,?)",
-                   (user["clinic_id"], patient_id, issued, issued, version, payload.scenario, json.dumps(stored), utc_now()))
+        from backend.worker import mature_event_outcomes
+        mature_event_outcomes(db, user, patient_id, snapshot["observations"], issued)
+        db.execute("INSERT OR IGNORE INTO forecasts(clinic_id,patient_id,issued_at,input_cutoff,model_version,scenario,snapshot_json,recorded_at,input_digest) VALUES(?,?,?,?,?,?,?,?,?)",
+                   (user["clinic_id"], patient_id, issued, issued, version, payload.scenario, json.dumps(stored), utc_now(), input_digest))
         forecast = db.execute("SELECT id FROM forecasts WHERE clinic_id=? AND patient_id=? AND issued_at=? AND scenario=? AND model_version=?",
                               (user["clinic_id"], patient_id, issued, payload.scenario, version)).fetchone()
         forecast_id = forecast["id"]
@@ -219,17 +224,27 @@ def capture(patient_id: str, payload: Capture, user: dict = Depends(current_user
 
 
 @router.get("/api/clinic/queue")
-def queue(at: str | None = None, user: dict = Depends(current_user)):
+def queue(at: str | None = None, user: dict = Depends(clinic_user)):
     if at:
         at = iso_time(at, required_zone=False)
     seed_profiles()
     with connection() as db:
-        rows = db.execute("SELECT r.*,f.snapshot_json,p.profile_json FROM reviews r JOIN forecasts f ON r.forecast_id=f.id JOIN profiles p ON p.clinic_id=r.clinic_id AND p.patient_id=r.patient_id WHERE r.clinic_id=? ORDER BY CASE r.type WHEN 'predicted_excursion' THEN 0 WHEN 'ongoing_high' THEN 1 WHEN 'missing_data' THEN 2 ELSE 3 END,r.issued_at DESC", (user["clinic_id"],)).fetchall()
+        rows = db.execute("SELECT r.*,f.snapshot_json,f.clock_kind,p.profile_json FROM reviews r JOIN forecasts f ON COALESCE(r.latest_forecast_id,r.forecast_id)=f.id JOIN profiles p ON p.clinic_id=r.clinic_id AND p.patient_id=r.patient_id WHERE r.clinic_id=? ORDER BY CASE r.type WHEN 'predicted_excursion' THEN 0 WHEN 'ongoing_high' THEN 1 WHEN 'missing_data' THEN 2 ELSE 3 END,r.issued_at DESC", (user["clinic_id"],)).fetchall()
     now = at or utc_now()
     items = []
     for row in rows:
+        if at and time_key(row["issued_at"]) > time_key(at):
+            continue
         item = {key: row[key] for key in row.keys() if key not in {"snapshot_json", "profile_json", "clinic_id"}}
         profile, snapshot = json.loads(row["profile_json"]), json.loads(row["snapshot_json"])
+        if at and time_key(snapshot["current_time"]) > time_key(at):
+            with connection() as db:
+                original = db.execute("SELECT snapshot_json FROM forecasts WHERE id=?", (row["forecast_id"],)).fetchone()
+            snapshot = json.loads(original[0])
+            item["latest_forecast_id"] = row["forecast_id"]
+        primary_risk = next((risk for risk in (snapshot.get("clinic_model") or {}).get("event_risks", []) if risk.get("horizon_minutes") == 30), {})
+        item["probability"] = primary_risk.get("probability", row["probability"])
+        item["forecast_issued_at"] = snapshot["current_time"]
         item.update(patient_name=profile.get("name") or f"Patient {profile['id']}", reading_freshness=snapshot["quality"],
                     cursor=snapshot.get("cursor", 0), scenario=snapshot.get("scenario", "recorded"),
                     overdue=bool(row["status"] != "closed" and row["next_review_at"] and time_key(row["next_review_at"]) < time_key(now)),
@@ -246,7 +261,7 @@ def queue(at: str | None = None, user: dict = Depends(current_user)):
 
 
 @router.get("/api/clinic/monitoring")
-def get_monitoring(at: str | None = None, user: dict = Depends(current_user)):
+def get_monitoring(at: str | None = None, user: dict = Depends(clinic_user)):
     return result(monitoring(user, at))
 
 
@@ -276,15 +291,17 @@ def put_monitoring(payload: Monitoring, user: dict = Depends(admin_user)):
 
 
 class ReviewAction(BaseModel):
-    status: str
+    status: str | None = None
     reason: str = Field(min_length=1, max_length=500)
     note: str = Field(default="", max_length=4000)
     next_review_at: str | None = None
     assigned_reviewer: str | None = None
+    expected_revision: int | None = Field(default=None, ge=0)
+    disposition: str | None = None
 
 
 @router.get("/api/clinic/reviews/{review_id}")
-def review_detail(review_id: int, user: dict = Depends(current_user)):
+def review_detail(review_id: int, user: dict = Depends(clinic_user)):
     with connection() as db:
         review = db.execute("SELECT * FROM reviews WHERE id=? AND clinic_id=?", (review_id, user["clinic_id"])).fetchone()
         if not review:
@@ -295,24 +312,34 @@ def review_detail(review_id: int, user: dict = Depends(current_user)):
 
 @router.patch("/api/clinic/reviews/{review_id}")
 @router.post("/api/clinic/reviews/{review_id}/actions")
-def review_action(review_id: int, payload: ReviewAction, user: dict = Depends(current_user)):
+def review_action(review_id: int, payload: ReviewAction, user: dict = Depends(clinic_user)):
     transitions = {"new": {"reviewed"}, "reviewed": {"follow_up_planned", "closed"}, "follow_up_planned": {"follow_up_planned", "closed"}, "closed": set()}
     next_time = iso_time(payload.next_review_at) if payload.next_review_at else None
     if payload.status == "follow_up_planned" and not next_time:
         raise HTTPException(422, "A follow-up review time is required.")
     with connection() as db:
+        db.execute("BEGIN IMMEDIATE")
         review = db.execute("SELECT * FROM reviews WHERE id=? AND clinic_id=?", (review_id, user["clinic_id"])).fetchone()
         if not review:
             raise HTTPException(404, "Review is unavailable in this clinic.")
-        if payload.status not in transitions.get(review["status"], set()):
+        if payload.expected_revision is not None and payload.expected_revision != review["revision"]:
+            raise HTTPException(409, "Review changed. Reload the latest action history before saving.")
+        status = payload.status or review["status"]
+        if payload.status is not None and payload.status not in transitions.get(review["status"], set()):
             raise HTTPException(409, "Review must progress new → reviewed → follow-up planned or closed.")
+        dispositions = {"none", "reviewed_no_action", "context_requested", "follow_up_scheduled", "technical_issue", "closed_after_review"}
+        if payload.disposition is not None and payload.disposition not in dispositions:
+            raise HTTPException(422, "Unknown review disposition.")
+        disposition = payload.disposition or review["disposition"]
         assigned = payload.assigned_reviewer or review["assigned_reviewer"]
         if not db.execute("SELECT id FROM users WHERE id=? AND clinic_id=?", (assigned, user["clinic_id"])).fetchone():
             raise HTTPException(422, "Reviewer must belong to this clinic.")
         now = utc_now()
-        db.execute("INSERT INTO actions(clinic_id,review_id,actor_id,status,reason,note,next_review_at,recorded_at) VALUES(?,?,?,?,?,?,?,?)", (user["clinic_id"], review_id, user["id"], payload.status, payload.reason, payload.note, next_time, now))
-        db.execute("UPDATE reviews SET status=?,assigned_reviewer=?,last_review=?,next_review_at=?,closed_at=? WHERE id=? AND clinic_id=?", (payload.status, assigned, now, next_time, now if payload.status == "closed" else None, review_id, user["clinic_id"]))
-        audit(db, user, "review.action", str(review_id), {"status": payload.status})
+        db.execute("INSERT INTO actions(clinic_id,review_id,actor_id,status,reason,note,next_review_at,recorded_at,disposition) VALUES(?,?,?,?,?,?,?,?,?)", (user["clinic_id"], review_id, user["id"], status, payload.reason, payload.note, next_time, now, disposition))
+        db.execute("UPDATE reviews SET status=?,assigned_reviewer=?,last_review=?,next_review_at=?,closed_at=?,revision=revision+1,disposition=? WHERE id=? AND clinic_id=?", (status, assigned, now, next_time or (review["next_review_at"] if payload.status is None else None), now if status == "closed" else None, disposition, review_id, user["clinic_id"]))
+        audit(db, user, "review.action", str(review_id), {"status": status, "disposition": disposition})
+        from backend.operational import emit
+        emit(db, user["clinic_id"], "review.changed", review["patient_id"], review_id)
     return review_detail(review_id, user)
 
 
@@ -351,14 +378,14 @@ def add_context_entry(patient_id: str, payload: ContextEntry, user: dict, db=Non
         existing = db.execute("SELECT id FROM context WHERE clinic_id=? AND patient_id=? AND dedupe_key=?", (user["clinic_id"], patient_id, dedupe_key)).fetchone()
         if existing:
             return {"id": existing["id"], **payload.model_dump(), "observed_at": observed, "available_at": available, "duplicate": True}
-        cur = db.execute("INSERT INTO context(clinic_id,patient_id,kind,value_json,observed_at,available_at,provenance,created_by,dedupe_key) VALUES(?,?,?,?,?,?,?,?,?)", (user["clinic_id"], patient_id, payload.kind, value_json, observed, available, payload.provenance, user["id"], dedupe_key))
+        cur = db.execute("INSERT INTO context(clinic_id,patient_id,kind,value_json,observed_at,available_at,provenance,created_by,dedupe_key,received_at) VALUES(?,?,?,?,?,?,?,?,?,?)", (user["clinic_id"], patient_id, payload.kind, value_json, observed, available, payload.provenance, user["id"], dedupe_key, utc_now()))
         audit(db, user, "context.added", str(cur.lastrowid), {"patient_id": patient_id, "kind": payload.kind})
     return {"id": cur.lastrowid, **payload.model_dump(), "observed_at": observed, "available_at": available}
 
 
 @router.post("/api/clinic/context/{patient_id}")
 @router.post("/api/clinic/patients/{patient_id}/context")
-def add_context(patient_id: str, payload: ContextEntry, user: dict = Depends(current_user)):
+def add_context(patient_id: str, payload: ContextEntry, user: dict = Depends(clinic_user)):
     return result(add_context_entry(patient_id, payload, user))
 
 
@@ -580,7 +607,7 @@ def import_fhir(payload: FHIRInput, user: dict = Depends(admin_user)):
 
 @router.get("/api/clinic/timeline/{patient_id}")
 @router.get("/api/clinic/patients/{patient_id}/timeline")
-def timeline(patient_id: str, at: str | None = None, user: dict = Depends(current_user), scenario: str = "recorded"):
+def timeline(patient_id: str, at: str | None = None, user: dict = Depends(clinic_user), scenario: str = "recorded"):
     profile = get_profile(patient_id, user)
     cutoff = iso_time(at, required_zone=False) if at else utc_now()
     if scenario not in {"recorded", "sensor_gap"}:
@@ -605,7 +632,7 @@ def timeline(patient_id: str, at: str | None = None, user: dict = Depends(curren
         snapshot = json.loads(forecast["snapshot_json"])
         curves = snapshot.get("clinic_model", {}).get("forecasts", {}).get(snapshot.get("clinic_model", {}).get("model", {}).get("primary", "population"), []) or snapshot.get("forecasts", {}).get("population", []) or snapshot.get("forecasts", {}).get("twin", [])
         outcomes = [{"target_time": point["timestamp"], "horizon_minutes": point["horizon_minutes"], "predicted": point["glucose_mg_dl"], "actual": known.get(time_key(point["timestamp"])) if time_key(point["timestamp"]) <= time_key(cutoff) else None} for point in curves]
-        events.append({"type": "forecast", "timestamp": forecast["issued_at"], "id": forecast["id"], "model_version": forecast["model_version"], "quality": snapshot["quality"], "outcomes": outcomes, "provenance": "model"})
+        events.append({"type": "forecast", "timestamp": forecast["issued_at"], "id": forecast["id"], "model_version": forecast["model_version"], "quality": snapshot["quality"], "outcomes": outcomes, "provenance": "model", "input_cutoff": forecast["input_cutoff"], "clock_kind": forecast.get("clock_kind", "recorded"), "input_digest": forecast.get("input_digest"), "temporal": snapshot.get("clinic_model", {}).get("temporal", {})})
     # Reviewer actions use wall-clock audit time, displayed separately from the historical sensor clock.
     reviews = [row for row in reviews if time_key(row["issued_at"]) <= time_key(cutoff)]
     allowed_review_ids = {row["id"] for row in reviews}
@@ -613,13 +640,18 @@ def timeline(patient_id: str, at: str | None = None, user: dict = Depends(curren
     events.sort(key=lambda row: time_key(row["timestamp"]), reverse=True)
     from backend.twin import observation_quality
     quality = observation_quality([{**row, "timestamp": time_key(row["timestamp"]).isoformat()} for row in records], time_key(cutoff).isoformat())
+    if is_imported and quality["status"] == "ok":
+        quality["message"] = "Native available imported readings; trusted availability restricts the evidence. No readings are interpolated."
+    evidence_scenario = scenario
+    if is_imported and scenario == "recorded":
+        evidence_scenario = "synthetic_arrival" if any(row.get("clock_kind") == "server_received" for row in forecasts) else "imported_research"
     return result({"patient": profile, "at": cutoff, "events": events, "reviews": reviews, "monitoring": monitoring(user, at),
-                   "quality": quality, "scenario": scenario, "doctor_review_status": "pending"})
+                   "quality": quality, "scenario": evidence_scenario, "doctor_review_status": "pending"})
 
 
 @router.get("/api/clinic/report/{patient_id}")
 @router.get("/api/clinic/patients/{patient_id}/summary.pdf")
-def report(patient_id: str, at: str | None = None, user: dict = Depends(current_user), scenario: str = "recorded"):
+def report(patient_id: str, at: str | None = None, user: dict = Depends(clinic_user), scenario: str = "recorded"):
     from backend.report import consultation_pdf
     evidence = timeline(patient_id, at, user, scenario)["data"]
     document = consultation_pdf(evidence, user)
